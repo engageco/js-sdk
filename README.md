@@ -1,6 +1,11 @@
 Javascript SDK
 ======
 
+**load SDK into page**
+```
+<script src="//sdk.workface.com/v2/WorkfaceSDK.js"></script>
+```
+
 **initialize Workface Object**
 ```
 var workface = new WorkfaceSDK("API_KEY", "SECRET", "cb15f03f140f28d81223f7b7c64e3a0d");
