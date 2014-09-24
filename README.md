@@ -1,41 +1,41 @@
 Javascript SDK
 ======
 
-**load SDK into page**
+**Load SDK into Page**
 ```
 <script src="//sdk.workface.com/v2/WorkfaceSDK.js"></script>
 ```
 
-**initialize Workface Object**
+**Initialize Workface Object**
 ```
 var workface = new WorkfaceSDK("API_KEY", "SECRET", "cb15f03f140f28d81223f7b7c64e3a0d");
 ```
 
-**get all the agents in the company**
+**Get all the Agents in the Company**
 ```
 var allAgents = workface.getAgentCollection();
 ```
 
-**TODO: get agents by Geolocation**
+**TODO: Get Agents by Geolocation**
 
-**get all the agents in a category**
+**Get all the Agents in a Category**
 ```
 var customerFacingTeam = workface.getAgentCollection("customer-facing-team");
 ```
 
-**watch for any change to an agent's status in the collection**
+**Watch for any change to an Agent's status in the Collection**
 ```
 customerFacingTeam.watchStatus(function() {
 	// todo: callback
 });
 ```
 
-**unwatch agent status changes in the collection**
+**Unwatch Agent Status changes in the Collection**
 ```
 customerFacingTeam.unwatchStatus();
 ```
 
-**Loop through agents in a collection**
+**Loop through Agents in a Collection**
 ```
 var agents = customerFacingTeam.getAgents();
 for(var i = 0; i < agents.length; i++) {
@@ -48,19 +48,19 @@ for(var i = 0; i < agents.length; i++) {
 var patterson = workface.getAgent("patterson");
 ```
 
-**watch for the agent's status changes**
+**Watch for the Agent's Status Changes**
 ```
 patterson.watchStatus(function() {
 	// todo: callback
 });
 ```
 
-**unwatch the agent's status changes**
+**Unwatch the Agent's Status Changes**
 ```
 patterson.unwatchStatus();
 ```
 
-**Check an agent's status**
+**Check an Agent's Status**
 ```
 if(patterson.status == WorkfaceSDK.STATUS.ONLINE) {
 
