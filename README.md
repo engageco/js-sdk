@@ -3,24 +3,24 @@ Javascript SDK
 
 **Load SDK into Page**
 ```
-<script src="//sdk.workface.com/v2/WorkfaceSDK.js"></script>
+<script src="//sdk.engage.co/v2/EngageSDK.js"></script>
 ```
 
-**Initialize Workface Object**
+**Initialize Engage SDK Object**
 ```
-var workface = new WorkfaceSDK("API_KEY", "SECRET", "cb15f03f140f28d81223f7b7c64e3a0d");
+var engage = new EngageSDK("cb15f03f140f28d81223f7b7c64e3a0d");
 ```
 
 **Get all the Agents in the Company**
 ```
-var allAgents = workface.getAgentCollection();
+var allAgents = engage.getAgentCollection();
 ```
 
 **TODO: Get Agents by Geolocation**
 
 **Get all the Agents in a Category**
 ```
-var customerFacingTeam = workface.getAgentCollection("customer-facing-team");
+var customerFacingTeam = engage.getAgentCollection("customer-facing-team");
 ```
 
 **Watch for any change to an Agent's status in the Collection**
@@ -45,24 +45,33 @@ for(var i = 0; i < agents.length; i++) {
 
 **Get an Agent**
 ```
-var patterson = workface.getAgent("patterson");
+var johndoe = customerFacingTeam.getAgent("johndoe");
 ```
 
 **Watch for the Agent's Status Changes**
 ```
-patterson.watchStatus(function() {
+johndoe.watchStatus(function() {
 	// todo: callback
 });
 ```
 
 **Unwatch the Agent's Status Changes**
 ```
-patterson.unwatchStatus();
+johndoe.unwatchStatus();
 ```
 
 **Check an Agent's Status**
 ```
-if(patterson.status == WorkfaceSDK.STATUS.ONLINE) {
+if(johndoe.status == EngageSDK.STATUS.ONLINE) {
 
 }
 ```
+
+**TODO: Listen for "flag" events**
+	***currently chating with***
+	***recently chatted with***
+
+**TODO: proactive chat events**
+
+**TODO: tap into browser preview**
+
