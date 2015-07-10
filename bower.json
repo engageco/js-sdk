@@ -1,0 +1,13 @@
+{
+  "name": "js-sdk",
+  "version": "0.1.1",
+  "homepage": "https://github.com/engageco/js-sdk",
+  "authors": [
+    "Danny Patterson <me@dannypatterson.com>"
+  ],
+  "dependencies": {
+    "require-css": "~0.1.8",
+    "requirejs": "~2.1.18",
+    "bourbon": "~4.2.3"
+  }
+}

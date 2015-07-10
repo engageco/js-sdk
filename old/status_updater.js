@@ -10,14 +10,14 @@ the add_indicator function at any time during execution, which will be picked up
 Additionally, the class has an optional digest callback that simply sends the status of every present user (NOT those using image status indicators) on every heartbeat. To subscribe to this callback, pass in a listener
 function that takes 1 parameter (statuses) as input to the subscribe_to_digest_cb function and a namspace for that listener (to unsubscribe later if needed)
 
-NOTE: to specificy a different url (aka for testing) other than console.engage.co, simply create a JS variable in the global namespace called WORKFACE_STATUS_PING_DOMAIN, with the TLD and a forward slash (ex "test_domain.com/")
+NOTE: to specificy a different url (aka for testing) other than console.engage.co, simply create a JS variable in the global namespace called ENGAGE_STATUS_PING_DOMAIN, with the TLD and a forward slash (ex "test_domain.com/")
 */
 
 (function(window, document){
     "use strict";
     if(!window.console) console = {log:function(){}};
     try{
-	window.workface_stati_upd = window.workface_stati_upd || {
+	window.engage_stati_upd = window.engage_stati_upd || {
         indicators : [],                                //all status indicators present (which aren't img tags) in format {type:'type of indicator',namespace:'whatever_ns',user:'userDomain',cb_data:{any data for cb},cb:callback(new_status,cb_data) or boolean(false) for no cb}
             //NOTE: for the current implementation, we are assuming that ALL non-img indicators are fully cacheable and interchangable because they only include user & status - support for independent 'type' caching will come later if/when needed
 		imgs: [],                                       //all on-page status images (NOT nesessarily a status indicator, but a status element of type <img> tag w/ the img status url
@@ -25,7 +25,7 @@ NOTE: to specificy a different url (aka for testing) other than console.engage.c
 		status_update_interval: 5,						//how often to update the user status (in seconds)
 		iter_cnt: 0,									//iteration interval cnt, for tracking how often to update img list
 		update_imgs_every_iter: 20,						//how often (iteration count) should we update the image list on the page in case of dynamic content or delayed loading?
-		img_class_name: 'workface_status_indicator',	//classname for all status images used on pages
+		img_class_name: 'engage_status_indicator',	//classname for all status images used on pages
 		prot: 'http:',								    //current window protocol
         ping_domain: "console.engage.co/",                   //TLD for ping endpoints
 		status_path: 'online-status-img/',				//path after domain to the status images
@@ -92,15 +92,15 @@ NOTE: to specificy a different url (aka for testing) other than console.engage.c
             var allow_node=false;
 			if(window.location.protocol == 'https:') _wfs.prot = 'https:';
             //if(_wfs.force_node || window.location.host=='console.engege.co' || window.location.host=='engage' || window.location.host=='test.engage') _wfs.use_nodejs = true;
-            if( typeof WORKFACE_STATUS_PING_DOMAIN != 'undefined' && WORKFACE_STATUS_PING_DOMAIN != "") _wfs.ping_domain =WORKFACE_STATUS_PING_DOMAIN;
+            if( typeof ENGAGE_STATUS_PING_DOMAIN != 'undefined' && ENGAGE_STATUS_PING_DOMAIN != "") _wfs.ping_domain =ENGAGE_STATUS_PING_DOMAIN;
             _wfs._set_heartbeat_ts();
             _wfs.timer = setInterval(_wfs._update_status, _wfs.status_update_interval*1000);
             var loaded_ms = new Date();
             _wfs.global_ready_called = setInterval(function(){
-                    if('workface_status_service_ready' in window && typeof(window.workface_status_service_ready)=='function' && _wfs.global_ready_called!==true){
+                    if('engage_status_service_ready' in window && typeof(window.engage_status_service_ready)=='function' && _wfs.global_ready_called!==true){
                         clearInterval(_wfs.global_ready_called);
                         _wfs.global_ready_called = true;
-                        return window.workface_status_service_ready();
+                        return window.engage_status_service_ready();
                     }
                     var this_ms = new Date();
                     if((this_ms.getTime() - loaded_ms.getTime())/1000 > 8){
@@ -157,7 +157,7 @@ NOTE: to specificy a different url (aka for testing) other than console.engage.c
         //get an xdomain call and add it to the CB tracking arr 
         new_xdomain_call : function( url, cb, data ){
             var nextkey = _wfs.xdomain_calls.length;
-            var xdomain_call = new _workface_xdomain_ajax( url, cb, data, nextkey );
+            var xdomain_call = new _engage_xdomain_ajax( url, cb, data, nextkey );
             _wfs.xdomain_calls.push(xdomain_call);
             return nextkey;
         },
@@ -271,16 +271,16 @@ NOTE: to specificy a different url (aka for testing) other than console.engage.c
         },
         
         track_recent_chat : function(udomain){
-            var tdata = _wfs._get_cache_cookie('workface_recentchats'),
+            var tdata = _wfs._get_cache_cookie('engage_recentchats'),
                 ts = new Date().getTime();
             if(!tdata) tdata = {};
             tdata[udomain] = ts;
-            _wfs._set_cache_cookie('workface_recentchats',tdata,(60*60*24*14));
+            _wfs._set_cache_cookie('engage_recentchats',tdata,(60*60*24*14));
         },
         
         get_tracked_chats: function(){
             var new_tdata = {};
-            var tdata = _wfs._get_cache_cookie('workface_recentchats'),
+            var tdata = _wfs._get_cache_cookie('engage_recentchats'),
                 ts = new Date().getTime(),
                 limit = ts-(_wfs.track_chat_date_tolerance*24*60*60);
             if(tdata){
@@ -288,7 +288,7 @@ NOTE: to specificy a different url (aka for testing) other than console.engage.c
                     if(!tdata.hasOwnProperty(t)) continue;
                     if(tdata[t] >= limit) new_tdata[t] = tdata[t];
                 }
-                _wfs._set_cache_cookie('workface_recentchats',new_tdata,(60*60*24*14));
+                _wfs._set_cache_cookie('engage_recentchats',new_tdata,(60*60*24*14));
             }
             return new_tdata;
         },
@@ -519,7 +519,7 @@ NOTE: to specificy a different url (aka for testing) other than console.engage.c
     
     //this object is intended to be instantiated to do a cross-domain ajax request by putting all the params for the request in a url string and passing in a callback, which is rendered and returned
     //the script is then executed in real-time and the callback is fired with the return data as it's payload.
-    window._workface_xdomain_ajax = window._workface_xdomain_ajax || function(url,callback,data,ind_key){
+    window._engage_xdomain_ajax = window._engage_xdomain_ajax || function(url,callback,data,ind_key){
         this.failed = false;            //did the call fail (via timeout check/settings)
         this.url = url;                 //base url to call (NO query string)
         this.callback = callback;       //callback function to pass returned data into
@@ -570,8 +570,8 @@ NOTE: to specificy a different url (aka for testing) other than console.engage.c
            this.callback( this.failed ? false : true , data, this.ind_key);
         }
     };
-    window._wfs = workface_stati_upd;
-    window.workface_stati_upd.init();
-    }catch(e){ if('workface_err_log' in window){if('WF_ERR_LOG_PREVENT_CATCH' in window){throw(e);}else{workface_err_log.err( e.name+' - '+e.message, e.fileName || false, e.lineNumber || false );}}}
+    window._wfs = engage_stati_upd;
+    window.engage_stati_upd.init();
+    }catch(e){ if('engage_err_log' in window){if('WF_ERR_LOG_PREVENT_CATCH' in window){throw(e);}else{engage_err_log.err( e.name+' - '+e.message, e.fileName || false, e.lineNumber || false );}}}
 })(window,document);
 
