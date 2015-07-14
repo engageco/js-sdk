@@ -6,8 +6,7 @@
 
 define(["jquery",
 		"event-dispatcher/EventDispatcher",
-		"gibberish.aes",
-		"jquery.iecors", "crypto.sha1"],
+		"gibberish.aes","crypto.sha1"],
 	function(jQuery, EventDispatcher, GibberishAES) {
 
 		'use strict';

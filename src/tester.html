@@ -1,8 +1,9 @@
 <html>
 <head>
 	<title>Engage SDK Tester</title>
-	<script src="js/engage/sdk.js"></script>
+	<script src="../build/sdk.js"></script>
 	<script>
+		console.log(EngageSDK);
 		var engage = new EngageSDK("cb15f03f140f28d81223f7b7c64e3a0d");
 		engage.getAgentCollection("support");
 		engage.drawWidgetByType("toolbar");
