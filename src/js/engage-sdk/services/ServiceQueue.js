@@ -5,7 +5,7 @@
  */
 
 define(["jquery",
-		"engage/services/KeepAliveService",
+		"engage-sdk/services/KeepAliveService",
 		"event-dispatcher/EventDispatcher",
 		"event-dispatcher/Event"],
 	function(jQuery, KeepAliveService, EventDispatcher, Event) {
