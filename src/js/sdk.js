@@ -1,4 +1,4 @@
-define("EngageSDK", ["engage/services/ServiceQueue"],
+define("EngageSDK", ["engage-sdk/services/ServiceQueue"],
 	function(ServiceQueue) {
 
 		'use strict';
