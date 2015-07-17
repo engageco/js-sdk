@@ -7,11 +7,11 @@
   ],
   "dependencies": {
     "jquery": "~2.1.3",
-    "require-css": "~0.1.8",
-    "requirejs": "~2.1.18",
-    "bourbon": "~4.2.3",
+    "bourbon": "~4.1.0",
     "gibberish-aes": "*",
     "event-dispatcher": "git@github.com:patterson/event-dispatcher.git",
-    "CryptoJS": "~3.1.12"
+    "CryptoJS": "~3.1.12",
+    "almond": "~0.3.1",
+    "headjs": "~1.0.3"
   }
 }

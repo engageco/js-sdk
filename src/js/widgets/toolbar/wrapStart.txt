@@ -1,0 +1,9 @@
+(function (root, factory) {
+    if (typeof define === 'function' && define.amd) {
+        // AMD.
+        define(['jquery', 'EngageSDK'], factory);
+    } else {
+        // Browser globals
+        root.EngageToolbar = factory(root.jQuery, root.EngageSDK);
+    }
+}(this, function(jQuery, EngageSDK) {

@@ -1,0 +1,10 @@
+
+	define("jquery", function () {
+        return jQuery;
+    });
+    define("EngageSDK", function () {
+        return EngageSDK;
+    });
+    
+    return require("EngageToolbar");
+}));

@@ -1,0 +1,14 @@
+// placement: left-tab || right-tab || bottom-left-tab || bottom-right-tab || bottom-toolbar || top-left-tab || top-right-tab
+
+{
+  "widget-type": "toolbar",
+  "category-slug": "",
+  "widget-options": {
+  	"js-src": "",
+  	"css-src": "build/",
+    "placement": "left-tab",
+    "background-color": "#000",
+    "label-color": "#fff",
+    "proactive-delay": 5000
+  }
+}

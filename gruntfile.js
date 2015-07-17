@@ -6,58 +6,71 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON("package.json"),
 
         requirejs: {
-            compile: {
+            sdk: {
                 options: {
-                    mainConfigFile: "src/js/config.js",
+                    mainConfigFile: "src/js/engage-sdk/build.js",
                     out: "build/sdk.js",
                     baseUrl: "src/js",
-                    // name: "sdk",
                     paths: {
-                        EngageSDK: "sdk",
-                        requirejs: "components/requirejs/require"
+                        almond: "components/almond/almond",
+                        EngageSDK: "engage-sdk/sdk"
                     },
-                    include: ["requirejs", "EngageSDK"],
+                    include: ["almond", "EngageSDK"],
                     wrap: {
-                        startFile: "src/js/wrapStart.txt",
-                        endFile: "src/js/wrapEnd.txt"
+                        startFile: "src/js/engage-sdk/wrapStart.txt",
+                        endFile: "src/js/engage-sdk/wrapEnd.txt"
                     },
                     generateSourceMaps: false,
                     preserveLicenseComments: false,
                     optimize: "none"
-                    // dir: ".buildjs",
-                    // skipDirOptimize: false,
-                    // modules: [
-                    //     {name: "APITester"},
-                    //     {name: "Portal"}
-                    // ],
-                    // removeCombined: true,
-                    // uglify2: {
-                    //     mangle: false
-                    // }
+                }
+            },
+            toolbar: {
+                options: {
+                    mainConfigFile: "src/js/widgets/toolbar/build.js",
+                    out: "build/toolbar.js",
+                    baseUrl: "src/js",
+                    paths: {
+                        almond: "components/almond/almond",
+                        EngageToolbar: "widgets/toolbar/toolbar"
+                    },
+                    include: ["almond", "EngageToolbar"],
+                    exclude: ["jquery"],
+                    wrap: {
+                        startFile: "src/js/widgets/toolbar/wrapStart.txt",
+                        endFile: "src/js/widgets/toolbar/wrapEnd.txt"
+                    },
+                    generateSourceMaps: false,
+                    preserveLicenseComments: false,
+                    optimize: "none"
                 }
             }
         },
 
-        // sass: {
-        //     dist: {
-        //         options: {
-        //             style: "compressed"
-        //         },
-        //         files: {
-        //             "src/css/API.css": "src/sass/API.scss",
-        //             "src/css/Portal.css": "src/sass/Portal.scss"
-        //         }
-        //     }
-        // },
+        sass: {
+            toolbar: {
+                options: {
+                    style: "compressed",
+                    sourcemap: "none"
+                },
+                files: {
+                    "build/toolbar.css": "src/css/widgets/toolbar/toolbar.scss"
+                }
+            }
+        },
 
         watch: {
-            // css: {
-            //     files: "**/*.scss",
-            //     tasks: ["sass:dist"]
-            // },
-            js: {
-                files: "**/*.js",
-                tasks: ["requirejs:compile"]
+            "scss-toolbar": {
+                files: "src/css/widgets/toolbar/toolbar.scss",
+                tasks: ["sass:toolbar"]
+            },
+            "js-sdk": {
+                files: "src/js/engage-sdk/**/*.js",
+                tasks: ["requirejs:sdk"]
+            },
+            "js-toolbar": {
+                files: "src/js/widgets/toolbar/*.js",
+                tasks: ["requirejs:toolbar"]
             }
         },
 
@@ -67,20 +80,14 @@ module.exports = function(grunt) {
         //     bower: ["src/js/components"]
         // },
 
-        // concurrent: {
-        //     dev: {
-        //         tasks: ['watch:css'],
-        //         options: {
-        //             logConcurrentOutput: true
-        //         }
-        //     },
-        //     prod: {
-        //         tasks: ['watch:css', 'watch:js'],
-        //         options: {
-        //             logConcurrentOutput: true
-        //         }
-        //     }
-        // },
+        concurrent: {
+            compile: {
+                tasks: ["watch:scss-toolbar", "watch:js-sdk", "watch:js-toolbar"],
+                options: {
+                    logConcurrentOutput: true
+                }
+            }
+        },
 
         // copy: {
         //     build: {
@@ -122,16 +129,11 @@ module.exports = function(grunt) {
     });
 
     grunt.loadNpmTasks("grunt-contrib-requirejs");
-    // grunt.loadNpmTasks("grunt-contrib-sass");
-    // grunt.loadNpmTasks("grunt-contrib-copy");
+    grunt.loadNpmTasks("grunt-contrib-sass");
     grunt.loadNpmTasks("grunt-contrib-watch");
-    // grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks("grunt-concurrent");
 
-    // grunt.registerTask("build", ["clean:build", "sass:dist", "requirejs:compile", "copy:build"]);
-
-    // grunt.registerTask("watcher", ["concurrent:dev"]);
-    // grunt.registerTask("watcher:prod", ["concurrent:prod"]);
-
-    grunt.registerTask("default", ["requirejs:compile"]);
+    grunt.registerTask("build", ["sass:toolbar", "requirejs:sdk", "requirejs:toolbar"]);
+    grunt.registerTask("default", ["concurrent:compile"]);
 
 };
