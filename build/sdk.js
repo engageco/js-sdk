@@ -11190,7 +11190,7 @@ define('engage-sdk/utils/PresenceMonitor',["jquery",
 				}else {
 					self.servers[server][user].status = PresenceMonitor.OFFLINE;
 				}
-				if(oldStatus != self.servers[server][user]) {
+				if(oldStatus != self.servers[server][user].status) {
 					onStatusChange.apply(self, [jid, self.servers[server][user].status, self.servers[server][user].callback]);
 				}
 			});
@@ -11264,7 +11264,7 @@ define('engage-sdk/utils/PresenceMonitor',["jquery",
 			}
 		};
 
-		PresenceMonitor.prototype.watchGroup = function(users, callback) {
+		PresenceMonitor.prototype.watchCategory = function(categorySlug, callback) {
 			// create group watch util
 		};
 

@@ -136,7 +136,7 @@ define(["jquery",
 				}else {
 					self.servers[server][user].status = PresenceMonitor.OFFLINE;
 				}
-				if(oldStatus != self.servers[server][user]) {
+				if(oldStatus != self.servers[server][user].status) {
 					onStatusChange.apply(self, [jid, self.servers[server][user].status, self.servers[server][user].callback]);
 				}
 			});
@@ -210,8 +210,9 @@ define(["jquery",
 			}
 		};
 
-		PresenceMonitor.prototype.watchGroup = function(users, callback) {
-			// create group watch util
+		PresenceMonitor.prototype.watchCategory = function(categorySlug, callback) {
+			// todo: load users from category
+			// todo: create group watch util
 		};
 
 		PresenceMonitor.prototype.getUserStatus = function(jid) {
