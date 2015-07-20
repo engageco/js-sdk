@@ -1,24 +1,16 @@
 <html>
 <head>
-	<title>Engage SDK Tester</title>
+	<title>Engage SDK Example - Local Toolbar</title>
 	<script src="../build/sdk.js"></script>
 	<script>
 		var engage = new EngageSDK("cb15f03f140f28d81223f7b7c64e3a0d");
-		engage.getAgentCollection("support");
-		engage.drawWidget({
-			  "type": "toolbar",
-			  "js": "../build/toolbar.js",
-			  "css": "../build/toolbar.css",
-			  "category": "front-facing-team",
-			  "options": {
-			    "tabPlacement": "right-tab",
-			    "label": "Online! Chat Now!",
-			    "labelOrientation": "flipped", 
-			    "backgroundColor": "#eee",
-			    "labelColor": "#00ff00",
-			    // "proactiveDelay": 5000
-			  }
-			});
+		engage.presence.watchUser("patterson@chat-prod1.engage.co", function(status) {
+			console.log("patterson status changed to " + status);
+		});
+		engage.presence.watchUser("lieflarson", function(status) {
+			console.log("lieflarson status changed to " + status);
+		});
+		engage.presence.start();
 	</script>
 </head>
 <body>

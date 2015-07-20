@@ -2,8 +2,9 @@ define(["require",
 		"jquery",
 		"engage-sdk/services/BaseRESTService",
 		"engage-sdk/services/ServiceQueue",
+		"engage-sdk/utils/PresenceMonitor",
 		"headjs"],
-	function(require, jQuery, BaseRESTService, ServiceQueue) {
+	function(require, jQuery, BaseRESTService, ServiceQueue, PresenceMonitor) {
 
 		"use strict";
 
@@ -17,6 +18,7 @@ define(["require",
 
 		var EngageSDK = function(customerHash) {
 			this.customerHash = customerHash;
+			this.presence = PresenceMonitor.getInstance();
 			// todo: initialize browser preview and start tracking the user
 		};
 
@@ -32,8 +34,8 @@ define(["require",
 					var jsSrc = (config.js) ? config.js : "https://sdk.engage.co/toolbar.js";
 					var cssSrc = (config.css) ? config.css : "https://sdk.engage.co/toolbar.css";
 					head.load([jsSrc, cssSrc], function() {
-						sdk.toolbar = new EngageToolbar(sdk, config.options);
-						sdk.toolbar.draw();
+						sdk.widget = new EngageToolbar(sdk, config.options);
+						sdk.widget.draw();
 					});
 					break;
 				case "custom":
@@ -41,10 +43,15 @@ define(["require",
 					head.load([config.js, config.css], function() {
 						// todo: pass in an instance of the sdk to a callback
 					});
-					// todo: load custom js/css and pass in the loaded 
 					break;
 			}
-		}
+		};
+
+		EngageSDK.prototype.setWidgetVisibility = function(isVisible) {
+			if(this.widget) {
+				this.widget.setVisibility(isVisible);
+			}
+		};
 
 		// find script and look for config; if found init script
 		var currentScript = document.currentScript;
