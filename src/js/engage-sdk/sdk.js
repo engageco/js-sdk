@@ -1,20 +1,16 @@
 define(["require",
 		"jquery",
-		"engage-sdk/services/BaseRESTService",
-		"engage-sdk/services/ServiceQueue",
 		"engage-sdk/utils/PresenceMonitor",
 		"headjs"],
-	function(require, jQuery, BaseRESTService, ServiceQueue, PresenceMonitor) {
+	function(require, jQuery, PresenceMonitor) {
 
 		"use strict";
 
-		ServiceQueue.getInstance();
-
 		// define api key and secret that only have access to the widget APIs
-		if(!window.engageConfig) window.engageConfig = {
-			API_KEY: "9h23gk87234ysd7f9234hjksdf89234",
-			SECRET: "902340ulsdknzl23ljag07234asdf03952lkds"
-		};
+		// if(!window.engageConfig) window.engageConfig = {
+		// 	API_KEY: "9h23gk87234ysd7f9234hjksdf89234",
+		// 	SECRET: "902340ulsdknzl23ljag07234asdf03952lkds"
+		// };
 
 		var EngageSDK = function(customerHash) {
 			this.customerHash = customerHash;

@@ -16,6 +16,7 @@ define(["jquery",
 			this.checkInterval = null;
 			this.isRunning = false;
 			this.servers = new Object();
+			this.autoStart = false;
 		};
 
 		PresenceMonitor.prototype = new EventDispatcher();
@@ -198,6 +199,8 @@ define(["jquery",
 				}
 				if(this.checkInterval != null) {
 					onCheckPresence.apply(this);
+				}else if(this.autoStart) {
+					this.start();
 				}
 			}
 		};
