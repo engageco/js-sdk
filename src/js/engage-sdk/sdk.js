@@ -1,8 +1,9 @@
 define(["require",
 		"jquery",
 		"engage-sdk/utils/PresenceMonitor",
+		"engage-sdk/utils/UserPageTracker",
 		"headjs"],
-	function(require, jQuery, PresenceMonitor) {
+	function(require, jQuery, PresenceMonitor, UserPageTracker) {
 
 		"use strict";
 
@@ -12,10 +13,14 @@ define(["require",
 		// 	SECRET: "902340ulsdknzl23ljag07234asdf03952lkds"
 		// };
 
-		var EngageSDK = function(customerHash) {
-			this.customerHash = customerHash;
+		var EngageSDK = function(companyHash) {
+			this.companyHash = companyHash;
 			this.presence = PresenceMonitor.getInstance();
 			// todo: initialize browser preview and start tracking the user
+			var userPageTracker = new UserPageTracker(companyHash);
+			userPageTracker.init();
+
+
 		};
 
 		EngageSDK.prototype.getAgentCollection = function(categorySlug) {

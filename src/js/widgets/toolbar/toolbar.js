@@ -6,7 +6,6 @@ define(["jquery"],
 		var EngageToolbar = function(sdk, options) {
 			this.sdk = sdk;
 			this.options = options;
-			console.log(options);
 		};
 
 		EngageToolbar.prototype.draw = function() {
