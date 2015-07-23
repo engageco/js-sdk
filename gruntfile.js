@@ -22,7 +22,7 @@ module.exports = function(grunt) {
                     },
                     generateSourceMaps: false,
                     preserveLicenseComments: false,
-                    optimize: "uglify"
+                    optimize: "none"
                 }
             },
             toolbar: {
@@ -42,7 +42,7 @@ module.exports = function(grunt) {
                     },
                     generateSourceMaps: false,
                     preserveLicenseComments: false,
-                    optimize: "uglify"
+                    optimize: "none"
                 }
             }
         },

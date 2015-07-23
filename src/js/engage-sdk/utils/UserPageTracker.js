@@ -40,7 +40,7 @@ define(["jquery", "jquery.cookie"],
 	            var pageDataJSON = JSON.stringify(this.currentPageData);
 	            if(this.lastPageDataJSON != pageDataJSON) {
 	            	this.lastPageDataJSON = pageDataJSON;
-	            	console.log(this.currentPageData);
+	            	// console.log(this.currentPageData);
 	            	var pageDataCobrowsePacket = JSON.parse(pageDataJSON);
 					pageDataCobrowsePacket.type = "cobrowse_data";
             		this.xDomainIframeWindow.postMessage(JSON.stringify(pageDataCobrowsePacket), config.xdomainURL);
@@ -49,12 +49,12 @@ define(["jquery", "jquery.cookie"],
 		};
 
 		var onUpdatePageFocus = function(event) {
-			console.log("onUpdatePageFocus", document.visibilityState);
+			// console.log("onUpdatePageFocus", document.visibilityState);
 			this.currentPageData.in_focus = document.visibilityState == "visible";
 			onPushPageActivityToIframe.apply(this);
 		}
 		var onUpdatePageViewport = function(event) {
-			console.log("onUpdatePageViewport");
+			// console.log("onUpdatePageViewport");
 			var body = jQuery("body");
 			this.currentPageData.viewport.xpos = body.scrollLeft();
 			this.currentPageData.viewport.ypos = body.scrollTop();

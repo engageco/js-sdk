@@ -1,9 +1,13 @@
 define(["require",
 		"jquery",
 		"engage-sdk/utils/PresenceMonitor",
-		"engage-sdk/utils/UserPageTracker",
+        "engage-sdk/utils/UserPageTracker",
+        "engage-sdk/services/BaseRESTService",
+        "engage-sdk/services/ServiceQueue",
+        "engage-sdk/services/GetUsersService",
+        "event-dispatcher/Event",
 		"headjs"],
-	function(require, jQuery, PresenceMonitor, UserPageTracker) {
+	function(require, jQuery, PresenceMonitor, UserPageTracker, BaseRESTService, ServiceQueue, GetUsersService, Event) {
 
 		"use strict";
 
@@ -14,18 +18,22 @@ define(["require",
 		// };
 
 		var EngageSDK = function(companyHash) {
+            BaseRESTService.baseUrl = "https://wapidev.engage.co";
 			this.companyHash = companyHash;
 			this.presence = PresenceMonitor.getInstance();
 			// todo: initialize browser preview and start tracking the user
 			var userPageTracker = new UserPageTracker(companyHash);
 			userPageTracker.init();
 
-
 		};
 
-		EngageSDK.prototype.getAgentCollection = function(categorySlug) {
-			// todo: load agents by category if provided or all agents if not provided
-		}
+		EngageSDK.prototype.getUsers = function(categorySlug, callback) {
+			var getUsersService = new GetUsersService(this.companyHash, categorySlug);
+            getUsersService.addEventListener(Event.RESULT, function(event) {
+               callback(event.data);
+            });
+            ServiceQueue.getInstance().addRequest(getUsersService);
+		};
 
 		EngageSDK.prototype.drawWidget = function(config, category) {
 			var sdk = this;

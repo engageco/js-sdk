@@ -58,7 +58,7 @@ define(["jquery",
 			event.status = status;
 			this.dispatchEvent(event);
 			if(callback) {
-				callback(event.status);
+				callback(event.status, user);
 			}
 		};
 

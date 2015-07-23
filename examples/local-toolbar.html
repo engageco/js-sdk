@@ -6,18 +6,21 @@
 	<script>
 		var engage = new EngageSDK("cb15f03f140f28d81223f7b7c64e3a0d");
 		engage.drawWidget({
-			  "type": "toolbar",
-			  "js": "../build/toolbar.js",
-			  "css": "../build/toolbar.css",
-			  "category": "front-facing-team",
-			  "options": {
-			    "tabPlacement": "right-tab",
-			    "label": "Online! Chat Now!",
-			    "labelOrientation": "flipped", 
-			    "backgroundColor": "#004400",
-			    "labelColor": "#00ff00",
-			    // "proactiveDelay": 5000
-			  }
+                "type": "toolbar",
+                "js": "../build/toolbar.js",
+                "css": "../build/toolbar.css",
+                "category": "front-facing-team",
+                "options": {
+                    "tabPlacement": "bottom-left-tab",
+                    "label": "Online! Chat Now!",
+                    "labelOrientation": "flipped",
+                    "backgroundColor": "#004400",
+                    "labelColor": "#00ff00",
+                    "showAgentLocation": true
+//                    "showListOnly": true
+//                    "showSearch": true,
+//                    "proactiveDelay": 5000
+                }
 			});
 	</script>
 </head>
