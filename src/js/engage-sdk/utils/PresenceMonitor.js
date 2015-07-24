@@ -208,6 +208,10 @@ define(["jquery",
 		PresenceMonitor.prototype.unwatchUser = function(jid) {
 			var server = getDomainFromJid(jid);
 			var user = getNodeFromJid(jid);
+            if(server == null || user == null) {
+                server = "status.engage.co";
+                user = jid;
+            }
 			if(this.servers.hasOwnProperty(server)) {
 				delete this.servers[server][user];
 			}
@@ -221,6 +225,10 @@ define(["jquery",
 		PresenceMonitor.prototype.getUserStatus = function(jid) {
 			var server = getDomainFromJid(jid);
 			var user = getNodeFromJid(jid);
+            if(server == null || user == null) {
+                server = "status.engage.co";
+                user = jid;
+            }
 			if(this.servers.hasOwnProperty(server) && this.servers[server].hasOwnProperty(user)) {
 				return this.servers[server][user].status;
 			}else {
