@@ -1,0 +1,529 @@
+@import "../../../js/components/bourbon/app/assets/stylesheets/_bourbon.scss";
+
+$tab-radius: 10px;
+$tab-width: 50px;
+$tab-height: 250px;
+$tab-bottom-offest: 5%;
+$tab-label-size: 18px;
+
+$drawer-mobile-width: 320px;
+$drawer-width: 400px;
+$drawer-height: 475px;
+$drawer-radius: 10px;
+
+.engage-tab {
+	position: fixed;
+	background-color: #000;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #fff;
+	box-shadow: 0 0 10px rgba(0,0,0,0.5);
+	cursor: pointer;
+	@include transition-duration(0.2s);
+	@include transition-timing-function(ease-out);
+	&:active {
+		@include transform(scale(1.05));
+	}
+
+	@mixin side-tab() {
+		top: 50%;
+		width: $tab-width;
+		height: $tab-height;
+		margin-top: -$tab-height/2;
+		> .engage-tab-label {
+			width: 250px;
+			// bottom-up text
+			@include transform(rotate(-90deg) translateX(-100%) translateY(($tab-width - $tab-label-size) / 2));
+			@include transform-origin(top left);
+			@include transition-timing-function(ease-out-bounce);
+			&.flipped {
+				// top-down text
+				@include transform(rotate(90deg) translateY(-($tab-width - $tab-label-size)));
+				@include transform-origin(top left);
+			}
+		}
+	}
+	&.left-tab {
+		@include side-tab();
+		left: -$tab-width/10;
+		@include transition-property(left, transform);
+		border: {
+			top-right-radius: $tab-radius;
+			bottom-right-radius: $tab-radius;
+		}
+		&:hover {
+			left: 0;
+		}
+		&.engage-hide {
+			left: -$tab-width * 1.2;
+		}
+		
+	}
+	&.right-tab {
+		@include side-tab();
+		right: -$tab-width/10;
+		@include transition-property(right, transform);
+		border: {
+			top-left-radius: $tab-radius;
+			bottom-left-radius: $tab-radius;
+		}
+		&:hover {
+			right: 0;
+		}
+		&.engage-hide {
+			right: -$tab-width * 1.2;
+		}
+	}
+
+	@mixin bottom-tab() {
+		bottom: -$tab-width/10;
+		@include transition-property(bottom, transform);
+		width: $tab-height;
+		height: $tab-width;
+		
+		border: {
+			top-right-radius: $tab-radius;
+			top-left-radius: $tab-radius;
+		}
+		&:hover {
+			bottom: 0;
+		}
+		&:active {
+			@include transform(scale(1.05));
+		}
+		&.engage-hide {
+			bottom: -$tab-width * 1.2;
+		}
+		> .engage-tab-label {
+			@include transform(translateY(($tab-width - $tab-label-size) / 2));
+		}
+	}
+	&.bottom-left-tab {
+		@include bottom-tab();
+		left: $tab-bottom-offest;
+	}
+	&.bottom-right-tab {
+		@include bottom-tab();
+		right: $tab-bottom-offest;
+	}
+	&.bottom-toolbar {
+		@include bottom-tab();
+		border-radius: 0;
+		width: 100%;
+		left: 0;
+		right: 0;
+	}
+
+	@mixin top-tab() {
+		top: -$tab-width/10;
+		@include transition-property(top, transform);
+		width: $tab-height;
+		height: $tab-width;
+		border: {
+			bottom-right-radius: $tab-radius;
+			bottom-left-radius: $tab-radius;
+		}
+		&:hover {
+			top: 0;
+		}
+		&:active {
+			@include transform(scale(1.05));
+		}
+		&.engage-hide {
+			top: -$tab-width * 1.2;
+		}
+		> .engage-tab-label {
+			@include transform(translateY(($tab-width - $tab-label-size) / 2));
+		}
+	}
+	&.top-left-tab {
+		@include top-tab();
+		left: $tab-bottom-offest;
+	}
+	&.top-right-tab {
+		@include top-tab();
+		right: $tab-bottom-offest;
+	}
+
+	> .engage-tab-label {
+		@include user-select(none);
+		text-align: center;
+		font-size: $tab-label-size;
+	}
+	
+}
+
+.engage-drawer {
+	position: fixed;
+	background-color: #fff;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #4c4c4c;
+	overflow: hidden;
+	box-shadow: 0 0 10px rgba(0,0,0,0.5);
+	@include transition-duration(0.5s);
+	@include transition-timing-function(ease-out);
+	@include transition-property(all);
+
+	@mixin side-drawer() {
+		top: 50%;
+		width: $drawer-width;
+        @media (max-width: 700px) {
+            width: $drawer-mobile-width;
+        }
+		height: $drawer-height;
+		margin-top: -$drawer-height/2;
+	}
+	&.left-tab {
+		@include side-drawer();
+		left: 0;
+		border: {
+			top-right-radius: $drawer-radius;
+			bottom-right-radius: $drawer-radius;
+		}
+		&.engage-hide {
+			left: -$drawer-width * 1.2;
+		}
+	}
+	&.right-tab {
+		@include side-drawer();
+		right: 0;
+		@include transition-property(right, transform);
+		border: {
+			top-left-radius: $drawer-radius;
+			bottom-left-radius: $drawer-radius;
+		}
+		&.engage-hide {
+			right: -$drawer-width * 1.2;
+		}
+	}
+
+	@mixin bottom-drawer() {
+		bottom: 0;
+		@include transition-property(bottom, transform);
+		width: $drawer-width;
+        @media (max-width: 700px) {
+            width: $drawer-mobile-width;
+        }
+		height: $drawer-height;
+		border: {
+			top-right-radius: $drawer-radius;
+			top-left-radius: $drawer-radius;
+		}
+		&.engage-hide {
+			bottom: -$drawer-height * 1.2;
+		}
+	}
+	&.bottom-left-tab {
+		@include bottom-drawer();
+		left: $tab-bottom-offest;
+	}
+	&.bottom-right-tab {
+		@include bottom-drawer();
+		right: $tab-bottom-offest;
+	}
+	&.bottom-toolbar {
+		@include bottom-drawer();
+		border-radius: 0;
+		width: 100%;
+		left: 0;
+		right: 0;
+	}
+
+	@mixin top-drawer() {
+		top: 0;
+		@include transition-property(top, transform);
+		width: $drawer-width;
+        @media (max-width: 700px) {
+            width: $drawer-mobile-width;
+        }
+		height: $drawer-height;
+		border: {
+			bottom-right-radius: $drawer-radius;
+			bottom-left-radius: $drawer-radius;
+		}
+		&.engage-hide {
+			top: -$drawer-height * 1.2;
+		}
+	}
+	&.top-left-tab {
+		@include top-drawer();
+		left: $tab-bottom-offest;
+	}
+	&.top-right-tab {
+		@include top-drawer();
+		right: $tab-bottom-offest;
+	}
+
+	>.engage-header {
+		height: 50px;
+		width: 100%;
+		border-bottom: {
+			width: 1px;
+			color: #eaeaea;
+			style: solid;
+		}
+        @mixin header-button {
+            display: block;
+            position: absolute;
+            top: 0;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            background-repeat: no-repeat;
+            background-position: center center;
+            &:hover, &:active {
+                background-color: #eee;
+            }
+        }
+		.engage-back {
+            @include header-button();
+            left: 0;
+            background-image: url(images/back.png);
+            @include transform(translateX(0));
+            @include transition-property(transform);
+            @include transition-duration(0.4s);
+            &.engage-hide {
+                @include transform(translateX(-50px));
+            }
+		}
+		.engage-close {
+            @include header-button();
+            right: 0;
+            background-image: url(images/close.png);
+		}
+        .engage-directory-title {
+            left: 0;
+            right: 0;
+            padding: 16px 50px 12px 50px;
+            font-size: 18px;
+            text-align: center;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+	}
+
+	>.engage-screen {
+		position: absolute;
+		top: 50px;
+		bottom: 0;
+        left: 0;
+		width: 100%;
+        overflow: hidden;
+        overflow-y: auto;
+//		@include transform(translateX(0));
+		@include transition-property(left);
+		@include transition-duration(0.5s);
+		@include transition-timing-function(ease-out);
+
+		&.engage-right {
+//			@include transform(translateX(100%));
+            left: 100%;
+		}
+		&.engage-left {
+//			@include transform(translateX(-100%));
+            left: -100%;
+		}
+
+        &.engage-directory {
+            > ul {
+                position: relative;
+                list-style: none;
+                margin: 0;
+                padding: 0;
+                left: 0;
+                right: 20px;
+                > li {
+                    position: relative;
+                    cursor: pointer;
+                    display: inline-block;
+                    width: 120px;
+                    text-align: center;
+                    margin: 5px 0;
+                    padding: 5px;
+                    border-radius: 5px;
+                    &:hover {
+                        background-color: #eee;
+                    }
+                    .engage-profilePhoto {
+                        margin: 0 auto;
+                        margin-bottom: 10px;
+                    }
+                    .engage-button {
+                        margin: 0 auto;
+                        margin-top: 5px;
+                    }
+                }
+            }
+
+            @mixin list() {
+                > ul > li {
+                    position: relative;
+                    display: block;
+                    width: auto;
+                    left: 0;
+                    right: 0;
+//                    height: 50px;
+                    text-align: left;
+//                    padding: 10px;
+                    margin: 5px;
+                    .engage-profilePhoto {
+                        margin: 5px;
+                    }
+                    .engage-name, .engage-title, .engage-location {
+                        position: absolute;
+                        left: 60px;
+                        width: 130px;
+                        @media (min-width: 700px) {
+                            width: 210px;
+                        }
+                    }
+                    .engage-name {
+                        top: 15px;
+                    }
+                    .engage-title {
+                        top: 30px;
+                    }
+                    .engage-location {
+                        top: 40px;
+                    }
+                    .engage-button {
+                        position: absolute;
+                        right: 10px;
+                        top: 12px;
+                    }
+                }
+            }
+            &.engage-list {
+                @include list();
+            }
+            @media (max-width: 700px) {
+                @include list();
+            }
+        }
+
+        &.engage-profile {
+            text-align: center;
+            .engage-profilePhoto {
+                margin: 25px auto;
+            }
+            .engage-name {
+                font-size: 18px;
+            }
+            .engage-title, .engage-location {
+                font-size: 13px;
+            }
+            hr {
+                width: 20%;
+                border: 0;
+                height: 1px;
+                background: #eaeaea;
+                margin: 20px auto;
+            }
+            .engage-bio {
+                font-size: 15px;
+                padding: 0 10%;
+                line-height: 1.4;
+            }
+            .engage-button-row {
+                padding: 15px;
+                .engage-button {
+                    display: inline-block;
+                    padding: 10px;
+                    margin: 5px;
+                }
+            }
+        }
+
+        .engage-name, .engage-title, .engage-location {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        .engage-name {
+            font-size: 13px;
+            color: #212121;
+        }
+        .engage-title, .engage-location {
+            font-size: 11px;
+            color: #49a1d6;
+        }
+        .engage-bio {
+            font-size: 11px;
+            color: #666666;
+        }
+
+
+	}
+
+
+}
+
+.engage-profilePhoto {
+    position: relative;
+    width: 75px;
+    height: 75px;
+    margin: 6px;
+    .engage-photo {
+        width: 100%;
+        width: 100%;
+        border-radius: 30%;
+        overflow: hidden;
+        background-color: #999;
+        > img {
+            width: 100%;
+        }
+    }
+    &.engage-small {
+        width: 40px;
+        height: 40px;
+        >.engage-statusIndicator {
+            top: -6px;
+            right: -6px;
+            width: 12px;
+            height: 12px;
+        }
+    }
+    >.engage-statusIndicator {
+        position: absolute;
+        top: -3px;
+        right: -3px;
+        width: 15px;
+        height: 15px;
+        background-color: #f36868;
+        border: {
+            radius: 100%;
+            color: #fff;
+            style: solid;
+            width: 3px;
+        }
+        &.engage-online {
+            background-color: #62d9a4;
+        }
+    }
+}
+
+.engage-button {
+    display: block;
+    background-color: #56b68b;
+    color: #fff;
+    cursor: pointer;
+    font-size: 13px;
+    width: 90px;
+    text-align: center;
+    padding: 5px;
+    border-radius: 4px;
+    border: {
+        color: #56b68b;
+        style: solid;
+        width: 1px;
+    }
+    &.engage-outline {
+        color: #56b68b;
+        background-color: #fff;
+
+    }
+    &.engage-button-blue {
+        background-color: #49a1d6;
+        border-color: #49a1d6;
+    }
+}
