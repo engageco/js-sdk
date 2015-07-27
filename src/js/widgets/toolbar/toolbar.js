@@ -1,4 +1,4 @@
-define(["jquery",
+define("EngageToolbar", ["jquery",
         "engage-sdk/utils/ScreenController",
         "widgets/utils/SortOrderUtil"],
 	function(jQuery, ScreenController, SortOrderUtil) {

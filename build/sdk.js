@@ -12780,7 +12780,7 @@ define('engage-sdk/services/GetUsersService',["jquery",
 
 define("headjs", function(){});
 
-define('EngageSDK',["require",
+define("EngageSDK", ["require",
 		"jquery",
 		"engage-sdk/utils/PresenceMonitor",
         "engage-sdk/utils/UserPageTracker",

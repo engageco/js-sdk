@@ -1,4 +1,4 @@
-define(["require",
+define("EngageSDK", ["require",
 		"jquery",
 		"engage-sdk/utils/PresenceMonitor",
         "engage-sdk/utils/UserPageTracker",
