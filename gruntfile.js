@@ -22,7 +22,7 @@ module.exports = function(grunt) {
                     },
                     generateSourceMaps: false,
                     preserveLicenseComments: false,
-                    optimize: "uglify"
+                    optimize: "none"
                 }
             },
             toolbar: {
@@ -42,7 +42,7 @@ module.exports = function(grunt) {
                     },
                     generateSourceMaps: false,
                     preserveLicenseComments: false,
-                    optimize: "uglify"
+                    optimize: "none"
                 }
             }
         },
@@ -69,7 +69,7 @@ module.exports = function(grunt) {
                 tasks: ["requirejs:sdk"]
             },
             "js-toolbar": {
-                files: "src/js/widgets/toolbar/*.js",
+                files: "src/js/widgets/**/*.js",
                 tasks: ["requirejs:toolbar"]
             }
         },

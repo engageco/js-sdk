@@ -4,19 +4,25 @@
 	<title>Engage SDK Example - Local Toolbar</title>
 	<script src="../build/sdk.js"></script>
 	<script>
-		var engage = new EngageSDK("cb15f03f140f28d81223f7b7c64e3a0d");
+        // engage: cb15f03f140f28d81223f7b7c64e3a0d | customer-facing-team
+        // browns: 9ff4e31e20aad41e4303f4a96ee45a47 | all-team-members
+		var engage = new EngageSDK("9ff4e31e20aad41e4303f4a96ee45a47");
 		engage.drawWidget({
                 "type": "toolbar",
                 "js": "../build/toolbar.js",
                 "css": "../build/toolbar.css",
                 "options": {
-                    "category": "customer-facing-team",
-                    "tabPlacement": "left-tab",
+                    "category": "all-team-members",
+                    "directoryTitle": "Our Support Team",
+                    "tabPlacement": "bottom-left-tab",
                     "label": "Online! Chat Now!",
                     "labelOrientation": "flipped",
                     "backgroundColor": "#4c4c4c",
                     "labelColor": "#ffffff",
-//                    "showAgentLocation": true,
+//                    "hideOfflineAgents": true,
+                    "showOnlineAgentsFirst": true,
+                    "agentOrder": "alpha", // "random" (default) || "last-chat" || "alpha" || "distance"
+                    "showAgentLocation": true,
 //                    "showListOnly": true,
 //                    "showSearch": true
                 }

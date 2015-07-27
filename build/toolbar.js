@@ -1,1 +1,875 @@
-(function(e,t){typeof define=="function"&&define.amd?define(["jquery","EngageSDK"],t):e.EngageToolbar=t(e.jQuery,e.EngageSDK)})(this,function(e,t){var n,r,i;return function(e){function v(e,t){return h.call(e,t)}function m(e,t){var n,r,i,s,o,u,a,f,c,h,p,v=t&&t.split("/"),m=l.map,g=m&&m["*"]||{};if(e&&e.charAt(0)===".")if(t){e=e.split("/"),o=e.length-1,l.nodeIdCompat&&d.test(e[o])&&(e[o]=e[o].replace(d,"")),e=v.slice(0,v.length-1).concat(e);for(c=0;c<e.length;c+=1){p=e[c];if(p===".")e.splice(c,1),c-=1;else if(p===".."){if(c===1&&(e[2]===".."||e[0]===".."))break;c>0&&(e.splice(c-1,2),c-=2)}}e=e.join("/")}else e.indexOf("./")===0&&(e=e.substring(2));if((v||g)&&m){n=e.split("/");for(c=n.length;c>0;c-=1){r=n.slice(0,c).join("/");if(v)for(h=v.length;h>0;h-=1){i=m[v.slice(0,h).join("/")];if(i){i=i[r];if(i){s=i,u=c;break}}}if(s)break;!a&&g&&g[r]&&(a=g[r],f=c)}!s&&a&&(s=a,u=f),s&&(n.splice(0,u,s),e=n.join("/"))}return e}function g(t,n){return function(){var r=p.call(arguments,0);return typeof r[0]!="string"&&r.length===1&&r.push(null),s.apply(e,r.concat([t,n]))}}function y(e){return function(t){return m(t,e)}}function b(e){return function(t){a[e]=t}}function w(n){if(v(f,n)){var r=f[n];delete f[n],c[n]=!0,t.apply(e,r)}if(!v(a,n)&&!v(c,n))throw new Error("No "+n);return a[n]}function E(e){var t,n=e?e.indexOf("!"):-1;return n>-1&&(t=e.substring(0,n),e=e.substring(n+1,e.length)),[t,e]}function S(e){return function(){return l&&l.config&&l.config[e]||{}}}var t,s,o,u,a={},f={},l={},c={},h=Object.prototype.hasOwnProperty,p=[].slice,d=/\.js$/;o=function(e,t){var n,r=E(e),i=r[0];return e=r[1],i&&(i=m(i,t),n=w(i)),i?n&&n.normalize?e=n.normalize(e,y(t)):e=m(e,t):(e=m(e,t),r=E(e),i=r[0],e=r[1],i&&(n=w(i))),{f:i?i+"!"+e:e,n:e,pr:i,p:n}},u={require:function(e){return g(e)},exports:function(e){var t=a[e];return typeof t!="undefined"?t:a[e]={}},module:function(e){return{id:e,uri:"",exports:a[e],config:S(e)}}},t=function(t,n,r,i){var s,l,h,p,d,m=[],y=typeof r,E;i=i||t;if(y==="undefined"||y==="function"){n=!n.length&&r.length?["require","exports","module"]:n;for(d=0;d<n.length;d+=1){p=o(n[d],i),l=p.f;if(l==="require")m[d]=u.require(t);else if(l==="exports")m[d]=u.exports(t),E=!0;else if(l==="module")s=m[d]=u.module(t);else if(v(a,l)||v(f,l)||v(c,l))m[d]=w(l);else{if(!p.p)throw new Error(t+" missing "+l);p.p.load(p.n,g(i,!0),b(l),{}),m[d]=a[l]}}h=r?r.apply(a[t],m):undefined;if(t)if(s&&s.exports!==e&&s.exports!==a[t])a[t]=s.exports;else if(h!==e||!E)a[t]=h}else t&&(a[t]=r)},n=r=s=function(n,r,i,a,f){if(typeof n=="string")return u[n]?u[n](r):w(o(n,r).f);if(!n.splice){l=n,l.deps&&s(l.deps,l.callback);if(!r)return;r.splice?(n=r,r=i,i=null):n=e}return r=r||function(){},typeof i=="function"&&(i=a,a=f),a?t(e,n,r,i):setTimeout(function(){t(e,n,r,i)},4),s},s.config=function(e){return s(e)},n._defined=a,i=function(e,t,n){if(typeof e!="string")throw new Error("See almond README: incorrect module build, no module name");t.splice||(n=t,t=[]),!v(a,e)&&!v(f,e)&&(f[e]=[e,t,n])},i.amd={jQuery:!0}}(),i("almond",function(){}),i("engage-sdk/utils/ScreenController",["jquery"],function(e){"use strict";var t=function(){this.screens=new Array,this.currentScreen=null,this.cssClasses={left:"left",right:"right",overlay:"overlay",hide:"hide",background:"background"},this.clearHistory()};return t.DIRECTION_BACK="back",t.DIRECTION_FORWARD="forward",t.prototype.addScreen=function(e,t){this.screens[e]==null&&(this.screens[e]=t,t.css("visibility","hidden"))},t.prototype.clearHistory=function(){this.history=new Array,this.currentIndex=-1},t.prototype.getScreen=function(e){return this.screens[e]},t.prototype.setScreen=function(e,n,r){var i,s,o=this.screens[e];if(this.currentScreen==o)return null;if(!o.hasClass(this.cssClasses.overlay)){n==t.DIRECTION_BACK?s=this.cssClasses.right:s=this.cssClasses.left;if(this.currentScreen!=null){var u=this.currentScreen;setTimeout(function(){u.css("visibility","hidden")},700),this.currentScreen.hasClass(t.OVERLAY)&&(s=this.cssClasses.hide),this.currentScreen.addClass(s)}}else this.currentScreen!=null&&this.currentScreen.addClass(t.BACKGROUND);return o.css("visibility","visible"),o.removeClass(this.cssClasses.left+" "+this.cssClasses.right+" "+this.cssClasses.overlay+" "+this.cssClasses.hide+" "+this.cssClasses.background),r||(this.history=this.history.slice(0,this.currentIndex+1),this.history.push(e),this.currentIndex=this.history.length-1),this.currentScreen=o,o},t.prototype.back=function(e){this.currentIndex>0?(this.currentIndex--,this.setScreen(this.history[this.currentIndex],t.DIRECTION_BACK,!0)):e!=null&&this.setScreen(e,t.DIRECTION_BACK,!0)},t.prototype.forward=function(){this.currentIndex<this.history.length-1&&this.setScreen(this.history[++this.currentIndex],t.DIRECTION_FORWARD,!0)},t.prototype.resetAllScreens=function(){for(var e in this.screens){var t=this.screens[e];t.hasClass(this.cssClasses.overlay)?t.addClass(this.cssClasses.hide):t.addClass(this.cssClasses.right)}},t.prototype.isOverlayOpen=function(){return this.currentScreen.hasClass(t.OVERLAY)},t}),i("EngageToolbar",["jquery","engage-sdk/utils/ScreenController"],function(e,t){"use strict";var n=function(n,r){this.sdk=n,this.options=r,this.users=null,this.tab=null,this.drawer=null,this.sdk.getUsers(this.options.category,e.proxy(s,this)),this.screenController=new t,this.screenController.cssClasses.left="engage-left",this.screenController.cssClasses.right="engage-right",e(e.proxy(i,this))};n.SCREENS={SEARCH:"search",DIRECTORY:"directory",PROFILE:"profile"};var r=function(e){var t=[];return e.city&&t.push(e.city),e.state&&t.push(e.state),t.join(", ")},i=function(){this.tab=e('<div class="engage-tab"><div class="engage-tab-label"></div></div>'),this.tab.on("click",e.proxy(f,this));var t=this.options.tabPlacement?this.options.tabPlacement:"right-tab";this.tab.addClass(t),this.options.backgroundColor&&this.tab.css("background-color",this.options.backgroundColor);var r=this.tab.find(".engage-tab-label"),i=this.options.label?this.options.label:"Chat";r.text(i),this.options.labelOrientation&&r.addClass(this.options.labelOrientation),this.options.labelColor&&this.tab.css("color",this.options.labelColor),r.appendTo(this.tab),this.tab.appendTo(e("body")),this.drawer=e('<div class="engage-drawer"><div class="engage-header"><a class="engage-back engage-hide"></a><a class="engage-close"></a></div><div class="engage-screen engage-search engage-right">search</div><div class="engage-screen engage-directory engage-right"><ul></ul></div><div class="engage-screen engage-profile engage-right"><div class="engage-profilePhoto"><div class="engage-photo"><img></div><div class="engage-statusIndicator engage-online"></div></div><div class="engage-name"></div><div class="engage-title"></div><div class="engage-location"></div><hr><div class="engage-bio"></div><div class="engage-button-row"><a class="engage-button engage-button-blue">View Profile</a><a class="engage-button engage-chat">Start Chat</a></div></div></div>'),this.drawer.find(".engage-close").on("click",e.proxy(l,this)),this.drawer.find(".engage-back").on("click",e.proxy(c,this)),this.drawer.find(".engage-button").on("click",e.proxy(a,this)),this.drawer.addClass("engage-hide"),this.drawer.addClass(t),this.drawer.appendTo(e("body")),this.searchScreen=this.drawer.find(".engage-screen.engage-search"),this.screenController.addScreen(n.SCREENS.SEARCH,this.searchScreen),this.directoryScreen=this.drawer.find(".engage-screen.engage-directory"),this.screenController.addScreen(n.SCREENS.DIRECTORY,this.directoryScreen),this.options.showListOnly&&this.directoryScreen.addClass("engage-list"),this.profileScreen=this.drawer.find(".engage-screen.engage-profile"),this.screenController.addScreen("profile",this.profileScreen),this.users&&s.apply(this,[this.users])},s=function(t){this.users=t.users;if(this.directoryScreen){var n=this.directoryScreen.find("ul");for(var i=0;i<this.users.length;i++){var s=this.users[i],f=e('<li><div class="engage-profilePhoto engage-small"><div class="engage-photo"><img></div><div class="engage-statusIndicator"></div></div><div class="engage-name"></div><div class="engage-title"></div><div class="engage-location"></div><a class="engage-button">Chat Now</a></li>');f.find(".engage-photo > img").attr("src",s.profilePhoto),f.find(".engage-name").text(s.firstName+" "+s.lastName),f.find(".engage-title").text(s.title),f.find(".engage-location").text(r(s)),f.find(".engage-location").toggle(this.options.showAgentLocation==1),f.attr("data-domain",s.domain),f.data("user",s),f.on("click",e.proxy(u,this)),f.find(".engage-button").on("click",e.proxy(a,this)),n.append(f),this.sdk.presence.watchUser(s.domain,e.proxy(o,this))}this.sdk.presence.start()}},o=function(e,t){var n=e=="online",r=this.directoryScreen.find("li[data-domain='"+t+"']");r.find(".engage-statusIndicator").toggleClass("engage-online",n);var i=r.find(".engage-button");i.toggleClass("engage-outline",!n);var s=n?"Chat Now":"Send Message";i.text(s);if(this.currentUser&&this.currentUser.domain==t){this.profileScreen.find(".engage-statusIndicator").toggleClass("engage-online",n);var i=this.profileScreen.find(".engage-button.engage-chat");i.toggleClass("engage-outline",!n),i.text(s)}},u=function(t){var i=e(t.currentTarget).data("user");this.screenController.setScreen(n.SCREENS.PROFILE),this.drawer.find(".engage-back").removeClass("engage-hide"),this.currentUser=i,this.profileScreen.find(".engage-photo > img").attr("src",i.profilePhoto),this.profileScreen.find(".engage-name").text(i.firstName+" "+i.lastName),this.profileScreen.find(".engage-title").text(i.title),this.profileScreen.find(".engage-location").text(r(i)),this.profileScreen.find(".engage-location").toggle(this.options.showAgentLocation==1);var s=e.trim(i.bio).substring(0,140).split(" ").slice(0,-1).join(" ")+"...";this.profileScreen.find(".engage-bio").text(s),o.apply(this,[this.sdk.presence.getUserStatus(i.domain),i.domain])},a=function(t){t.stopImmediatePropagation();var n=e(t.currentTarget).parent().data("user")||this.currentUser;window.open(n.profileUrl)},f=function(e){this.tab.addClass("engage-hide");var t=this;setTimeout(function(){t.drawer.removeClass("engage-hide"),t.screenController.currentScreen==null&&(t.options.showSearch?t.screenController.setScreen(n.SCREENS.SEARCH):t.screenController.setScreen(n.SCREENS.DIRECTORY))},300)},l=function(e){this.drawer.addClass("engage-hide");var t=this;setTimeout(function(){t.tab.removeClass("engage-hide")},500)},c=function(e){this.screenController.back(),this.drawer.find(".engage-back").toggleClass("engage-hide",this.screenController.currentIndex==0)};return n.prototype.setVisibility=function(e){tyhis.tab.toggle(e)},n}),i("jquery",function(){return e}),i("EngageSDK",function(){return t}),r("EngageToolbar")});
+(function (root, factory) {
+    if (typeof define === 'function' && define.amd) {
+        // AMD.
+        define(['jquery', 'EngageSDK'], factory);
+    } else {
+        // Browser globals
+        root.EngageToolbar = factory(root.jQuery, root.EngageSDK);
+    }
+}(this, function(jQuery, EngageSDK) {/**
+ * @license almond 0.3.1 Copyright (c) 2011-2014, The Dojo Foundation All Rights Reserved.
+ * Available via the MIT or new BSD license.
+ * see: http://github.com/jrburke/almond for details
+ */
+//Going sloppy to avoid 'use strict' string cost, but strict practices should
+//be followed.
+/*jslint sloppy: true */
+/*global setTimeout: false */
+
+var requirejs, require, define;
+(function (undef) {
+    var main, req, makeMap, handlers,
+        defined = {},
+        waiting = {},
+        config = {},
+        defining = {},
+        hasOwn = Object.prototype.hasOwnProperty,
+        aps = [].slice,
+        jsSuffixRegExp = /\.js$/;
+
+    function hasProp(obj, prop) {
+        return hasOwn.call(obj, prop);
+    }
+
+    /**
+     * Given a relative module name, like ./something, normalize it to
+     * a real name that can be mapped to a path.
+     * @param {String} name the relative name
+     * @param {String} baseName a real name that the name arg is relative
+     * to.
+     * @returns {String} normalized name
+     */
+    function normalize(name, baseName) {
+        var nameParts, nameSegment, mapValue, foundMap, lastIndex,
+            foundI, foundStarMap, starI, i, j, part,
+            baseParts = baseName && baseName.split("/"),
+            map = config.map,
+            starMap = (map && map['*']) || {};
+
+        //Adjust any relative paths.
+        if (name && name.charAt(0) === ".") {
+            //If have a base name, try to normalize against it,
+            //otherwise, assume it is a top-level require that will
+            //be relative to baseUrl in the end.
+            if (baseName) {
+                name = name.split('/');
+                lastIndex = name.length - 1;
+
+                // Node .js allowance:
+                if (config.nodeIdCompat && jsSuffixRegExp.test(name[lastIndex])) {
+                    name[lastIndex] = name[lastIndex].replace(jsSuffixRegExp, '');
+                }
+
+                //Lop off the last part of baseParts, so that . matches the
+                //"directory" and not name of the baseName's module. For instance,
+                //baseName of "one/two/three", maps to "one/two/three.js", but we
+                //want the directory, "one/two" for this normalization.
+                name = baseParts.slice(0, baseParts.length - 1).concat(name);
+
+                //start trimDots
+                for (i = 0; i < name.length; i += 1) {
+                    part = name[i];
+                    if (part === ".") {
+                        name.splice(i, 1);
+                        i -= 1;
+                    } else if (part === "..") {
+                        if (i === 1 && (name[2] === '..' || name[0] === '..')) {
+                            //End of the line. Keep at least one non-dot
+                            //path segment at the front so it can be mapped
+                            //correctly to disk. Otherwise, there is likely
+                            //no path mapping for a path starting with '..'.
+                            //This can still fail, but catches the most reasonable
+                            //uses of ..
+                            break;
+                        } else if (i > 0) {
+                            name.splice(i - 1, 2);
+                            i -= 2;
+                        }
+                    }
+                }
+                //end trimDots
+
+                name = name.join("/");
+            } else if (name.indexOf('./') === 0) {
+                // No baseName, so this is ID is resolved relative
+                // to baseUrl, pull off the leading dot.
+                name = name.substring(2);
+            }
+        }
+
+        //Apply map config if available.
+        if ((baseParts || starMap) && map) {
+            nameParts = name.split('/');
+
+            for (i = nameParts.length; i > 0; i -= 1) {
+                nameSegment = nameParts.slice(0, i).join("/");
+
+                if (baseParts) {
+                    //Find the longest baseName segment match in the config.
+                    //So, do joins on the biggest to smallest lengths of baseParts.
+                    for (j = baseParts.length; j > 0; j -= 1) {
+                        mapValue = map[baseParts.slice(0, j).join('/')];
+
+                        //baseName segment has  config, find if it has one for
+                        //this name.
+                        if (mapValue) {
+                            mapValue = mapValue[nameSegment];
+                            if (mapValue) {
+                                //Match, update name to the new value.
+                                foundMap = mapValue;
+                                foundI = i;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                if (foundMap) {
+                    break;
+                }
+
+                //Check for a star map match, but just hold on to it,
+                //if there is a shorter segment match later in a matching
+                //config, then favor over this star map.
+                if (!foundStarMap && starMap && starMap[nameSegment]) {
+                    foundStarMap = starMap[nameSegment];
+                    starI = i;
+                }
+            }
+
+            if (!foundMap && foundStarMap) {
+                foundMap = foundStarMap;
+                foundI = starI;
+            }
+
+            if (foundMap) {
+                nameParts.splice(0, foundI, foundMap);
+                name = nameParts.join('/');
+            }
+        }
+
+        return name;
+    }
+
+    function makeRequire(relName, forceSync) {
+        return function () {
+            //A version of a require function that passes a moduleName
+            //value for items that may need to
+            //look up paths relative to the moduleName
+            var args = aps.call(arguments, 0);
+
+            //If first arg is not require('string'), and there is only
+            //one arg, it is the array form without a callback. Insert
+            //a null so that the following concat is correct.
+            if (typeof args[0] !== 'string' && args.length === 1) {
+                args.push(null);
+            }
+            return req.apply(undef, args.concat([relName, forceSync]));
+        };
+    }
+
+    function makeNormalize(relName) {
+        return function (name) {
+            return normalize(name, relName);
+        };
+    }
+
+    function makeLoad(depName) {
+        return function (value) {
+            defined[depName] = value;
+        };
+    }
+
+    function callDep(name) {
+        if (hasProp(waiting, name)) {
+            var args = waiting[name];
+            delete waiting[name];
+            defining[name] = true;
+            main.apply(undef, args);
+        }
+
+        if (!hasProp(defined, name) && !hasProp(defining, name)) {
+            throw new Error('No ' + name);
+        }
+        return defined[name];
+    }
+
+    //Turns a plugin!resource to [plugin, resource]
+    //with the plugin being undefined if the name
+    //did not have a plugin prefix.
+    function splitPrefix(name) {
+        var prefix,
+            index = name ? name.indexOf('!') : -1;
+        if (index > -1) {
+            prefix = name.substring(0, index);
+            name = name.substring(index + 1, name.length);
+        }
+        return [prefix, name];
+    }
+
+    /**
+     * Makes a name map, normalizing the name, and using a plugin
+     * for normalization if necessary. Grabs a ref to plugin
+     * too, as an optimization.
+     */
+    makeMap = function (name, relName) {
+        var plugin,
+            parts = splitPrefix(name),
+            prefix = parts[0];
+
+        name = parts[1];
+
+        if (prefix) {
+            prefix = normalize(prefix, relName);
+            plugin = callDep(prefix);
+        }
+
+        //Normalize according
+        if (prefix) {
+            if (plugin && plugin.normalize) {
+                name = plugin.normalize(name, makeNormalize(relName));
+            } else {
+                name = normalize(name, relName);
+            }
+        } else {
+            name = normalize(name, relName);
+            parts = splitPrefix(name);
+            prefix = parts[0];
+            name = parts[1];
+            if (prefix) {
+                plugin = callDep(prefix);
+            }
+        }
+
+        //Using ridiculous property names for space reasons
+        return {
+            f: prefix ? prefix + '!' + name : name, //fullName
+            n: name,
+            pr: prefix,
+            p: plugin
+        };
+    };
+
+    function makeConfig(name) {
+        return function () {
+            return (config && config.config && config.config[name]) || {};
+        };
+    }
+
+    handlers = {
+        require: function (name) {
+            return makeRequire(name);
+        },
+        exports: function (name) {
+            var e = defined[name];
+            if (typeof e !== 'undefined') {
+                return e;
+            } else {
+                return (defined[name] = {});
+            }
+        },
+        module: function (name) {
+            return {
+                id: name,
+                uri: '',
+                exports: defined[name],
+                config: makeConfig(name)
+            };
+        }
+    };
+
+    main = function (name, deps, callback, relName) {
+        var cjsModule, depName, ret, map, i,
+            args = [],
+            callbackType = typeof callback,
+            usingExports;
+
+        //Use name if no relName
+        relName = relName || name;
+
+        //Call the callback to define the module, if necessary.
+        if (callbackType === 'undefined' || callbackType === 'function') {
+            //Pull out the defined dependencies and pass the ordered
+            //values to the callback.
+            //Default to [require, exports, module] if no deps
+            deps = !deps.length && callback.length ? ['require', 'exports', 'module'] : deps;
+            for (i = 0; i < deps.length; i += 1) {
+                map = makeMap(deps[i], relName);
+                depName = map.f;
+
+                //Fast path CommonJS standard dependencies.
+                if (depName === "require") {
+                    args[i] = handlers.require(name);
+                } else if (depName === "exports") {
+                    //CommonJS module spec 1.1
+                    args[i] = handlers.exports(name);
+                    usingExports = true;
+                } else if (depName === "module") {
+                    //CommonJS module spec 1.1
+                    cjsModule = args[i] = handlers.module(name);
+                } else if (hasProp(defined, depName) ||
+                           hasProp(waiting, depName) ||
+                           hasProp(defining, depName)) {
+                    args[i] = callDep(depName);
+                } else if (map.p) {
+                    map.p.load(map.n, makeRequire(relName, true), makeLoad(depName), {});
+                    args[i] = defined[depName];
+                } else {
+                    throw new Error(name + ' missing ' + depName);
+                }
+            }
+
+            ret = callback ? callback.apply(defined[name], args) : undefined;
+
+            if (name) {
+                //If setting exports via "module" is in play,
+                //favor that over return value and exports. After that,
+                //favor a non-undefined return value over exports use.
+                if (cjsModule && cjsModule.exports !== undef &&
+                        cjsModule.exports !== defined[name]) {
+                    defined[name] = cjsModule.exports;
+                } else if (ret !== undef || !usingExports) {
+                    //Use the return value from the function.
+                    defined[name] = ret;
+                }
+            }
+        } else if (name) {
+            //May just be an object definition for the module. Only
+            //worry about defining if have a module name.
+            defined[name] = callback;
+        }
+    };
+
+    requirejs = require = req = function (deps, callback, relName, forceSync, alt) {
+        if (typeof deps === "string") {
+            if (handlers[deps]) {
+                //callback in this case is really relName
+                return handlers[deps](callback);
+            }
+            //Just return the module wanted. In this scenario, the
+            //deps arg is the module name, and second arg (if passed)
+            //is just the relName.
+            //Normalize module name, if it contains . or ..
+            return callDep(makeMap(deps, callback).f);
+        } else if (!deps.splice) {
+            //deps is a config object, not an array.
+            config = deps;
+            if (config.deps) {
+                req(config.deps, config.callback);
+            }
+            if (!callback) {
+                return;
+            }
+
+            if (callback.splice) {
+                //callback is an array, which means it is a dependency list.
+                //Adjust args if there are dependencies
+                deps = callback;
+                callback = relName;
+                relName = null;
+            } else {
+                deps = undef;
+            }
+        }
+
+        //Support require(['a'])
+        callback = callback || function () {};
+
+        //If relName is a function, it is an errback handler,
+        //so remove it.
+        if (typeof relName === 'function') {
+            relName = forceSync;
+            forceSync = alt;
+        }
+
+        //Simulate async callback;
+        if (forceSync) {
+            main(undef, deps, callback, relName);
+        } else {
+            //Using a non-zero value because of concern for what old browsers
+            //do, and latest browsers "upgrade" to 4 if lower value is used:
+            //http://www.whatwg.org/specs/web-apps/current-work/multipage/timers.html#dom-windowtimers-settimeout:
+            //If want a value immediately, use require('id') instead -- something
+            //that works in almond on the global level, but not guaranteed and
+            //unlikely to work in other AMD implementations.
+            setTimeout(function () {
+                main(undef, deps, callback, relName);
+            }, 4);
+        }
+
+        return req;
+    };
+
+    /**
+     * Just drops the config on the floor, but returns req in case
+     * the config return value is used.
+     */
+    req.config = function (cfg) {
+        return req(cfg);
+    };
+
+    /**
+     * Expose module registry for debugging and tooling
+     */
+    requirejs._defined = defined;
+
+    define = function (name, deps, callback) {
+        if (typeof name !== 'string') {
+            throw new Error('See almond README: incorrect module build, no module name');
+        }
+
+        //This module may not have dependencies
+        if (!deps.splice) {
+            //deps is not an array, so probably means
+            //an object literal or factory function for
+            //the value. Adjust args.
+            callback = deps;
+            deps = [];
+        }
+
+        if (!hasProp(defined, name) && !hasProp(waiting, name)) {
+            waiting[name] = [name, deps, callback];
+        }
+    };
+
+    define.amd = {
+        jQuery: true
+    };
+}());
+
+define("almond", function(){});
+
+/**
+ *
+ *
+ * @author Danny Patterson
+ */
+
+define('engage-sdk/utils/ScreenController',["jquery"],
+	function(jQuery) {
+
+		'use strict';
+
+		var ScreenController = function() {
+			this.screens = new Array();
+			this.currentScreen = null;
+            this.cssClasses = {
+                left: "left",
+                right: "right",
+                overlay: "overlay",
+                hide: "hide",
+                background: "background"
+            }
+			this.clearHistory();
+		};
+
+        ScreenController.DIRECTION_BACK = "back";
+        ScreenController.DIRECTION_FORWARD = "forward";
+
+		ScreenController.prototype.addScreen = function(screenId, screen) {
+			if(this.screens[screenId] == null) {
+				this.screens[screenId] = screen;
+				screen.css("visibility", "hidden");
+			}
+		};
+
+		ScreenController.prototype.clearHistory = function() {
+			this.history = new Array();
+			this.currentIndex = -1;
+		};
+
+		ScreenController.prototype.getScreen = function(screenId) {
+			return this.screens[screenId];
+		};
+
+		ScreenController.prototype.setScreen = function(screenId, direction, hideFromHistory) {
+            var inTransition, outTransition;
+            var screen = this.screens[screenId];
+            if(this.currentScreen == screen) return null;
+            if(!screen.hasClass(this.cssClasses.overlay)) {
+                if(direction == ScreenController.DIRECTION_BACK) {
+                    outTransition = this.cssClasses.right;
+                }else {
+                    outTransition = this.cssClasses.left;
+                }
+                if(this.currentScreen != null) {
+                    var oldScreen = this.currentScreen;
+                    setTimeout(function(){oldScreen.css("visibility", "hidden");}, 700);
+                    if(this.currentScreen.hasClass(ScreenController.OVERLAY)) {
+                        outTransition = this.cssClasses.hide;
+                    }
+                    this.currentScreen.addClass(outTransition);
+                }
+            }else {
+                if(this.currentScreen != null) {
+                    this.currentScreen.addClass(ScreenController.BACKGROUND);
+                }
+            }
+            screen.css("visibility", "visible");
+//			setTimeout(function(){
+            screen.removeClass(this.cssClasses.left + " " + this.cssClasses.right + " " + this.cssClasses.overlay + " " + this.cssClasses.hide + " " + this.cssClasses.background);
+//			}, 100);
+            if(!hideFromHistory) {
+                this.history = this.history.slice(0, this.currentIndex + 1);
+                this.history.push(screenId);
+                this.currentIndex = this.history.length - 1;
+            }
+            this.currentScreen = screen;
+            return screen;
+		};
+
+		ScreenController.prototype.back = function(defaultScreen) {
+            if(this.currentIndex > 0) {
+                this.currentIndex--;
+                this.setScreen(this.history[this.currentIndex], ScreenController.DIRECTION_BACK, true);
+            }else {
+                if(defaultScreen != null) {
+                    this.setScreen(defaultScreen, ScreenController.DIRECTION_BACK, true);
+                }else {
+                    // todo: if mobile, close the app
+                    //navigator.notification.confirm("Are you sure you want to exit?", onConfirmExit, "Exit", ["Yes", "No"]);
+                }
+            }
+		};
+
+		ScreenController.prototype.forward = function() {
+			if(this.currentIndex < this.history.length - 1) {
+				this.setScreen(this.history[++this.currentIndex], ScreenController.DIRECTION_FORWARD, true);
+			}
+		};
+
+		ScreenController.prototype.resetAllScreens = function() {
+			for(var screenId in this.screens) {
+				var screen = this.screens[screenId];
+				if(!screen.hasClass(this.cssClasses.overlay)) {
+					screen.addClass(this.cssClasses.right);
+				}else {
+					screen.addClass(this.cssClasses.hide);
+				}
+			}
+		};
+
+		ScreenController.prototype.isOverlayOpen = function() {
+			return this.currentScreen.hasClass(ScreenController.OVERLAY);
+		};
+
+		return ScreenController;
+
+	});
+/**
+ *
+ *
+ * @author Danny Patterson
+ */
+
+define('widgets/utils/SortOrderUtil',["jquery"],
+	function(jQuery) {
+
+		'use strict';
+
+		var SortOrderUtil = {};
+
+        SortOrderUtil.orderByOnline = function(list, presence) {
+            return list.sort(function(a, b) {
+                    var userAStatus = presence.getUserStatus(jQuery(a).data("user").domain);
+                    var userBStatus = presence.getUserStatus(jQuery(b).data("user").domain);
+                    if(userAStatus == "online" && userBStatus != "online") {
+                        return -1;
+                    }else if(userAStatus != "online" && userBStatus == "online") {
+                        return 1;
+                    }
+                    return 0;
+                });
+        };
+
+        SortOrderUtil.orderByRandom = function(list) {
+            return list.sort(function(a, b) {
+                    return Math.round(Math.random()) - 0.5;
+                });
+        };
+
+        SortOrderUtil.orderByAlpha = function(list) {
+            return list.sort(function(a, b) {
+                    var userALastName = jQuery(a).data("user").lastName;
+                    var userBLastName = jQuery(b).data("user").lastName;
+                    if(userALastName < userBLastName) {
+                        return -1;
+                    }else if(userALastName > userBLastName) {
+                        return 1;
+                    }
+                    return 0;
+                });
+        };
+
+        SortOrderUtil.orderByLastChat = function(list) {
+            return list.sort(function(a, b) {
+                var userALastChat = Date.parse(jQuery(a).data("user").lastChat);
+                var userBLastChat = Date.parse(jQuery(b).data("user").lastChat);
+                if(userALastChat < userBLastChat) {
+                    return -1;
+                }else if(userALastChat > userBLastChat) {
+                    return 1;
+                }
+                return 0;
+            });
+        };
+
+        //SortOrderUtil.orderByDistance = function(list, lat, long) {
+        //    // todo
+        //    return list;
+        //};
+
+        //SortOrderUtil.orderByCategory = function(list, categoryOrder) {
+        //    // todo
+        //    return list;
+        //};
+
+		return SortOrderUtil;
+
+	});
+define('EngageToolbar',["jquery",
+        "engage-sdk/utils/ScreenController",
+        "widgets/utils/SortOrderUtil"],
+	function(jQuery, ScreenController, SortOrderUtil) {
+
+		'use strict';
+
+		var EngageToolbar = function(sdk, options) {
+			this.sdk = sdk;
+			this.options = options;
+			this.users = null;
+			this.tab = null;
+			this.drawer = null;
+			this.sdk.getUsers(this.options.category, jQuery.proxy(onUsersLoaded, this));
+            this.screenController = new ScreenController();
+            this.screenController.cssClasses.left = "engage-left";
+            this.screenController.cssClasses.right = "engage-right";
+			jQuery(jQuery.proxy(onDOMReady, this));
+		};
+
+        EngageToolbar.SCREENS = {
+            SEARCH: "search",
+            DIRECTORY: "directory",
+            PROFILE: "profile"
+        };
+
+        var getCityStateFormatted = function(user) {
+            var cityState = [];
+            if(user.city) cityState.push(user.city);
+            if(user.state) cityState.push(user.state);
+            return cityState.join(", ");
+        };
+
+		var onDOMReady = function() {
+			// create tab
+			this.tab = jQuery('<div class="engage-tab">' +
+                    '<div class="engage-tab-label"></div>' +
+                '</div>');
+			this.tab.on("click", jQuery.proxy(onTabClick, this));
+			var tabPlacement = (this.options.tabPlacement) ? this.options.tabPlacement : "right-tab";
+			this.tab.addClass(tabPlacement);
+			if(this.options.backgroundColor) {
+				this.tab.css("background-color", this.options.backgroundColor);
+			}
+			var label = this.tab.find('.engage-tab-label');
+			var labelText = (this.options.label) ? this.options.label : "Chat";
+			label.text(labelText);
+			if(this.options.labelOrientation) {
+				label.addClass(this.options.labelOrientation);
+			}
+			if(this.options.labelColor) {
+				this.tab.css("color", this.options.labelColor);
+			}
+			label.appendTo(this.tab);
+			this.tab.appendTo(jQuery("body"));
+
+			// create drawer
+			this.drawer = jQuery('<div class="engage-drawer">' +
+                    '<div class="engage-header">' +
+                        '<div class="engage-directory-title"></div>' +
+                        '<a class="engage-back engage-hide"></a>' +
+                        '<a class="engage-close"></a>' +
+                    '</div>' +
+                    '<div class="engage-screen engage-search engage-right"></div>' +
+                    '<div class="engage-screen engage-directory engage-right">' +
+                        '<ul></ul>' +
+                    '</div>' +
+                    '<div class="engage-screen engage-profile engage-right">' +
+                    '<div class="engage-profilePhoto">' +
+                        '<div class="engage-photo"><img></div>' +
+                            '<div class="engage-statusIndicator engage-online"></div>' +
+                        '</div>' +
+                        '<div class="engage-name"></div>' +
+                        '<div class="engage-title"></div>' +
+                        '<div class="engage-location"></div>' +
+                        '<hr>' +
+                        '<div class="engage-bio"></div>' +
+                        '<div class="engage-button-row">' +
+                            '<a class="engage-button engage-button-blue">View Profile</a>' +
+                            '<a class="engage-button engage-chat">Start Chat</a>' +
+                        '</div>' +
+                    '</div>' +
+                '</div>');
+            this.drawer.find(".engage-directory-title").text(this.options.directoryTitle);
+			this.drawer.find(".engage-close").on("click", jQuery.proxy(onDrawerCloseClick, this));
+            this.drawer.find(".engage-back").on("click", jQuery.proxy(onScreenBackClick, this));
+            this.drawer.find(".engage-button").on("click", jQuery.proxy(onUserChatClick, this));
+			this.drawer.addClass("engage-hide");
+			this.drawer.addClass(tabPlacement);
+			this.drawer.appendTo(jQuery("body"));
+			this.searchScreen = this.drawer.find(".engage-screen.engage-search");
+            this.screenController.addScreen(EngageToolbar.SCREENS.SEARCH, this.searchScreen);
+			this.directoryScreen = this.drawer.find(".engage-screen.engage-directory");
+            this.screenController.addScreen(EngageToolbar.SCREENS.DIRECTORY, this.directoryScreen);
+			if(this.options.showListOnly) {
+				this.directoryScreen.addClass("engage-list");
+			}
+			this.profileScreen = this.drawer.find(".engage-screen.engage-profile");
+            this.screenController.addScreen("profile", this.profileScreen);
+            if(this.users) {
+                onUsersLoaded.apply(this, [this.users]);
+            }
+		};
+
+		var onUsersLoaded = function(data) {
+			this.users = data.users;
+            // todo: look for agents this visitor has chatted with before and highlight them in a featured agents area in the drawer and put them in the
+            if(this.directoryScreen) {
+                var list = this.directoryScreen.find("ul");
+                for(var i = 0; i < this.users.length; i++) {
+                    var user = this.users[i];
+                    var item = jQuery('<li>' +
+                            '<div class="engage-profilePhoto engage-small">' +
+                                '<div class="engage-photo"><img></div>' +
+                                '<div class="engage-statusIndicator"></div>' +
+                            '</div>' +
+                            '<div class="engage-name"></div>' +
+                            '<div class="engage-title"></div>' +
+                            '<div class="engage-location"></div>' +
+                            '<a class="engage-button">Chat Now</a>' +
+                        '</li>');
+                    item.find(".engage-photo > img").attr("src", user.profilePhoto);
+                    item.find(".engage-name").text(user.firstName + " " + user.lastName);
+                    item.find(".engage-title").text(user.title);
+                    item.find(".engage-location").text(getCityStateFormatted(user));
+                    item.find(".engage-location").toggle(this.options.showAgentLocation == true);
+                    item.attr("data-domain", user.domain);
+                    item.data("user", user);
+                    item.on("click", jQuery.proxy(onUserClick, this));
+                    item.find(".engage-button").on("click", jQuery.proxy(onUserChatClick, this));
+                    list.append(item);
+                    this.sdk.presence.watchUser(user.domain, jQuery.proxy(onUserPresenceChange, this));
+                }
+                this.sdk.presence.start();
+            }
+		};
+
+		var onUserPresenceChange = function(status, domain) {
+			var online = status == "online";
+			var item = this.directoryScreen.find("li[data-domain='" + domain + "']");
+			item.find(".engage-statusIndicator").toggleClass("engage-online", online);
+            item.toggle(online || !this.options.hideOfflineAgents)
+			var button = item.find(".engage-button");
+			button.toggleClass("engage-outline", !online);
+			var label = online ? "Chat Now" : "Send Message";
+			button.text(label);
+            if(this.currentUser && this.currentUser.domain == domain) {
+                this.profileScreen.find(".engage-statusIndicator").toggleClass("engage-online", online);
+                var button = this.profileScreen.find(".engage-button.engage-chat");
+                button.toggleClass("engage-outline", !online);
+                button.text(label);
+            }
+            // note: since this is called each time a user's presence changes, we want to add a delay in case multiple users change at once
+            clearTimeout(this.sortTimeout);
+            this.sortTimeout = setTimeout(jQuery.proxy(onSortUserList, this), 200);
+		};
+
+        var onSortUserList = function(event) {
+            var sortedList = this.directoryScreen.find("li");
+            switch(this.options.agentOrder) {
+                case "random":
+                    sortedList = SortOrderUtil.orderByRandom(sortedList);
+                    break;
+                case "alpha":
+                    sortedList = SortOrderUtil.orderByAlpha(sortedList);
+                    break;
+                case "last-chat":
+                default:
+                    sortedList = SortOrderUtil.orderByLastChat(sortedList);
+                    break;
+            }
+            if(this.options.showOnlineAgentsFirst) {
+                sortedList = SortOrderUtil.orderByOnline(sortedList, this.sdk.presence);
+            }
+            this.directoryScreen.find("ul").append(sortedList);
+        };
+
+		var onUserClick = function(event) {
+			var user = jQuery(event.currentTarget).data("user");
+            this.screenController.setScreen(EngageToolbar.SCREENS.PROFILE);
+            this.drawer.find(".engage-back").removeClass("engage-hide");
+            this.currentUser = user;
+            this.profileScreen.find(".engage-photo > img").attr("src", user.profilePhoto);
+            this.profileScreen.find(".engage-name").text(user.firstName + " " + user.lastName);
+            this.profileScreen.find(".engage-title").text(user.title);
+            this.profileScreen.find(".engage-location").text(getCityStateFormatted(user));
+            this.profileScreen.find(".engage-location").toggle(this.options.showAgentLocation == true);
+            var bio = jQuery.trim(user.bio).substring(0, 140).split(" ").slice(0, -1).join(" ");
+            if(bio != "") bio += "...";
+            this.profileScreen.find(".engage-bio").text(bio);
+            onUserPresenceChange.apply(this, [this.sdk.presence.getUserStatus(user.domain), user.domain]);
+		};
+
+		var onUserChatClick = function(event) {
+			event.stopImmediatePropagation();
+			var user = jQuery(event.currentTarget).parent().data("user") || this.currentUser;
+			window.open(user.profileUrl);
+		};
+
+		var onTabClick = function(event) {
+			this.tab.addClass("engage-hide");
+			var self = this;
+			setTimeout(function() {
+				self.drawer.removeClass("engage-hide");
+                setTimeout(function() {
+                    if(self.screenController.currentScreen == null) {
+                        if(self.options.showSearch) {
+                            self.screenController.setScreen(EngageToolbar.SCREENS.SEARCH);
+                        }else {
+                            self.screenController.setScreen(EngageToolbar.SCREENS.DIRECTORY);
+                        }
+                    }
+                }, 300);
+			}, 300);
+		};
+
+		var onDrawerCloseClick = function(event) {
+			this.drawer.addClass("engage-hide");
+			var self = this;
+			setTimeout(function() {
+				self.tab.removeClass("engage-hide");
+			}, 500);
+		};
+
+        var onScreenBackClick = function(event) {
+            this.screenController.back();
+            this.drawer.find(".engage-back").toggleClass("engage-hide", this.screenController.currentIndex == 0);
+        };
+
+		EngageToolbar.prototype.setVisibility = function(isVisible) {
+			tyhis.tab.toggle(isVisible);
+		};
+
+		return EngageToolbar;
+
+});
+
+	define("jquery", function () {
+        return jQuery;
+    });
+    define("EngageSDK", function () {
+        return EngageSDK;
+    });
+    
+    return require("EngageToolbar");
+}));

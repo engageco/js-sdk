@@ -18,7 +18,7 @@ define(["require",
 		// };
 
 		var EngageSDK = function(companyHash) {
-            BaseRESTService.baseUrl = "https://wapidev.engage.co";
+            //BaseRESTService.baseUrl = "https://wapidev.engage.co";
 			this.companyHash = companyHash;
 			this.presence = PresenceMonitor.getInstance();
 			// todo: initialize browser preview and start tracking the user

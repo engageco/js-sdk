@@ -1,6 +1,7 @@
 define(["jquery",
-        "engage-sdk/utils/ScreenController"],
-	function(jQuery, ScreenController) {
+        "engage-sdk/utils/ScreenController",
+        "widgets/utils/SortOrderUtil"],
+	function(jQuery, ScreenController, SortOrderUtil) {
 
 		'use strict';
 
@@ -56,10 +57,11 @@ define(["jquery",
 			// create drawer
 			this.drawer = jQuery('<div class="engage-drawer">' +
                     '<div class="engage-header">' +
+                        '<div class="engage-directory-title"></div>' +
                         '<a class="engage-back engage-hide"></a>' +
                         '<a class="engage-close"></a>' +
                     '</div>' +
-                    '<div class="engage-screen engage-search engage-right">search</div>' +
+                    '<div class="engage-screen engage-search engage-right"></div>' +
                     '<div class="engage-screen engage-directory engage-right">' +
                         '<ul></ul>' +
                     '</div>' +
@@ -79,6 +81,7 @@ define(["jquery",
                         '</div>' +
                     '</div>' +
                 '</div>');
+            this.drawer.find(".engage-directory-title").text(this.options.directoryTitle);
 			this.drawer.find(".engage-close").on("click", jQuery.proxy(onDrawerCloseClick, this));
             this.drawer.find(".engage-back").on("click", jQuery.proxy(onScreenBackClick, this));
             this.drawer.find(".engage-button").on("click", jQuery.proxy(onUserChatClick, this));
@@ -101,6 +104,7 @@ define(["jquery",
 
 		var onUsersLoaded = function(data) {
 			this.users = data.users;
+            // todo: look for agents this visitor has chatted with before and highlight them in a featured agents area in the drawer and put them in the
             if(this.directoryScreen) {
                 var list = this.directoryScreen.find("ul");
                 for(var i = 0; i < this.users.length; i++) {
@@ -135,6 +139,7 @@ define(["jquery",
 			var online = status == "online";
 			var item = this.directoryScreen.find("li[data-domain='" + domain + "']");
 			item.find(".engage-statusIndicator").toggleClass("engage-online", online);
+            item.toggle(online || !this.options.hideOfflineAgents)
 			var button = item.find(".engage-button");
 			button.toggleClass("engage-outline", !online);
 			var label = online ? "Chat Now" : "Send Message";
@@ -145,7 +150,30 @@ define(["jquery",
                 button.toggleClass("engage-outline", !online);
                 button.text(label);
             }
+            // note: since this is called each time a user's presence changes, we want to add a delay in case multiple users change at once
+            clearTimeout(this.sortTimeout);
+            this.sortTimeout = setTimeout(jQuery.proxy(onSortUserList, this), 200);
 		};
+
+        var onSortUserList = function(event) {
+            var sortedList = this.directoryScreen.find("li");
+            switch(this.options.agentOrder) {
+                case "random":
+                    sortedList = SortOrderUtil.orderByRandom(sortedList);
+                    break;
+                case "alpha":
+                    sortedList = SortOrderUtil.orderByAlpha(sortedList);
+                    break;
+                case "last-chat":
+                default:
+                    sortedList = SortOrderUtil.orderByLastChat(sortedList);
+                    break;
+            }
+            if(this.options.showOnlineAgentsFirst) {
+                sortedList = SortOrderUtil.orderByOnline(sortedList, this.sdk.presence);
+            }
+            this.directoryScreen.find("ul").append(sortedList);
+        };
 
 		var onUserClick = function(event) {
 			var user = jQuery(event.currentTarget).data("user");
@@ -157,7 +185,8 @@ define(["jquery",
             this.profileScreen.find(".engage-title").text(user.title);
             this.profileScreen.find(".engage-location").text(getCityStateFormatted(user));
             this.profileScreen.find(".engage-location").toggle(this.options.showAgentLocation == true);
-            var bio = jQuery.trim(user.bio).substring(0, 140).split(" ").slice(0, -1).join(" ") + "...";
+            var bio = jQuery.trim(user.bio).substring(0, 140).split(" ").slice(0, -1).join(" ");
+            if(bio != "") bio += "...";
             this.profileScreen.find(".engage-bio").text(bio);
             onUserPresenceChange.apply(this, [this.sdk.presence.getUserStatus(user.domain), user.domain]);
 		};
@@ -173,13 +202,15 @@ define(["jquery",
 			var self = this;
 			setTimeout(function() {
 				self.drawer.removeClass("engage-hide");
-                if(self.screenController.currentScreen == null) {
-                    if(self.options.showSearch) {
-                        self.screenController.setScreen(EngageToolbar.SCREENS.SEARCH);
-                    }else {
-                        self.screenController.setScreen(EngageToolbar.SCREENS.DIRECTORY);
+                setTimeout(function() {
+                    if(self.screenController.currentScreen == null) {
+                        if(self.options.showSearch) {
+                            self.screenController.setScreen(EngageToolbar.SCREENS.SEARCH);
+                        }else {
+                            self.screenController.setScreen(EngageToolbar.SCREENS.DIRECTORY);
+                        }
                     }
-                }
+                }, 300);
 			}, 300);
 		};
 
