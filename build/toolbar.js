@@ -748,7 +748,11 @@ define("EngageToolbar", ["jquery",
                             '<div class="engage-location"></div>' +
                             '<a class="engage-button">Chat Now</a>' +
                         '</li>');
-                    item.find(".engage-photo > img").attr("src", user.profilePhoto);
+                    if(user.profilePhoto != null && user.profilePhoto != "") {
+                        item.find(".engage-photo > img").attr("src", user.profilePhoto);
+                    }else {
+                        item.find(".engage-photo").addClass("no-photo");
+                    }
                     item.find(".engage-name").text(user.firstName + " " + user.lastName);
                     item.find(".engage-title").text(user.title);
                     item.find(".engage-location").text(getCityStateFormatted(user));
@@ -809,7 +813,12 @@ define("EngageToolbar", ["jquery",
             this.screenController.setScreen(EngageToolbar.SCREENS.PROFILE);
             this.drawer.find(".engage-back").removeClass("engage-hide");
             this.currentUser = user;
-            this.profileScreen.find(".engage-photo > img").attr("src", user.profilePhoto);
+            if(user.profilePhoto != null && user.profilePhoto != "") {
+                this.profileScreen.find(".engage-photo > img").attr("src", user.profilePhoto);
+            }else {
+                this.profileScreen.find(".engage-photo > img").attr("src", "");
+                this.profileScreen.find(".engage-photo").addClass("no-photo");
+            }
             this.profileScreen.find(".engage-name").text(user.firstName + " " + user.lastName);
             this.profileScreen.find(".engage-title").text(user.title);
             this.profileScreen.find(".engage-location").text(getCityStateFormatted(user));
