@@ -3,13 +3,15 @@
 $tab-radius: 10px;
 $tab-width: 50px;
 $tab-height: 250px;
-$tab-bottom-offest: 5%;
+$tab-bottom-offest: 20px;
 $tab-label-size: 18px;
 
 $drawer-mobile-width: 320px;
 $drawer-width: 400px;
-$drawer-height: 475px;
+$drawer-height: 400px;
 $drawer-radius: 10px;
+
+$bubble-width: 175px;
 
 .engage-tab {
     @include box-sizing(border-box);
@@ -21,6 +23,22 @@ $drawer-radius: 10px;
 	cursor: pointer;
 	@include transition-duration(0.2s);
 	@include transition-timing-function(ease-out);
+    &.engage-show-user {
+        > .engage-profilePhoto {
+            top: 2px;
+            pointer-events: inherit;
+            opacity: 1;
+            cursor: pointer;
+        }
+        > div.engage-tab-label {
+            padding-right: 32px;
+            width: 218px;
+            &.flipped {
+                padding-right: 0;
+                padding-left: 32px;
+            }
+        }
+    }
 	&:active {
 		@include transform(scale(1.05));
 	}
@@ -30,7 +48,7 @@ $drawer-radius: 10px;
 		width: $tab-width;
 		height: $tab-height;
 		margin-top: -$tab-height/2;
-		> .engage-tab-label {
+		.engage-tab-label {
 			width: 250px;
 			// bottom-up text
 			@include transform(rotate(-90deg) translateX(-100%) translateY(($tab-width - $tab-label-size) / 2));
@@ -38,7 +56,7 @@ $drawer-radius: 10px;
 			@include transition-timing-function(ease-out-bounce);
 			&.flipped {
 				// top-down text
-				@include transform(rotate(90deg) translateY(-($tab-width - $tab-label-size)));
+				@include transform(rotate(90deg) translateY(-($tab-width - $tab-label-size) - 3));
 				@include transform-origin(top left);
 			}
 		}
@@ -57,7 +75,9 @@ $drawer-radius: 10px;
 		&.engage-hide {
 			left: -$tab-width * 1.2;
 		}
-		
+        > .engage-profilePhoto {
+            left: 4px;
+        }
 	}
 	&.right-tab {
 		@include side-tab();
@@ -73,6 +93,9 @@ $drawer-radius: 10px;
 		&.engage-hide {
 			right: -$tab-width * 1.2;
 		}
+        > .engage-profilePhoto {
+            left: 0px;
+        }
 	}
 
 	@mixin bottom-tab() {
@@ -80,7 +103,6 @@ $drawer-radius: 10px;
 		@include transition-property(bottom, transform);
 		width: $tab-height;
 		height: $tab-width;
-		
 		border: {
 			top-right-radius: $tab-radius;
 			top-left-radius: $tab-radius;
@@ -94,6 +116,17 @@ $drawer-radius: 10px;
 		&.engage-hide {
 			bottom: -$tab-width * 1.2;
 		}
+        &.engage-show-user {
+            .engage-profilePhoto {
+                display: block;
+                left: 0;
+                top: 0;
+            }
+            .engage-tab-label {
+                padding-left: 32px;
+                padding-right: 0;
+            }
+        }
 		> .engage-tab-label {
 			@include transform(translateY(($tab-width - $tab-label-size) / 2));
 		}
@@ -132,6 +165,16 @@ $drawer-radius: 10px;
 		&.engage-hide {
 			top: -$tab-width * 1.2;
 		}
+        &.engage-show-user {
+            .engage-profilePhoto {
+                display: block;
+                left: 0;
+                top: 4px;
+            }
+            .engage-tab-label {
+                padding-left: 32px;
+            }
+        }
 		> .engage-tab-label {
 			@include transform(translateY(($tab-width - $tab-label-size) / 2));
 		}
@@ -144,13 +187,134 @@ $drawer-radius: 10px;
 		@include top-tab();
 		right: $tab-bottom-offest;
 	}
-
 	> .engage-tab-label {
 		@include user-select(none);
 		text-align: center;
 		font-size: $tab-label-size;
+        @include transition-property(all);
+        @include transition-duration(0.3s);
+        @include transition-timing-function(ease-out);
+        @include transition-delay(0.2s);
 	}
+
+    > .engage-profilePhoto {
+        position: absolute;
+        z-index: 1;
+        pointer-events: none;
+        opacity: 0;
+        @include transition-property(opacity);
+        @include transition-duration(0.3s);
+        @include transition-timing-function(ease-out);
+        @include transition-delay(0.5s);
+        > .engage-photo {
+            box-shadow: 0 0 5px rgba(0,0,0,0.3);
+        }
+    }
 	
+}
+
+.engage-bubble {
+    @include box-sizing(border-box);
+    position: fixed;
+    background-color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #000;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    width: $bubble-width;
+    min-height: 100px;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+    pointer-events: none;
+    opacity: 0;
+    cursor: pointer;
+    @include transform(scale(0.1));
+    @include transition-property(opacity, transform);
+    @include transition-duration(0.3s);
+    @include transition-timing-function(ease-out);
+    @include transition-delay(0.10s);
+    &:after {
+        display: block;
+        content: "";
+        position: absolute;
+        width: 20px;
+        height: 20px;
+    }
+    &.engage-show {
+        pointer-events: inherit;
+        opacity: 1;
+        @include transform(scale(1));
+    }
+    &.left-tab {
+        left: 60px;
+        top: 50%;
+        margin-top: -$tab-height/2;
+        @include transform-origin(top left);
+        &:after {
+            top: 20px;
+            left: -20px;
+            background-image: url(images/LeftArrow.png);
+        }
+    }
+    &.right-tab {
+        right: 60px;
+        top: 50%;
+        margin-top: -$tab-height/2;
+        @include transform-origin(top right);
+        &:after {
+            top: 20px;
+            right: -20px;
+            background-image: url(images/RightArrow.png);
+        }
+    }
+    &.top-left-tab {
+        top: 60px;
+        left: $tab-bottom-offest;
+        @include transform-origin(top left);
+        &:after {
+            top: -20px;
+            left: 20px;
+            background-image: url(images/TopLeftArrow.png);
+        }
+    }
+    &.top-right-tab {
+        top: 60px;
+        right: $tab-bottom-offest + ($tab-height - $bubble-width);
+        @include transform-origin(top left);
+        &:after {
+            top: -20px;
+            left: 20px;
+            background-image: url(images/TopLeftArrow.png);
+        }
+    }
+    &.bottom-left-tab {
+        bottom: 60px;
+        left: $tab-bottom-offest;
+        @include transform-origin(bottom left);
+        &:after {
+            bottom: -20px;
+            left: 20px;
+            background-image: url(images/BottomLeftArrow.png);
+        }
+    }
+    &.bottom-right-tab {
+        bottom: 60px;
+        right: $tab-bottom-offest + ($tab-height - $bubble-width);
+        @include transform-origin(bottom left);
+        &:after {
+            bottom: -20px;
+            left: 20px;
+            background-image: url(images/BottomLeftArrow.png);
+        }
+    }
+    > .engage-bubble-message {
+        font-size: 16px;
+        color: #49a1d6;
+        margin: 10px 0;
+    }
+    > .engage-button {
+        margin: 10px auto;
+    }
 }
 
 .engage-drawer {
@@ -339,7 +503,7 @@ $drawer-radius: 10px;
                     position: relative;
                     cursor: pointer;
                     display: inline-block;
-                    width: 130px;
+                    width: 125px;
                     text-align: center;
                     margin: 0;
                     padding: 10px;
@@ -407,7 +571,7 @@ $drawer-radius: 10px;
         &.engage-profile {
             text-align: center;
             .engage-profilePhoto {
-                margin: 25px auto;
+                margin: 20px auto;
             }
             .engage-name {
                 font-size: 18px;
@@ -420,15 +584,15 @@ $drawer-radius: 10px;
                 border: 0;
                 height: 1px;
                 background: #eaeaea;
-                margin: 20px auto;
+                margin: 15px auto;
             }
             .engage-bio {
                 font-size: 15px;
                 padding: 0 10%;
-                line-height: 1.4;
+                line-height: 1.3;
             }
             .engage-button-row {
-                padding: 15px;
+                padding: 10px;
                 .engage-button {
                     display: inline-block;
                     padding: 10px;
@@ -438,27 +602,7 @@ $drawer-radius: 10px;
             }
         }
 
-        .engage-name, .engage-title, .engage-location {
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-        }
-        .engage-name {
-            font-size: 13px;
-            color: #212121;
-        }
-        .engage-title, .engage-location {
-            font-size: 11px;
-            color: #49a1d6;
-        }
-        .engage-bio {
-            font-size: 11px;
-            color: #666666;
-        }
-
-
 	}
-
 
 }
 
@@ -473,7 +617,7 @@ $drawer-radius: 10px;
         height: 100%;
         border-radius: 30%;
         overflow: hidden;
-        background-color: #fff;
+//        background-color: #fff;
         > img {
             width: 100%;
         }
@@ -495,6 +639,17 @@ $drawer-radius: 10px;
             height: 18px;
         }
     }
+    &.engage-tiny {
+        width: 30px;
+        height: 30px;
+        margin: 8px;
+        >.engage-statusIndicator {
+            top: -6px;
+            right: -6px;
+            width: 16px;
+            height: 16px;
+        }
+    }
     >.engage-statusIndicator {
         @include box-sizing(border-box);
         position: absolute;
@@ -513,6 +668,24 @@ $drawer-radius: 10px;
             background-color: #62d9a4;
         }
     }
+}
+
+.engage-name, .engage-title, .engage-location {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.engage-name {
+    font-size: 13px;
+    color: #212121;
+}
+.engage-title, .engage-location {
+    font-size: 11px;
+    color: #49a1d6;
+}
+.engage-bio {
+    font-size: 11px;
+    color: #666666;
 }
 
 .engage-button {
