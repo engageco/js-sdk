@@ -3,7 +3,7 @@
 $tab-radius: 10px;
 $tab-width: 50px;
 $tab-height: 250px;
-$tab-bottom-offest: 20px;
+$tab-bottom-offest: 40px;
 $tab-label-size: 18px;
 
 $drawer-mobile-width: 320px;
@@ -12,6 +12,12 @@ $drawer-height: 400px;
 $drawer-radius: 10px;
 
 $bubble-width: 175px;
+
+@mixin phone() {
+    @media only screen and (max-device-width: 767px), only screen and (max-width: 767px) {
+        @content;
+    }
+}
 
 .engage-tab {
     @include box-sizing(border-box);
@@ -99,6 +105,7 @@ $bubble-width: 175px;
 	}
 
 	@mixin bottom-tab() {
+        top: auto;
 		bottom: -$tab-width/10;
 		@include transition-property(bottom, transform);
 		width: $tab-height;
@@ -106,12 +113,11 @@ $bubble-width: 175px;
 		border: {
 			top-right-radius: $tab-radius;
 			top-left-radius: $tab-radius;
+            bottom-right-radius: 0;
+            bottom-left-radius: 0;
 		}
 		&:hover {
 			bottom: 0;
-		}
-		&:active {
-			@include transform(scale(1.05));
 		}
 		&.engage-hide {
 			bottom: -$tab-width * 1.2;
@@ -139,12 +145,38 @@ $bubble-width: 175px;
 		@include bottom-tab();
 		right: $tab-bottom-offest;
 	}
+
+    @mixin bottom-full-width-label() {
+        padding-right: 0;
+        padding-left: 0;
+        width: 100%;
+        @include transform(translateY(($tab-width - $tab-label-size) / 2));
+    }
+    @mixin bottom-full-tab() {
+        @include bottom-tab();
+        width: auto;
+        left: $tab-bottom-offest/2;
+        right: $tab-bottom-offest/2;
+        &:hover {
+            left: $tab-bottom-offest/2;
+            right: $tab-bottom-offest/2;
+            top: auto;
+            bottom: 0;
+        }
+        &.engage-show-user {
+            > .engage-tab-label {
+                @include bottom-full-width-label();
+                &.flipped {
+                    @include bottom-full-width-label();
+                }
+            }
+        }
+        > .engage-tab-label {
+            @include bottom-full-width-label();
+        }
+    }
 	&.bottom-toolbar {
-		@include bottom-tab();
-		border-radius: 0;
-		width: 100%;
-		left: 0;
-		right: 0;
+        @include bottom-full-tab();
 	}
 
 	@mixin top-tab() {
@@ -158,9 +190,6 @@ $bubble-width: 175px;
 		}
 		&:hover {
 			top: 0;
-		}
-		&:active {
-			@include transform(scale(1.05));
 		}
 		&.engage-hide {
 			top: -$tab-width * 1.2;
@@ -200,6 +229,12 @@ $bubble-width: 175px;
         @include transition-delay(0.2s);
 	}
 
+    @include phone() {
+        &.left-tab, &.right-tab, &.top-left-tab, &.top-right-tab, &.bottom-left-tab, &.bottom-right-tab {
+            @include bottom-full-tab();
+        }
+    }
+
     > .engage-profilePhoto {
         position: absolute;
         z-index: 1;
@@ -213,6 +248,8 @@ $bubble-width: 175px;
             box-shadow: 0 0 5px rgba(0,0,0,0.3);
         }
     }
+
+
 	
 }
 
@@ -290,24 +327,45 @@ $bubble-width: 175px;
             background-image: url(images/TopLeftArrow.png);
         }
     }
-    &.bottom-left-tab {
+    @mixin bottom-bubble() {
+        top: auto;
         bottom: 60px;
         left: $tab-bottom-offest;
         @include transform-origin(bottom left);
         &:after {
+            top: auto;
             bottom: -20px;
             left: 20px;
             background-image: url(images/BottomLeftArrow.png);
         }
     }
+    &.bottom-left-tab, &.bottom-toolbar {
+        @include bottom-bubble();
+    }
     &.bottom-right-tab {
-        bottom: 60px;
+        @include bottom-bubble();
+        left: auto;
         right: $tab-bottom-offest + ($tab-height - $bubble-width);
-        @include transform-origin(bottom left);
-        &:after {
-            bottom: -20px;
-            left: 20px;
-            background-image: url(images/BottomLeftArrow.png);
+    }
+    @include phone() {
+        &.left-tab, &.right-tab, &.top-left-tab, &.top-right-tab, &.bottom-left-tab, &.bottom-right-tab {
+            @include bottom-bubble();
+            left: $tab-bottom-offest/2;
+        }
+    }
+    > .engage-bubble-close {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        width: 16px;
+        height: 16px;
+        border-radius: 2px;
+        background-image: url(images/close.png);
+        background-size: 75%;
+        background-position: center center;
+        background-repeat: no-repeat;
+        &:hover {
+            background-color: #eee;
         }
     }
     > .engage-bubble-message {
@@ -323,6 +381,7 @@ $bubble-width: 175px;
 .engage-drawer {
     @include box-sizing(border-box);
 	position: fixed;
+    z-index: 1000000;
 	background-color: #fff;
 	font-family: Arial, Helvetica, sans-serif;
 	color: #4c4c4c;
@@ -335,9 +394,6 @@ $bubble-width: 175px;
 	@mixin side-drawer() {
 		top: 50%;
 		width: $drawer-width;
-        @media (max-width: 700px) {
-            width: $drawer-mobile-width;
-        }
 		height: $drawer-height;
 		margin-top: -$drawer-height/2;
 	}
@@ -366,19 +422,18 @@ $bubble-width: 175px;
 	}
 
 	@mixin bottom-drawer() {
+        top: auto;
 		bottom: 0;
+        margin-top: 0;
 		@include transition-property(bottom, transform);
 		width: $drawer-width;
-        @media (max-width: 700px) {
-            width: $drawer-mobile-width;
-        }
 		height: $drawer-height;
 		border: {
 			top-right-radius: $drawer-radius;
 			top-left-radius: $drawer-radius;
 		}
 		&.engage-hide {
-			bottom: -$drawer-height * 1.2;
+			bottom: -110%;
 		}
 	}
 	&.bottom-left-tab {
@@ -401,9 +456,6 @@ $bubble-width: 175px;
 		top: 0;
 		@include transition-property(top, transform);
 		width: $drawer-width;
-        @media (max-width: 700px) {
-            width: $drawer-mobile-width;
-        }
 		height: $drawer-height;
 		border: {
 			bottom-right-radius: $drawer-radius;
@@ -543,7 +595,7 @@ $bubble-width: 175px;
                         position: absolute;
                         left: 60px;
                         width: 130px;
-                        @media (min-width: 700px) {
+                        @include phone() {
                             width: 210px;
                         }
                     }
@@ -566,7 +618,7 @@ $bubble-width: 175px;
             &.engage-list {
                 @include list();
             }
-            @media (max-width: 700px) {
+            @include phone() {
                 @include list();
             }
         }
@@ -606,6 +658,30 @@ $bubble-width: 175px;
         }
 
 	}
+
+    @include phone() {
+        &.left-tab, &.right-tab, &.top-left-tab, &.top-right-tab, &.bottom-left-tab, &.bottom-right-tab {
+            @include bottom-drawer();
+            width: 100%;
+            height: 100%;
+            top: auto;
+            left: 0;
+            right: 0;
+            margin-top: 0;
+            border: {
+                top-left-radius: 0;
+                top-right-radius: 0;
+                bottom-left-radius: 0;
+                bottom-right-radius: 0;
+            }
+            &.engage-hide {
+                left: 0;
+                right: 0;
+                top: auto;
+                bottom: -110%;
+            }
+        }
+    }
 
 }
 

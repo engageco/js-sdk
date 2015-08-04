@@ -33,6 +33,10 @@ define("EngageToolbar", ["jquery",
         };
 
 		var onDOMReady = function() {
+            console.log("window size", jQuery(window).innerWidth());
+            jQuery(window).on("resize", function() {
+               console.log("window size", jQuery(window).innerWidth());
+            });
 			var tabPlacement = (this.options.tabPlacement) ? this.options.tabPlacement : "right-tab";
 			// create tab
 			this.tab = jQuery('<div class="engage-tab">' +
@@ -63,6 +67,7 @@ define("EngageToolbar", ["jquery",
             this.tab.find(".engage-profilePhoto").on("click", jQuery.proxy(onTabUserClick, this));
 
             this.bubble = jQuery('<div class="engage-bubble">' +
+                    '<div class="engage-bubble-close"></div>' +
                     '<div class="engage-bubble-message">Hey there! Do you need any help?</div>' +
                     '<div class="engage-name">Peter Hashtag</div>' +
                     '<div class="engage-title">CTO</div>' +
@@ -70,6 +75,7 @@ define("EngageToolbar", ["jquery",
                 '</div>');
             this.bubble.on("click", jQuery.proxy(onTabUserClick, this));
             this.bubble.find(".engage-button").on("click", jQuery.proxy(onUserChatClick, this));
+            this.bubble.find(".engage-bubble-close").on("click", jQuery.proxy(onCloseProactiveBubble, this));
             this.bubble.addClass(tabPlacement);
             this.bubble.appendTo(jQuery("body"));
 
@@ -148,6 +154,11 @@ define("EngageToolbar", ["jquery",
         var onOpenProactiveBubble = function() {
             this.bubble.find(".engage-bubble-message").text(this.options.proactive.message);
             this.bubble.addClass("engage-show");
+        };
+
+        var onCloseProactiveBubble = function(event) {
+            event.stopImmediatePropagation();
+            this.bubble.removeClass("engage-show");
         };
 
 		var onUsersLoaded = function(data) {
