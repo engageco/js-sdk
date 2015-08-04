@@ -35,7 +35,7 @@ define("EngageSDK", ["require",
             ServiceQueue.getInstance().addRequest(getUsersService);
 		};
 
-		EngageSDK.prototype.drawWidget = function(config, category) {
+		EngageSDK.prototype.drawWidget = function(config, callback) {
 			var sdk = this;
 			// note: load widget configuration for the customer if 'config' is a string
 			switch(config.type) {
@@ -44,12 +44,13 @@ define("EngageSDK", ["require",
 					var cssSrc = (config.css) ? config.css : "https://sdk.engage.co/toolbar.css";
 					head.load([jsSrc, cssSrc], function() {
 						sdk.widget = new EngageToolbar(sdk, config.options);
+                        callback(sdk.widget);
 					});
 					break;
 				case "custom":
 				default:
 					head.load([config.js, config.css], function() {
-						// todo: pass in an instance of the sdk to a callback
+                        callback();
 					});
 					break;
 			}

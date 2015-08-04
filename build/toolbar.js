@@ -640,7 +640,7 @@ define("EngageToolbar", ["jquery",
 			this.users = null;
 			this.tab = null;
 			this.drawer = null;
-			this.sdk.getUsers(this.options.category, jQuery.proxy(onUsersLoaded, this));
+            this.setOption("category", this.options.category);
             this.screenController = new ScreenController();
             this.screenController.cssClasses.left = "engage-left";
             this.screenController.cssClasses.right = "engage-right";
@@ -662,58 +662,40 @@ define("EngageToolbar", ["jquery",
         };
 
 		var onDOMReady = function() {
-            console.log("window size", jQuery(window).innerWidth());
-            jQuery(window).on("resize", function() {
-               console.log("window size", jQuery(window).innerWidth());
-            });
-			var tabPlacement = (this.options.tabPlacement) ? this.options.tabPlacement : "right-tab";
-			// create tab
-			this.tab = jQuery('<div class="engage-tab">' +
+			this.tab = jQuery('<div class="engage-tab mobile-enabled">' +
                     '<div class="engage-tab-label"></div>' +
                     '<div class="engage-profilePhoto engage-tiny">' +
                         '<div class="engage-photo no-photo"><img></div>' +
                         '<div class="engage-statusIndicator engage-online"></div>' +
                     '</div>' +
                 '</div>');
-			this.tab.addClass(tabPlacement);
-			if(this.options.backgroundColor) {
-				this.tab.css("background-color", this.options.backgroundColor);
-                this.tab.find(".engage-statusIndicator").css("border-color", this.options.backgroundColor);
-			}
-			var label = this.tab.find('.engage-tab-label');
-			var labelText = (this.options.label) ? this.options.label : "Chat";
-			label.text(labelText);
-			if(this.options.labelOrientation) {
-				label.addClass(this.options.labelOrientation);
-			}
-			if(this.options.labelColor) {
-				this.tab.css("color", this.options.labelColor);
-			}
-			label.appendTo(this.tab);
+			this.tabLabel = this.tab.find('.engage-tab-label');
+            this.tabLabel.appendTo(this.tab);
 			this.tab.appendTo(jQuery("body"));
-            //console.log(this.tab.find(".engage-profilePhoto"));
             this.tab.on("click", jQuery.proxy(onTabClick, this));
             this.tab.find(".engage-profilePhoto").on("click", jQuery.proxy(onTabUserClick, this));
 
-            this.bubble = jQuery('<div class="engage-bubble">' +
+            this.bubble = jQuery('<div class="engage-bubble mobile-enabled">' +
                     '<div class="engage-bubble-close"></div>' +
-                    '<div class="engage-bubble-message">Hey there! Do you need any help?</div>' +
-                    '<div class="engage-name">Peter Hashtag</div>' +
-                    '<div class="engage-title">CTO</div>' +
+                    '<div class="engage-bubble-message"></div>' +
+                    '<div class="engage-name"></div>' +
+                    '<div class="engage-title"></div>' +
                     '<a class="engage-button engage-chat">Chat Now</a>' +
                 '</div>');
             this.bubble.on("click", jQuery.proxy(onTabUserClick, this));
             this.bubble.find(".engage-button").on("click", jQuery.proxy(onUserChatClick, this));
             this.bubble.find(".engage-bubble-close").on("click", jQuery.proxy(onCloseProactiveBubble, this));
-            this.bubble.addClass(tabPlacement);
             this.bubble.appendTo(jQuery("body"));
 
-			// create drawer
-			this.drawer = jQuery('<div class="engage-drawer">' +
+			this.drawer = jQuery('<div class="engage-drawer mobile-enabled">' +
                     '<div class="engage-header">' +
                         '<div class="engage-directory-title"></div>' +
                         '<a class="engage-back engage-hide"></a>' +
                         '<a class="engage-close"></a>' +
+                    '</div>' +
+                    '<div class="engage-footer">' +
+                        '<a class="engage-powered-by" href="http://engage.co" target="tab">Powered By Engage</a>' +
+                        '<a class="engage-directory-link" target="tab">Full Directory</a>' +
                     '</div>' +
                     '<div class="engage-screen engage-search engage-right"></div>' +
                     '<div class="engage-screen engage-directory engage-right">' +
@@ -735,22 +717,28 @@ define("EngageToolbar", ["jquery",
                         '</div>' +
                     '</div>' +
                 '</div>');
-            this.drawer.find(".engage-directory-title").text(this.options.directoryTitle);
 			this.drawer.find(".engage-close").on("click", jQuery.proxy(onDrawerCloseClick, this));
             this.drawer.find(".engage-back").on("click", jQuery.proxy(onScreenBackClick, this));
             this.drawer.find(".engage-button").on("click", jQuery.proxy(onUserChatClick, this));
 			this.drawer.addClass("engage-hide");
-			this.drawer.addClass(tabPlacement);
 			this.drawer.appendTo(jQuery("body"));
 			this.searchScreen = this.drawer.find(".engage-screen.engage-search");
             this.screenController.addScreen(EngageToolbar.SCREENS.SEARCH, this.searchScreen);
 			this.directoryScreen = this.drawer.find(".engage-screen.engage-directory");
             this.screenController.addScreen(EngageToolbar.SCREENS.DIRECTORY, this.directoryScreen);
-			if(this.options.showListOnly) {
-				this.directoryScreen.addClass("engage-list");
-			}
 			this.profileScreen = this.drawer.find(".engage-screen.engage-profile");
             this.screenController.addScreen("profile", this.profileScreen);
+
+            this.setOption("tabPlacement", this.options.tabPlacement);
+            this.setOption("showListOnly", this.options.showListOnly);
+            this.setOption("label", this.options.label);
+            this.setOption("labelOrientation", this.options.labelOrientation);
+            this.setOption("disableMobileView", this.options.disableMobileView);
+            this.setOption("labelColor", this.options.labelColor);
+            this.setOption("directoryTitle", this.options.directoryTitle);
+            this.setOption("backgroundColor", this.options.backgroundColor);
+            this.setOption("directoryUrl", this.options.directoryUrl);
+
             if(this.users) {
                 onUsersLoaded.apply(this, [this.users]);
             }
@@ -906,15 +894,7 @@ define("EngageToolbar", ["jquery",
 		};
 
 		var onTabClick = function(event) {
-			this.tab.addClass("engage-hide");
-            clearTimeout(this.showProactiveBubbleTimeout);
-            this.bubble.removeClass("engage-show");
-            this.neverOpened = false;
-			var self = this;
-			setTimeout(function() {
-				self.drawer.removeClass("engage-hide");
-                setTimeout(jQuery.proxy(onShowFirstScreen, self), 300);
-			}, 300);
+            this.openDrawer();
 		};
 
         var onTabUserClick = function(event) {
@@ -925,11 +905,7 @@ define("EngageToolbar", ["jquery",
         };
 
         var onDrawerCloseClick = function(event) {
-            this.drawer.addClass("engage-hide");
-            var self = this;
-            setTimeout(function() {
-                self.tab.removeClass("engage-hide");
-            }, 500);
+            this.closeDrawer();
         };
 
         var onScreenBackClick = function(event) {
@@ -947,9 +923,112 @@ define("EngageToolbar", ["jquery",
             }
         };
 
-		EngageToolbar.prototype.setVisibility = function(isVisible) {
-			tyhis.tab.toggle(isVisible);
-		};
+        EngageToolbar.prototype.setOption = function(name, value) {
+            this.options[name] = value;
+            switch(name) {
+                case "category":
+                    this.sdk.getUsers(value, jQuery.proxy(onUsersLoaded, this));
+                    break;
+                case "directoryTitle":
+                    if(this.isInitialized()) {
+                        this.drawer.find(".engage-directory-title").text(this.options.directoryTitle);
+                    }
+                    break;
+                case "tabPlacement":
+                    if(this.isInitialized()) {
+                        var tabPlacement = (value) ? value : "right-tab";
+                        this.tab.addClass(tabPlacement);
+                        this.bubble.addClass(tabPlacement);
+                        this.drawer.addClass(tabPlacement);
+                    }
+                    break;
+                case "disableMobileView":
+                    if(this.isInitialized()) {
+                        this.tab.toggleClass("mobile-enabled", !value);
+                        this.bubble.toggleClass("mobile-enabled", !value);
+                        this.drawer.toggleClass("mobile-enabled", !value);
+                    }
+                    break;
+                case "label":
+                    if(this.isInitialized()) {
+                        var labelText = (value) ? value : "Chat";
+                        this.tabLabel.text(labelText);
+                    }
+                    break;
+                case "labelOrientation":
+                    if(this.isInitialized()) {
+                        this.tabLabel.addClass(value);
+                    }
+                    break;
+                case "backgroundColor":
+                    if(this.isInitialized() && value) {
+                        this.tab.css("background-color", value);
+                        this.tab.find(".engage-statusIndicator").css("border-color", value);
+                    }
+                    break;
+                case "labelColor":
+                    if(this.isInitialized() && value) {
+                        this.tab.css("color", value);
+                    }
+                    break;
+                case "hideTabOffline":
+                    break;
+                case "hideOfflineAgents":
+                    break;
+                case "showOnlineAgentsFirst":
+                    break;
+                case "agentOrder":
+                    break;
+                case "showAgentLocation":
+                    break;
+                case "showListOnly":
+                    if(this.isInitialized()) {
+                        this.directoryScreen.toggleClass("engage-list", (value == true));
+                    }
+                    break;
+                case "showSearch":
+                    break;
+                case "proactive":
+                    break;
+                case "directoryUrl":
+                    if(this.isInitialized()) {
+                        var link = this.drawer.find(".engage-directory-link")
+                        link.attr("href", value);
+                        link.toggle(value != null && value != "");
+                    }
+                    break;
+            }
+        };
+
+        EngageToolbar.prototype.isInitialized = function() {
+            return this.tab != null;
+        };
+
+        EngageToolbar.prototype.openDrawer = function() {
+            clearTimeout(this.showProactiveBubbleTimeout);
+            this.tab.addClass("engage-hide");
+            this.bubble.removeClass("engage-show");
+            this.neverOpened = false;
+            var self = this;
+            setTimeout(function() {
+                self.drawer.removeClass("engage-hide");
+                setTimeout(jQuery.proxy(onShowFirstScreen, self), 300);
+            }, 300);
+        };
+
+        EngageToolbar.prototype.closeDrawer = function() {
+            this.drawer.addClass("engage-hide");
+            var self = this;
+            setTimeout(function() {
+                self.tab.removeClass("engage-hide");
+            }, 500);
+        };
+
+        EngageToolbar.prototype.setVisibility = function(isVisible) {
+            this.tab.toggleClass("engage-hide", !isVisible);
+            this.bubble.toggleClass("engage-show", isVisible);
+            this.drawer.toggleClass("engage-hide", !isVisible);
+        };
 
 		return EngageToolbar;
 

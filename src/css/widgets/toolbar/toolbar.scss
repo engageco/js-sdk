@@ -22,6 +22,7 @@ $bubble-width: 175px;
 .engage-tab {
     @include box-sizing(border-box);
 	position: fixed;
+    z-index: 1000001;
 	background-color: #000;
 	font-family: Arial, Helvetica, sans-serif;
 	color: #fff;
@@ -230,8 +231,10 @@ $bubble-width: 175px;
 	}
 
     @include phone() {
-        &.left-tab, &.right-tab, &.top-left-tab, &.top-right-tab, &.bottom-left-tab, &.bottom-right-tab {
-            @include bottom-full-tab();
+        &.mobile-enabled {
+            &.left-tab, &.right-tab, &.top-left-tab, &.top-right-tab, &.bottom-left-tab, &.bottom-right-tab {
+                @include bottom-full-tab();
+            }
         }
     }
 
@@ -248,14 +251,13 @@ $bubble-width: 175px;
             box-shadow: 0 0 5px rgba(0,0,0,0.3);
         }
     }
-
-
 	
 }
 
 .engage-bubble {
     @include box-sizing(border-box);
     position: fixed;
+    z-index: 1000002;
     background-color: #fff;
     font-family: Arial, Helvetica, sans-serif;
     color: #000;
@@ -348,9 +350,11 @@ $bubble-width: 175px;
         right: $tab-bottom-offest + ($tab-height - $bubble-width);
     }
     @include phone() {
-        &.left-tab, &.right-tab, &.top-left-tab, &.top-right-tab, &.bottom-left-tab, &.bottom-right-tab {
-            @include bottom-bubble();
-            left: $tab-bottom-offest/2;
+        &.mobile-enabled {
+            &.left-tab, &.right-tab, &.top-left-tab, &.top-right-tab, &.bottom-left-tab, &.bottom-right-tab {
+                @include bottom-bubble();
+                left: $tab-bottom-offest/2;
+            }
         }
     }
     > .engage-bubble-close {
@@ -381,7 +385,7 @@ $bubble-width: 175px;
 .engage-drawer {
     @include box-sizing(border-box);
 	position: fixed;
-    z-index: 1000000;
+    z-index: 1000003;
 	background-color: #fff;
 	font-family: Arial, Helvetica, sans-serif;
 	color: #4c4c4c;
@@ -394,6 +398,9 @@ $bubble-width: 175px;
 	@mixin side-drawer() {
 		top: 50%;
 		width: $drawer-width;
+        @include phone() {
+            width: $drawer-mobile-width;
+        }
 		height: $drawer-height;
 		margin-top: -$drawer-height/2;
 	}
@@ -427,6 +434,9 @@ $bubble-width: 175px;
         margin-top: 0;
 		@include transition-property(bottom, transform);
 		width: $drawer-width;
+        @include phone() {
+            width: $drawer-mobile-width;
+        }
 		height: $drawer-height;
 		border: {
 			top-right-radius: $drawer-radius;
@@ -456,6 +466,9 @@ $bubble-width: 175px;
 		top: 0;
 		@include transition-property(top, transform);
 		width: $drawer-width;
+        @include phone() {
+            width: $drawer-mobile-width;
+        }
 		height: $drawer-height;
 		border: {
 			bottom-right-radius: $drawer-radius;
@@ -523,10 +536,34 @@ $bubble-width: 175px;
         }
 	}
 
+    >.engage-footer {
+        @include box-sizing(border-box);
+        position: absolute;
+        bottom: 0;
+        height: 30px;
+        width: 100%;
+        padding: 8px;
+        background-color: #fff;
+        font-size: 13px;
+        border-top: {
+            width: 1px;
+            color: #eaeaea;
+            style: solid;
+        };
+        >.engage-directory-link {
+            color: #49a1d6;
+        }
+        >.engage-powered-by {
+            float: right;
+            color: #aaa;
+            font-size: 11px;
+        }
+    }
+
 	>.engage-screen {
 		position: absolute;
 		top: 50px;
-		bottom: 0;
+		bottom: 30px;
         left: 0;
 		width: 100%;
         overflow: hidden;
@@ -660,25 +697,27 @@ $bubble-width: 175px;
 	}
 
     @include phone() {
-        &.left-tab, &.right-tab, &.top-left-tab, &.top-right-tab, &.bottom-left-tab, &.bottom-right-tab {
-            @include bottom-drawer();
-            width: 100%;
-            height: 100%;
-            top: auto;
-            left: 0;
-            right: 0;
-            margin-top: 0;
-            border: {
-                top-left-radius: 0;
-                top-right-radius: 0;
-                bottom-left-radius: 0;
-                bottom-right-radius: 0;
-            }
-            &.engage-hide {
+        &.mobile-enabled {
+            &.left-tab, &.right-tab, &.top-left-tab, &.top-right-tab, &.bottom-left-tab, &.bottom-right-tab {
+                @include bottom-drawer();
+                width: 100% !important;
+                height: 100%;
+                top: auto;
                 left: 0;
                 right: 0;
-                top: auto;
-                bottom: -110%;
+                margin-top: 0;
+                border: {
+                    top-left-radius: 0;
+                    top-right-radius: 0;
+                    bottom-left-radius: 0;
+                    bottom-right-radius: 0;
+                }
+                &.engage-hide {
+                    left: 0;
+                    right: 0;
+                    top: auto;
+                    bottom: -110%;
+                }
             }
         }
     }
