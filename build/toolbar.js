@@ -662,7 +662,7 @@ define("EngageToolbar", ["jquery",
         };
 
 		var onDOMReady = function() {
-			this.tab = jQuery('<div class="engage-tab mobile-enabled">' +
+			this.tab = jQuery('<div class="engage-tab mobile-enabled engage-hide">' +
                     '<div class="engage-tab-label"></div>' +
                     '<div class="engage-profilePhoto engage-tiny">' +
                         '<div class="engage-photo no-photo"><img></div>' +
@@ -687,7 +687,7 @@ define("EngageToolbar", ["jquery",
             this.bubble.find(".engage-bubble-close").on("click", jQuery.proxy(onCloseProactiveBubble, this));
             this.bubble.appendTo(jQuery("body"));
 
-			this.drawer = jQuery('<div class="engage-drawer mobile-enabled">' +
+			this.drawer = jQuery('<div class="engage-drawer mobile-enabled engage-hide">' +
                     '<div class="engage-header">' +
                         '<div class="engage-directory-title"></div>' +
                         '<a class="engage-back engage-hide"></a>' +
@@ -720,7 +720,6 @@ define("EngageToolbar", ["jquery",
 			this.drawer.find(".engage-close").on("click", jQuery.proxy(onDrawerCloseClick, this));
             this.drawer.find(".engage-back").on("click", jQuery.proxy(onScreenBackClick, this));
             this.drawer.find(".engage-button").on("click", jQuery.proxy(onUserChatClick, this));
-			this.drawer.addClass("engage-hide");
 			this.drawer.appendTo(jQuery("body"));
 			this.searchScreen = this.drawer.find(".engage-screen.engage-search");
             this.screenController.addScreen(EngageToolbar.SCREENS.SEARCH, this.searchScreen);
@@ -1040,7 +1039,7 @@ define("EngageToolbar", ["jquery",
             this.tab.toggleClass("engage-hide", !isVisible);
             if(!isVisible) {
                 this.bubble.toggleClass("engage-show", false);
-                this.drawer.toggleClass("engage-hide", false);
+                this.drawer.toggleClass("engage-hide", true);
             }
         };
 
