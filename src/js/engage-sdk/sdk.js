@@ -30,7 +30,7 @@ define("EngageSDK", ["require",
 		EngageSDK.prototype.getUsers = function(categorySlug, callback) {
 			var getUsersService = new GetUsersService(this.companyHash, categorySlug);
             getUsersService.addEventListener(Event.RESULT, function(event) {
-               callback(event.data);
+                if(callback) callback(event.data);
             });
             ServiceQueue.getInstance().addRequest(getUsersService);
 		};
@@ -44,13 +44,13 @@ define("EngageSDK", ["require",
 					var cssSrc = (config.css) ? config.css : "https://sdk.engage.co/toolbar.css";
 					head.load([jsSrc, cssSrc], function() {
 						sdk.widget = new EngageToolbar(sdk, config.options);
-                        callback(sdk.widget);
+                        if(callback) callback(sdk.widget);
 					});
 					break;
 				case "custom":
 				default:
 					head.load([config.js, config.css], function() {
-                        callback();
+                        if(callback) callback();
 					});
 					break;
 			}
