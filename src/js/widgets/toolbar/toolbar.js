@@ -102,7 +102,7 @@ define("EngageToolbar", ["jquery",
 
             this.setOption("tabPlacement", this.options.tabPlacement);
             this.setOption("showListOnly", this.options.showListOnly);
-            this.setOption("label", this.options.label);
+            //this.setOption("label", this.options.label);
             this.setOption("labelOrientation", this.options.labelOrientation);
             this.setOption("disableMobileView", this.options.disableMobileView);
             this.setOption("labelColor", this.options.labelColor);
@@ -111,7 +111,7 @@ define("EngageToolbar", ["jquery",
             this.setOption("directoryUrl", this.options.directoryUrl);
 
             if(this.users) {
-                onUsersLoaded.apply(this, [{this.users}]);
+                onUsersLoaded.apply(this, [{users:this.users}]);
             }
 		};
 
@@ -230,6 +230,8 @@ define("EngageToolbar", ["jquery",
                 var isOnline = this.sdk.presence.getUserStatus(user.domain) == "online";
                 onShowTabUser.apply(this, [isOnline ? user : null]);
             //}
+            onUpdateLabel.apply(this);
+            this.setVisibility(!(this.options.hideTabOffline && !this.isAnyoneOnline()));
         };
 
 		var onUserClick = function(event) {
@@ -284,6 +286,12 @@ define("EngageToolbar", ["jquery",
             this.drawer.find(".engage-back").toggleClass("engage-hide", this.screenController.currentIndex == 0);
         };
 
+        var onUpdateLabel = function(event) {
+            var labelText = (this.isAnyoneOnline(this)) ? this.options.onlineLabel : this.options.offlineLabel;
+            labelText = (labelText) ? labelText : "Chat";
+            this.tabLabel.text(labelText);
+        };
+
         var onShowFirstScreen = function() {
             if(this.screenController.currentScreen == null) {
                 if(this.options.showSearch) {
@@ -320,10 +328,14 @@ define("EngageToolbar", ["jquery",
                         this.drawer.toggleClass("mobile-enabled", !value);
                     }
                     break;
-                case "label":
+                case "onlineLabel":
                     if(this.isInitialized()) {
-                        var labelText = (value) ? value : "Chat";
-                        this.tabLabel.text(labelText);
+                        onUpdateLabel.apply(this);
+                    }
+                    break;
+                case "offlineLabel":
+                    if(this.isInitialized()) {
+                        onUpdateLabel.apply(this);
                     }
                     break;
                 case "labelOrientation":
@@ -397,8 +409,19 @@ define("EngageToolbar", ["jquery",
 
         EngageToolbar.prototype.setVisibility = function(isVisible) {
             this.tab.toggleClass("engage-hide", !isVisible);
-            this.bubble.toggleClass("engage-show", isVisible);
-            this.drawer.toggleClass("engage-hide", !isVisible);
+            if(!isVisible) {
+                this.bubble.toggleClass("engage-show", false);
+                this.drawer.toggleClass("engage-hide", false);
+            }
+        };
+
+        EngageToolbar.prototype.isAnyoneOnline = function() {
+            for(var i = 0; i < this.users.length; i++) {
+                if(this.sdk.presence.getUserStatus(this.users[i].domain) == "online") {
+                    return true;
+                }
+            }
+            return false;
         };
 
 		return EngageToolbar;
