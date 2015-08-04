@@ -31,11 +31,11 @@ $bubble-width: 175px;
             cursor: pointer;
         }
         > div.engage-tab-label {
-            padding-right: 32px;
+            padding-right: 35px;
             width: 218px;
             &.flipped {
                 padding-right: 0;
-                padding-left: 32px;
+                padding-left: 35px;
             }
         }
     }
@@ -123,7 +123,7 @@ $bubble-width: 175px;
                 top: 0;
             }
             .engage-tab-label {
-                padding-left: 32px;
+                padding-left: 35px;
                 padding-right: 0;
             }
         }
@@ -172,7 +172,7 @@ $bubble-width: 175px;
                 top: 4px;
             }
             .engage-tab-label {
-                padding-left: 32px;
+                padding-left: 35px;
             }
         }
 		> .engage-tab-label {
@@ -191,7 +191,10 @@ $bubble-width: 175px;
 		@include user-select(none);
 		text-align: center;
 		font-size: $tab-label-size;
-        @include transition-property(all);
+        width: $tab-height;
+        padding-left: 0;
+        padding-right: 0;
+        @include transition-property(width, padding);
         @include transition-duration(0.3s);
         @include transition-timing-function(ease-out);
         @include transition-delay(0.2s);
