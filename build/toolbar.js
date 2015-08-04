@@ -779,6 +779,10 @@ define("EngageToolbar", ["jquery",
         };
 
 		var onUsersLoaded = function(data) {
+            console.log(data);
+            if(data == null) {
+                console.error(data);
+            }
 			this.users = data.users;
             // todo: look for agents this visitor has chatted with before and highlight them in a featured agents area in the drawer and put them in the
             if(this.users && this.directoryScreen) {
