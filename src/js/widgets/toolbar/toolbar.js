@@ -65,7 +65,7 @@ define("EngageToolbar", ["jquery",
                         '<a class="engage-close"></a>' +
                     '</div>' +
                     '<div class="engage-footer">' +
-                        '<a class="engage-powered-by" href="http://engage.co" target="tab">Powered By Engage</a>' +
+                        '<a class="engage-powered-by" href="http://engage.co" target="tab">Powered By Engage &copy; 2015</a>' +
                         '<a class="engage-directory-link" target="tab">Full Directory</a>' +
                     '</div>' +
                     '<div class="engage-screen engage-search engage-right"></div>' +
