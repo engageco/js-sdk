@@ -557,6 +557,10 @@ $bubble-width: 175px;
             float: right;
             color: #aaa;
             font-size: 11px;
+            >a {
+                color: #aaa;
+                text-decoration: underline;
+            }
         }
     }
 

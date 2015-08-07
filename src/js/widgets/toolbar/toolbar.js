@@ -65,8 +65,8 @@ define("EngageToolbar", ["jquery",
                         '<a class="engage-close"></a>' +
                     '</div>' +
                     '<div class="engage-footer">' +
-                        '<a class="engage-powered-by" href="http://engage.co" target="tab">Powered By Engage &copy; 2015</a>' +
-                        '<a class="engage-directory-link" target="tab">Full Directory</a>' +
+                        '<span class="engage-powered-by">&copy; ' + new Date().getFullYear() + ' <a href="http://engage.co" target="tab">Powered By Engage</a></span>' +
+                        '<a class="engage-directory-link" target="tab">Full Company Directory</a>' +
                     '</div>' +
                     '<div class="engage-screen engage-search engage-right"></div>' +
                     '<div class="engage-screen engage-directory engage-right">' +
@@ -101,7 +101,7 @@ define("EngageToolbar", ["jquery",
 
             this.setOption("tabPlacement", this.options.tabPlacement);
             this.setOption("showListOnly", this.options.showListOnly);
-            //this.setOption("label", this.options.label);
+            this.setOption("offlineLabel", this.options.offlineLabel);
             this.setOption("labelOrientation", this.options.labelOrientation);
             this.setOption("disableMobileView", this.options.disableMobileView);
             this.setOption("labelColor", this.options.labelColor);
@@ -139,8 +139,14 @@ define("EngageToolbar", ["jquery",
         };
 
         var onOpenProactiveBubble = function() {
-            this.bubble.find(".engage-bubble-message").text(this.options.proactive.message);
-            this.bubble.addClass("engage-show");
+            var lastShown = new Date(Date.parse(this.sdk.getLocalProperty("proactive-last-displayed")));
+            var frequency = (this.options.proactive && this.options.proactive.frequency) ? this.options.proactive.frequency : 1440;
+            var nextShowDate = new Date(lastShown.getTime() + Math.round(frequency * 60000));
+            if(nextShowDate <= new Date()){
+                this.sdk.setLocalProperty("proactive-last-displayed", new Date());
+                this.bubble.find(".engage-bubble-message").text(this.options.proactive.message);
+                this.bubble.addClass("engage-show");
+            }
         };
 
         var onCloseProactiveBubble = function(event) {
@@ -415,9 +421,11 @@ define("EngageToolbar", ["jquery",
         };
 
         EngageToolbar.prototype.isAnyoneOnline = function() {
-            for(var i = 0; i < this.users.length; i++) {
-                if(this.sdk.presence.getUserStatus(this.users[i].domain) == "online") {
-                    return true;
+            if(this.users) {
+                for(var i = 0; i < this.users.length; i++) {
+                    if(this.sdk.presence.getUserStatus(this.users[i].domain) == "online") {
+                        return true;
+                    }
                 }
             }
             return false;

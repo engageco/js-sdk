@@ -4,7 +4,7 @@
  * @author Danny Patterson
  */
 
-define(["jquery", "jquery.cookie"],
+define(["jquery"],
 	function(jQuery) {
 
 		'use strict';

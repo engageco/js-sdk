@@ -1,12 +1,13 @@
 define("EngageSDK", ["require",
-		"jquery",
+        "jquery",
 		"engage-sdk/utils/PresenceMonitor",
         "engage-sdk/utils/UserPageTracker",
         "engage-sdk/services/BaseRESTService",
         "engage-sdk/services/ServiceQueue",
         "engage-sdk/services/GetUsersService",
         "event-dispatcher/Event",
-		"headjs"],
+		"headjs",
+        "jquery.cookie"],
 	function(require, jQuery, PresenceMonitor, UserPageTracker, BaseRESTService, ServiceQueue, GetUsersService, Event) {
 
 		"use strict";
@@ -61,6 +62,22 @@ define("EngageSDK", ["require",
 				this.widget.setVisibility(isVisible);
 			}
 		};
+
+        EngageSDK.prototype.setLocalProperty = function(name, value) {
+            if(window.localStorage) {
+                window.localStorage.setItem(name, value);
+            }else {
+                jQuery.cookie(name, value);
+            }
+        };
+
+        EngageSDK.prototype.getLocalProperty = function(name) {
+            if(window.localStorage) {
+                return window.localStorage.getItem(name);
+            }else {
+                return jQuery.cookie(name);
+            }
+        };
 
 		// find script and look for config; if found init script
 		var currentScript = document.currentScript;
