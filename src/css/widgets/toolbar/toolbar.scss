@@ -1,4 +1,5 @@
 @import "../../../js/components/bourbon/app/assets/stylesheets/_bourbon.scss";
+@import "directory.scss";
 
 $tab-radius: 10px;
 $tab-width: 50px;
@@ -12,6 +13,8 @@ $drawer-height: 400px;
 $drawer-radius: 10px;
 
 $bubble-width: 175px;
+
+
 
 @mixin phone() {
     @media only screen and (max-device-width: 767px), only screen and (max-width: 767px) {
@@ -586,118 +589,6 @@ $bubble-width: 175px;
             left: -100%;
 		}
 
-        &.engage-directory {
-            > ul {
-                position: relative;
-                list-style: none;
-                margin: 0;
-                padding: 5px;
-                left: 0;
-                right: 20px;
-                > li {
-                    @include box-sizing(border-box);
-                    position: relative;
-                    cursor: pointer;
-                    display: inline-block;
-                    width: 125px;
-                    text-align: center;
-                    margin: 0;
-                    padding: 10px;
-                    border-radius: 5px;
-                    &:hover {
-                        background-color: #eee;
-                    }
-                    .engage-profilePhoto {
-                        margin: 0 auto;
-                        margin-bottom: 10px;
-                    }
-                    .engage-button {
-                        margin: 0 auto;
-                        margin-top: 5px;
-                    }
-                }
-            }
-
-            @mixin list() {
-                > ul > li {
-                    position: relative;
-                    display: block;
-                    width: auto;
-                    left: 0;
-                    right: 0;
-//                    height: 50px;
-                    text-align: left;
-//                    padding: 10px;
-                    margin: 5px;
-                    .engage-profilePhoto {
-                        margin: 5px;
-                    }
-                    .engage-name, .engage-title, .engage-location {
-                        position: absolute;
-                        left: 60px;
-                        width: 130px;
-                        @include phone() {
-                            width: 210px;
-                        }
-                    }
-                    .engage-name {
-                        top: 15px;
-                    }
-                    .engage-title {
-                        top: 30px;
-                    }
-                    .engage-location {
-                        top: 40px;
-                    }
-                    .engage-button {
-                        position: absolute;
-                        right: 10px;
-                        top: 12px;
-                    }
-                }
-            }
-            &.engage-list {
-                @include list();
-            }
-            @include phone() {
-                @include list();
-            }
-        }
-
-        &.engage-profile {
-            text-align: center;
-            .engage-profilePhoto {
-                margin: 20px auto;
-            }
-            .engage-name {
-                font-size: 18px;
-            }
-            .engage-title, .engage-location {
-                font-size: 13px;
-            }
-            hr {
-                width: 20%;
-                border: 0;
-                height: 1px;
-                background: #eaeaea;
-                margin: 15px auto;
-            }
-            .engage-bio {
-                font-size: 15px;
-                padding: 0 10%;
-                line-height: 1.3;
-            }
-            .engage-button-row {
-                padding: 10px;
-                .engage-button {
-                    display: inline-block;
-                    padding: 10px;
-                    margin: 5px;
-                    width: 115px;
-                }
-            }
-        }
-
 	}
 
     @include phone() {
@@ -726,113 +617,4 @@ $bubble-width: 175px;
         }
     }
 
-}
-
-.engage-profilePhoto {
-    @include box-sizing(border-box);
-    position: relative;
-    width: 75px;
-    height: 75px;
-    margin: 6px;
-    .engage-photo {
-        width: 100%;
-        height: 100%;
-        border-radius: 30%;
-        overflow: hidden;
-//        background-color: #fff;
-        > img {
-            width: 100%;
-        }
-        &.no-photo {
-            background-image: url(images/user.png);
-            background-size: 100%;
-            > img {
-                display: none;
-            }
-        }
-    }
-    &.engage-small {
-        width: 40px;
-        height: 40px;
-        >.engage-statusIndicator {
-            top: -6px;
-            right: -6px;
-            width: 18px;
-            height: 18px;
-        }
-    }
-    &.engage-tiny {
-        width: 30px;
-        height: 30px;
-        margin: 8px;
-        >.engage-statusIndicator {
-            top: -6px;
-            right: -6px;
-            width: 16px;
-            height: 16px;
-        }
-    }
-    >.engage-statusIndicator {
-        @include box-sizing(border-box);
-        position: absolute;
-        top: -3px;
-        right: -3px;
-        width: 21px;
-        height: 21px;
-        background-color: #f36868;
-        border: {
-            radius: 100%;
-            color: #fff;
-            style: solid;
-            width: 3px;
-        }
-        &.engage-online {
-            background-color: #62d9a4;
-        }
-    }
-}
-
-.engage-name, .engage-title, .engage-location {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
-.engage-name {
-    font-size: 13px;
-    color: #212121;
-}
-.engage-title, .engage-location {
-    font-size: 11px;
-    color: #49a1d6;
-}
-.engage-bio {
-    font-size: 11px;
-    color: #666666;
-}
-
-.engage-button {
-    @include box-sizing(border-box);
-    display: block;
-    background-color: #56b68b;
-    color: #fff;
-    cursor: pointer;
-    font-size: 13px;
-    width: 100px;
-    text-align: center;
-    padding: 5px;
-    border-radius: 4px;
-    border: {
-        color: #56b68b;
-        style: solid;
-        width: 1px;
-    }
-    &.engage-outline {
-        color: #56b68b;
-        background-color: #fff;
-
-    }
-    &.engage-button-blue {
-        background-color: #49a1d6;
-        border-color: #49a1d6;
-    }
 }
