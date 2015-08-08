@@ -1,5 +1,3 @@
-@import "../../../js/components/bourbon/app/assets/stylesheets/_bourbon.scss";
-
 @mixin phone() {
     @media only screen and (max-device-width: 767px), only screen and (max-width: 767px) {
         @content;
