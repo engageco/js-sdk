@@ -61,7 +61,7 @@ module.exports = function(grunt) {
 
         watch: {
             "scss-toolbar": {
-                files: "src/css/widgets/toolbar/toolbar.scss",
+                files: "src/css/widgets/toolbar/*.scss",
                 tasks: ["sass:toolbar"]
             },
             "js-sdk": {

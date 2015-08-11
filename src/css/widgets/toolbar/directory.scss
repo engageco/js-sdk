@@ -17,7 +17,7 @@
             position: relative;
             cursor: pointer;
             display: inline-block;
-            width: 125px;
+            width: 120px;
             text-align: center;
             margin: 0;
             padding: 10px;
@@ -184,6 +184,7 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    text-decoration: none;
 }
 .engage-name {
     font-size: 13px;
@@ -200,6 +201,7 @@
 
 .engage-button {
     @include box-sizing(border-box);
+    text-decoration: none;
     display: block;
     background-color: #56b68b;
     color: #fff;
