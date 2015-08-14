@@ -58,10 +58,11 @@ define(["jquery"],
 			var body = jQuery("body");
 			this.currentPageData.viewport.xpos = body.scrollLeft();
 			this.currentPageData.viewport.ypos = body.scrollTop();
-			this.currentPageData.viewport.width = body.width();
-			this.currentPageData.viewport.height = body.height();
-			this.currentPageData.viewport.pwidth = body.get(0).scrollWidth;
-			this.currentPageData.viewport.pheight = body.get(0).scrollHeight;
+			this.currentPageData.viewport.width = jQuery(window).width(); //body.width();
+			this.currentPageData.viewport.height = jQuery(window).height(); //body.height();
+			this.currentPageData.viewport.pwidth = Math.max(body.get(0).scrollWidth, jQuery(window).width());
+			this.currentPageData.viewport.pheight = Math.max(body.get(0).scrollHeight, jQuery(window).height());
+            //console.log(this.currentPageData.viewport);
 			onPushPageActivityToIframe.apply(this);
 		}
 
