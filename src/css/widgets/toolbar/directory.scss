@@ -185,6 +185,7 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     text-decoration: none;
+    line-height: 1.1;
 }
 .engage-name {
     font-size: 13px;
@@ -193,6 +194,7 @@
 .engage-title, .engage-location {
     font-size: 11px;
     color: #49a1d6;
+    min-height: 12px;
 }
 .engage-bio {
     font-size: 11px;
