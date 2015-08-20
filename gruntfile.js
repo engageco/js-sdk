@@ -127,6 +127,19 @@ module.exports = function(grunt) {
             }
         },
 
+        uglify: {
+            compile: {
+                options: {
+                    mangle: true,
+                    preserveComments: false
+                },
+                files: {
+                    'build/sdk.js': ['build/sdk.js'],
+                    'build/toolbar.js': ['build/toolbar.js']
+                }
+            }
+        }
+
         // copy: {
         //     build: {
         //         files: [
@@ -169,9 +182,10 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks("grunt-contrib-requirejs");
     grunt.loadNpmTasks("grunt-contrib-sass");
     grunt.loadNpmTasks("grunt-contrib-watch");
+    grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks("grunt-concurrent");
 
-    grunt.registerTask("build", ["sass:toolbar", "requirejs:sdk", "requirejs:toolbar"]);
+    grunt.registerTask("build", ["sass:toolbar", "requirejs:sdk", "requirejs:toolbar", "uglify:compile"]);
     grunt.registerTask("default", ["concurrent:compile"]);
 
 };
