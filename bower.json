@@ -11,7 +11,6 @@
     "gibberish-aes": "*",
     "event-dispatcher": "https://github.com/patterson/event-dispatcher.git",
     "CryptoJS": "~3.1.12",
-    "almond": "~0.3.1",
     "headjs": "~1.0.3",
     "jquery-cookie": "~1.4.1",
     "jquery.pagevisibility": "https://github.com/dcherman/jquery.pagevisibility.git#~0.2.2"

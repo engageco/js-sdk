@@ -12,17 +12,36 @@ module.exports = function(grunt) {
                     out: "build/sdk.js",
                     baseUrl: "src/js",
                     paths: {
-                        almond: "components/almond/almond",
+                    //    //almond: "components/almond/almond",
+                    //    "event-dispatcher": "components/event-dispatcher/src",
                         EngageSDK: "engage-sdk/sdk"
                     },
-                    include: ["almond", "EngageSDK"],
-                    wrap: {
-                        startFile: "src/js/engage-sdk/wrapStart.txt",
-                        endFile: "src/js/engage-sdk/wrapEnd.txt"
-                    },
+                    include: [
+                        "gibberish.aes",
+                        "event-dispatcher/EventDispatcher",
+                        "engage-sdk/services/BaseRESTService",
+                        "engage-sdk/services/KeepAliveService",
+                        "EngageSDK"
+                    ],
+                    //wrap: {
+                    //    startFile: "src/js/engage-sdk/wrapStart.txt",
+                    //    endFile: "src/js/engage-sdk/wrapEnd.txt"
+                    //},
                     generateSourceMaps: false,
                     preserveLicenseComments: false,
-                    optimize: "none"
+                    optimize: "none",
+                    onModuleBundleComplete: function (data) {
+                        var fs = require('fs');
+                        var amdclean = require('amdclean');
+                        var outputFile = data.path;
+                        fs.writeFileSync(outputFile, amdclean.clean({
+                            "filePath": outputFile,
+                            "wrap": {
+                                "start": ";(function (root, factory) {if (typeof define === 'function' && define.amd) {define([], factory);} else {root.EngageSDK = factory();}}(this, function() {",
+                                "end": "return EngageSDK;}));"
+                            }
+                        }));
+                    }
                 }
             },
             toolbar: {
@@ -31,18 +50,37 @@ module.exports = function(grunt) {
                     out: "build/toolbar.js",
                     baseUrl: "src/js",
                     paths: {
-                        almond: "components/almond/almond",
+                        //almond: "components/almond/almond",
                         EngageToolbar: "widgets/toolbar/toolbar"
                     },
-                    include: ["almond", "EngageToolbar"],
+                    include: ["EngageToolbar"],
                     exclude: ["jquery"],
-                    wrap: {
-                        startFile: "src/js/widgets/toolbar/wrapStart.txt",
-                        endFile: "src/js/widgets/toolbar/wrapEnd.txt"
-                    },
+                    //wrap: {
+                    //    startFile: "src/js/widgets/toolbar/wrapStart.txt",
+                    //    endFile: "src/js/widgets/toolbar/wrapEnd.txt"
+                    //},
                     generateSourceMaps: false,
                     preserveLicenseComments: false,
-                    optimize: "none"
+                    optimize: "none",
+                    onModuleBundleComplete: function (data) {
+                        var fs = require('fs');
+                        var amdclean = require('amdclean');
+                        var outputFile = data.path;
+                        fs.writeFileSync(outputFile, amdclean.clean({
+                            "filePath": outputFile,
+                            "wrap": {
+                                "start": ";(function (root, factory) {" +
+                                            "if (typeof define === 'function' && define.amd) {" +
+                                                "define(['jquery', 'EngageSDK'], factory);" +
+                                            "} else {" +
+                                                "root.EngageToolbar = factory(root.jQuery, root.EngageSDK);" +
+                                            "}" +
+                                        "}(this, function(jQuery, EngageSDK) {" +
+                                            "var jquery = jQuery;",
+                                "end": "return EngageToolbar;}));"
+                            }
+                        }));
+                    }
                 }
             }
         },

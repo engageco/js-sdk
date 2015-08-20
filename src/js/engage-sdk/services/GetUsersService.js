@@ -4,8 +4,7 @@
  * @author Danny Patterson
  */
 
-define("GetUsersService",
-       ["jquery",
+define(["jquery",
 		"engage-sdk/services/BaseRESTService",
 		"event-dispatcher/Event"],
 	function(jQuery, BaseRESTService, Event) {

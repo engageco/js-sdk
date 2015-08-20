@@ -3,7 +3,8 @@ require.config({
         baseUrl: "js",
         urlArgs: "v=@@version",
         paths: {
-                "event-dispatcher": "components/event-dispatcher/src",
+                "event-dispatcher/Event": "components/event-dispatcher/src/Event",
+                "event-dispatcher/EventDispatcher": "components/event-dispatcher/src/EventDispatcher",
                 "jquery": "components/jquery/dist/jquery",
                 "jquery.cookie": "components/jquery-cookie/jquery.cookie",
                 "jquery.pagevisibility": "components/jquery.pagevisibility/jquery.pagevisibility",

@@ -18,5 +18,8 @@
   "scripts": {
     "postinstall": "bower install",
     "prestart": "npm install"
+  },
+  "devDependencies": {
+    "amdclean": "^2.7.0"
   }
 }

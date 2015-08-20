@@ -4,8 +4,7 @@
  * @author Danny Patterson
  */
 
-define("ScreenController",
-      ["jquery"],
+define(["jquery"],
 	function(jQuery) {
 
 		'use strict';

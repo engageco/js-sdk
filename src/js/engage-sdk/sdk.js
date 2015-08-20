@@ -25,7 +25,6 @@ define("EngageSDK", ["require",
 			// todo: initialize browser preview and start tracking the user
 			var userPageTracker = new UserPageTracker(companyHash);
 			userPageTracker.init();
-
 		};
 
 		EngageSDK.prototype.getUsers = function(categorySlug, callback) {

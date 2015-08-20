@@ -4,8 +4,7 @@
  * @author Danny Patterson
  */
 
-define("UserPageTracker",
-      ["jquery"],
+define(["jquery"],
 	function(jQuery) {
 
 		'use strict';
