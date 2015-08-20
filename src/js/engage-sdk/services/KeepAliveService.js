@@ -4,7 +4,8 @@
  * @author Danny Patterson
  */
 
-define(["jquery",
+define("KeepAliveService",
+       ["jquery",
 		"engage-sdk/services/BaseRESTService",
 		"event-dispatcher/Event"],
 	function(jQuery, BaseRESTService, Event) {

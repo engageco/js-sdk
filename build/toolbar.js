@@ -445,7 +445,8 @@ define("almond", function(){});
  * @author Danny Patterson
  */
 
-define('engage-sdk/utils/ScreenController',["jquery"],
+define("ScreenController",
+      ["jquery"],
 	function(jQuery) {
 
 		'use strict';
@@ -556,13 +557,16 @@ define('engage-sdk/utils/ScreenController',["jquery"],
 		return ScreenController;
 
 	});
+define("engage-sdk/utils/ScreenController", function(){});
+
 /**
  *
  *
  * @author Danny Patterson
  */
 
-define('widgets/utils/SortOrderUtil',["jquery"],
+define("SortOrderUtil",
+      ["jquery"],
 	function(jQuery) {
 
 		'use strict';
@@ -627,6 +631,8 @@ define('widgets/utils/SortOrderUtil',["jquery"],
 		return SortOrderUtil;
 
 	});
+define("widgets/utils/SortOrderUtil", function(){});
+
 define("EngageToolbar", ["jquery",
         "engage-sdk/utils/ScreenController",
         "widgets/utils/SortOrderUtil"],

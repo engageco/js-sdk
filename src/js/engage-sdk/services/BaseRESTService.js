@@ -4,7 +4,8 @@
  * @author Danny Patterson
  */
 
-define(["jquery",
+define("BaseRESTService",
+       ["jquery",
 		"event-dispatcher/EventDispatcher",
 		"gibberish.aes","crypto.sha1"],
 	function(jQuery, EventDispatcher, GibberishAES) {

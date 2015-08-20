@@ -4,7 +4,8 @@
  * @author Danny Patterson
  */
 
-define(["jquery"],
+define("SortOrderUtil",
+      ["jquery"],
 	function(jQuery) {
 
 		'use strict';

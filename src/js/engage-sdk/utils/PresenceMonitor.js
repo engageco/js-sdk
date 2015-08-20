@@ -4,7 +4,8 @@
  * @author Danny Patterson
  */
 
-define(["jquery",
+define("PresenceMonitor",
+       ["jquery",
 		"event-dispatcher/EventDispatcher",
 		"event-dispatcher/Event"],
 	function(jQuery, EventDispatcher, Event) {

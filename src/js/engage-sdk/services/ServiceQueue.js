@@ -4,7 +4,8 @@
  * @author Danny Patterson
  */
 
-define(["jquery",
+define("ServiceQueue",
+       ["jquery",
 		"engage-sdk/services/KeepAliveService",
 		"event-dispatcher/EventDispatcher",
 		"event-dispatcher/Event"],
