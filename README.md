@@ -13,12 +13,14 @@ var engage = new EngageSDK("COMPANY_HASH");
 
 **Get all the Agents in the Company**
 ```
-engage.getUsers();
+engage.getUsers(null, function(users) {
+	for(var i = 0; i < this.users.length; i++) {}
+});
 ```
 
 **Get all the Agents in a Category**
 ```
-engage.getUsers("customer-facing-team");
+engage.getUsers("customer-facing-team", function(users) {});
 ```
 
 **Watch for any change to an Agent's status**
@@ -137,5 +139,43 @@ engage.drawToolbar({}, function(toolbar) {
 });
 ```
 
-**Toolbar Configuration Options**
+#### Toolbar Configuration Options ####
 
+- **category** *(optional)* Specify the category slug of the group of users you want to load into the toolbar.  If this is not included then all users from the company will be loaded.
+
+- **directoryTitle** *(optional)* The title you want shown at the top of the directory view of the toolbar widget.  If this is not included in the options then no title will be shown.
+
+- **tabPlacement** *(optional)* This option inducates the placement of the widget on the page.  Valid placements are left-tab, right-tab, top-left-tab, top-right-tab, bottom-left-tab, bottom-right-tab and bottom-toolbar.  The default placement is right-tab.
+
+- **disableMobileView** *(optional)*
+
+- **onlineLabel** *(optional)*
+
+- **offlineLabel** *(optional)*
+
+- **labelOrientation** *(optional)*
+
+- **backgroundColor** *(optional)*
+
+- **labelColor** *(optional)*
+
+- **hideTabOffline** *(optional)*
+
+- **hideOfflineAgents** *(optional)*
+
+- **showOnlineAgentsFirst** *(optional)*
+
+- **agentOrder** *(optional)*
+
+- **showAgentLocation** *(optional)*
+
+- **showListOnly** *(optional)*
+
+- **showSearch** *(optional)* Coming soon!
+
+- **directoryUrl** *(optional)*
+
+- **proactive** *(optional)* If provided this option defines the proactive component to the toolbar.  It has three sub-options:
+  - **message** *(required)* This is the message you want to show up inside the proactive bubble
+  - **delay** *(optional)* This defines (in milliseconds) when the proactive bubble will show after the page is loaded.  If not provided this will default to 1 second (or 1000 milliseconds).
+  - **frequency** *(optional)* This defines (in minutes) how often the visitor will see the proactive bubble.  If not provided this will default to 24 hours (or 1440 minutes).
