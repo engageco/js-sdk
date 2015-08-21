@@ -37,7 +37,13 @@ module.exports = function(grunt) {
                         fs.writeFileSync(outputFile, amdclean.clean({
                             "filePath": outputFile,
                             "wrap": {
-                                "start": ";(function (root, factory) {if (typeof define === 'function' && define.amd) {define([], factory);} else {root.EngageSDK = factory();}}(this, function() {",
+                                "start": ";(function (root, factory) {" +
+                                                "if (typeof define === 'function' && define.amd) {" +
+                                                    "define([], factory);" +
+                                                "} else {" +
+                                                    "root.EngageSDK = factory();" +
+                                                "}" +
+                                            "}(this, function() {",
                                 "end": "return EngageSDK;}));"
                             }
                         }));
@@ -70,13 +76,13 @@ module.exports = function(grunt) {
                             "filePath": outputFile,
                             "wrap": {
                                 "start": ";(function (root, factory) {" +
-                                            "if (typeof define === 'function' && define.amd) {" +
-                                                "define(['jquery', 'EngageSDK'], factory);" +
-                                            "} else {" +
-                                                "root.EngageToolbar = factory(root.jQuery, root.EngageSDK);" +
-                                            "}" +
-                                        "}(this, function(jQuery, EngageSDK) {" +
-                                            "var jquery = jQuery;",
+                                                "if (typeof define === 'function' && define.amd) {" +
+                                                    "define(['jquery', 'EngageSDK'], factory);" +
+                                                "} else {" +
+                                                    "root.EngageToolbar = factory(root.jQuery, root.EngageSDK);" +
+                                                "}" +
+                                            "}(this, function(jQuery, EngageSDK) {" +
+                                                "var jquery = jQuery;",
                                 "end": "return EngageToolbar;}));"
                             }
                         }));
@@ -185,7 +191,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks("grunt-concurrent");
 
-    grunt.registerTask("build", ["sass:toolbar", "requirejs:sdk", "requirejs:toolbar", "uglify:compile"]);
+    grunt.registerTask("build", ["sass:toolbar", "requirejs:sdk", "requirejs:toolbar"]); //"uglify:compile"
     grunt.registerTask("default", ["concurrent:compile"]);
 
 };
