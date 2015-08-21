@@ -44,21 +44,35 @@ if(engage.presence.getUserStatus("user_domain") == "online") {
 	// do something
 }
 ```
-**Draw Widget**
+**Draw Toolbar Widget**
 ```
-var widgetOptions = {
-	type: "toolbar",
-	options: {
-		"tabPlacement": "right-tab",
-		"onlineLabel": "Online! Chat Now!",
-		"offlineLabel": "Meet Our Team!",
-		"backgroundColor": "#004400",
-		"labelColor": "#00ff00"
-	}
-};
-engage.drawWidget(widgetOptions, function(toolbar) {
-	// do something to the toolbar
-});
+engage.drawWidget({
+		type: "toolbar",
+		options: {
+			"tabPlacement": "right-tab",
+			"onlineLabel": "Online! Chat Now!",
+			"offlineLabel": "Meet Our Team!",
+			"backgroundColor": "#004400",
+			"labelColor": "#00ff00"
+		}
+	},
+	function(toolbar) {
+		// do something to the toolbar
+	});
+```
+**Draw Custom Widget**
+```
+engage.drawWidget({
+		type: "custom",
+		js: "path/to/your.js",
+		css: "path/to/your.css"
+		options: {
+			"customProp": "Hello World"
+		}
+	},
+	function(widget) {
+		// do something to the widget
+	});
 ```
 **Hide Widget**
 ```
@@ -85,12 +99,15 @@ Toolbar Widget
 <script src="//sdk.engage.co/sdk.js"></script>
 <script>
 	var engage = new EngageSDK("COMPANY_HASH");
-	engage.drawToolbar({
-		"tabPlacement": "left-tab",
-		"onlineLabel": "Online! Chat Now!",
-		"offlineLabel": "Meet Our Team!",
-		"backgroundColor": "#004400",
-		"labelColor": "#00ff00"
+	engage.drawWidget({
+		type: "toolbar",
+		options: {
+			tabPlacement: "left-tab",
+			onlineLabel: "Online! Chat Now!",
+			offlineLabel: "Meet Our Team!",
+			backgroundColor: "#004400",
+			labelColor: "#00ff00"
+		}
 	}, function(toolbar) {
 		// do something to the toolbar
 	});
@@ -99,7 +116,7 @@ Toolbar Widget
 
 **Set Toolbar Options after Initialization**
 ```
-engage.drawToolbar({}, function(toolbar) {
+engage.drawToolbar({type:"toolbar"}, function(toolbar) {
 	toolbar.setOption("tabPlacement", "left-tab");
 	toolbar.setOption("onlineLabel", "Online! Chat Now!");
 	toolbar.setOption("offlineLabel", "Meet Our Team!");
