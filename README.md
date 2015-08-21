@@ -147,33 +147,33 @@ engage.drawToolbar({}, function(toolbar) {
 
 - **tabPlacement** *(optional)* This option inducates the placement of the widget on the page.  Valid placements are left-tab, right-tab, top-left-tab, top-right-tab, bottom-left-tab, bottom-right-tab and bottom-toolbar.  The default placement is right-tab.
 
-- **disableMobileView** *(optional)*
+- **disableMobileView** *(optional)* This option allows you to disable the mobile view that is enabled by default.  The mobile view moves the tab into the bottom-toolbar placement and makes the directory view the full size of the page.
 
-- **onlineLabel** *(optional)*
+- **onlineLabel** *(optional)* This specifies the label that should be displayed when at least one user is online.  If not provided it will default to "Chat".
 
-- **offlineLabel** *(optional)*
+- **offlineLabel** *(optional)* This specifies the label that should be displayed when all users are offline.  If not provided it will default to "Chat".
 
-- **labelOrientation** *(optional)*
+- **labelOrientation** *(optional)* If the left-tab and right-tab placements, this option allows you to flip the orientation of the label.  The value "flipped" is currently the only supportted value.
 
-- **backgroundColor** *(optional)*
+- **backgroundColor** *(optional)* This option specifices the color of the tab.  It defaults to black (#000).
 
-- **labelColor** *(optional)*
+- **labelColor** *(optional)* This option specifices the color of the tab's label text.  It defaults to white (#fff).
 
-- **hideTabOffline** *(optional)*
+- **hideTabOffline** *(optional)*  If set to true, this option allows you to hide the entire tab if there are no users online.  This option defaults to false.
 
-- **hideOfflineAgents** *(optional)*
+- **hideOfflineAgents** *(optional)* If set to true, this option allows you to hide any agents that are currently offline, away or busy.  This option defaults to false.
 
-- **showOnlineAgentsFirst** *(optional)*
+- **agentOrder** *(optional)* This option allows you to specify the desired sort order of the agents in the directory.  Valid options are last-chat, random and alpha.  The default value is last-chat.
 
-- **agentOrder** *(optional)*
+- **showOnlineAgentsFirst** *(optional)* If set to true, this option allows you sort online agents before all other agents in the directory.  This still opperates within the defined agent order.  This option defaults to true.
 
-- **showAgentLocation** *(optional)*
+- **showAgentLocation** *(optional)* If set to true, the agents city and state will be shown in the directory view.  This option defaults to false.
 
-- **showListOnly** *(optional)*
+- **showListOnly** *(optional)* If set to true, the directory will always show as a vertical list.  Otherwise the list view is reserved for mobile viewing only and the grid view is used for tablet and desktop viewing.  This option defaults to false.
 
 - **showSearch** *(optional)* Coming soon!
 
-- **directoryUrl** *(optional)*
+- **directoryUrl** *(optional)* If a URL is provided, a link will show in the footer of the directory that will take people to the provided page in a new tab.  We suggest you put your Engage Directory URL in this option.  If nothing is provided then this link is not displayed.
 
 - **proactive** *(optional)* If provided this option defines the proactive component to the toolbar.  It has three sub-options:
   - **message** *(required)* This is the message you want to show up inside the proactive bubble
