@@ -3,75 +3,139 @@ Javascript SDK
 
 **Load SDK into Page**
 ```
-<script src="//sdk.engage.co/v2/EngageSDK.js"></script>
+<script src="//sdk.engage.co/sdk.js"></script>
 ```
 
 **Initialize Engage SDK Object**
 ```
-var engage = new EngageSDK("cb15f03f140f28d81223f7b7c64e3a0d");
+var engage = new EngageSDK("COMPANY_HASH");
 ```
 
 **Get all the Agents in the Company**
 ```
-var allAgents = engage.getAgentCollection();
+engage.getUsers();
 ```
-
-**TODO: Get Agents by Geolocation**
 
 **Get all the Agents in a Category**
 ```
-var customerFacingTeam = engage.getAgentCollection("customer-facing-team");
+engage.getUsers("customer-facing-team");
 ```
 
-**Watch for any change to an Agent's status in the Collection**
+**Watch for any change to an Agent's status**
 ```
-customerFacingTeam.watchStatus(function() {
-	// todo: callback
+engage.presence.watchUser("user_domain", function(status, domain) {
+	if(status == "online") {
+		// do something
+	}
 });
+engage.presence.start();
 ```
 
 **Unwatch Agent Status changes in the Collection**
 ```
-customerFacingTeam.unwatchStatus();
-```
-
-**Loop through Agents in a Collection**
-```
-var agents = customerFacingTeam.getAgents();
-for(var i = 0; i < agents.length; i++) {
-
-}
-```
-
-**Get an Agent**
-```
-var johndoe = customerFacingTeam.getAgent("johndoe");
-```
-
-**Watch for the Agent's Status Changes**
-```
-johndoe.watchStatus(function() {
-	// todo: callback
-});
-```
-
-**Unwatch the Agent's Status Changes**
-```
-johndoe.unwatchStatus();
+engage.presence.unwwatchUser("user_domain");
 ```
 
 **Check an Agent's Status**
 ```
-if(johndoe.status == EngageSDK.STATUS.ONLINE) {
-
+if(engage.presence.getUserStatus("user_domain") == "online") {
+	// do something
 }
 ```
+**Draw Widget**
+```
+var widgetOptions = {
+	type: "toolbar",
+	options: {
+		"tabPlacement": "right-tab",
+		"onlineLabel": "Online! Chat Now!",
+		"offlineLabel": "Meet Our Team!",
+		"backgroundColor": "#004400",
+		"labelColor": "#00ff00"
+	}
+};
+engage.drawWidget(widgetOptions, function(toolbar) {
+	// do something to the toolbar
+});
+```
+**Hide Widget**
+```
+engage.setWidgetVisibility(false);
+```
+**Show Widget**
+```
+engage.setWidgetVisibility(true);
+```
+**Store Local Property**
+```
+engage.setLocalProperty("name", "value");
+```
+**Retreive Local Property**
+```
+engage.getLocalProperty("name");
+```
 
-**TODO: Listen for "flag" events**
-	***currently chating with***
-	***recently chatted with***
 
-**TODO: proactive chat events**
+Toolbar Widget
+======
+**Standard Toolbar Implementation**
+```
+<script src="//sdk.engage.co/sdk.js"></script>
+<script>
+	var engage = new EngageSDK("COMPANY_HASH");
+	engage.drawToolbar({
+		"tabPlacement": "left-tab",
+		"onlineLabel": "Online! Chat Now!",
+		"offlineLabel": "Meet Our Team!",
+		"backgroundColor": "#004400",
+		"labelColor": "#00ff00"
+	}, function(toolbar) {
+		// do something to the toolbar
+	});
+</script>
+```
 
-**TODO: tap into browser preview**
+**Set Toolbar Options after Initialization**
+```
+engage.drawToolbar({}, function(toolbar) {
+	toolbar.setOption("tabPlacement", "left-tab");
+	toolbar.setOption("onlineLabel", "Online! Chat Now!");
+	toolbar.setOption("offlineLabel", "Meet Our Team!");
+	toolbar.setOption("backgroundColor", "#004400");
+	toolbar.setOption("labelColor", "#00ff00");
+});
+```
+
+**Set Toolbar Visibility**
+```
+engage.drawToolbar({}, function(toolbar) {
+	// note: false is hide and true is show
+	toolbar.setVisibility(false);
+});
+```
+
+**Manually open Toolbar Directory**
+```
+engage.drawToolbar({}, function(toolbar) {
+	toolbar.openDrawer();
+});
+```
+
+**Manually close Toolbar Directory**
+```
+engage.drawToolbar({}, function(toolbar) {
+	toolbar.closeDrawer();
+});
+```
+
+**Check if anyone is online**
+```
+engage.drawToolbar({}, function(toolbar) {
+	if(!toolbar.isAnyoneOnline()) {
+		toolbar.setVisibility(false);
+	}
+});
+```
+
+**Toolbar Configuration Options**
 
