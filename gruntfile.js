@@ -195,7 +195,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks("grunt-concurrent");
 
-    grunt.registerTask("build", ["sass:toolbar", "requirejs:sdk", "requirejs:toolbar"]); //"uglify:compile"
+    grunt.registerTask("build", ["sass:toolbar", "requirejs:sdk", "requirejs:toolbar", "uglify:compile"]);
     grunt.registerTask("default", ["concurrent:compile"]);
 
 };
