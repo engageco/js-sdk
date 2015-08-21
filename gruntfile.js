@@ -38,13 +38,15 @@ module.exports = function(grunt) {
                             "filePath": outputFile,
                             "wrap": {
                                 "start": ";(function (root, factory) {" +
-                                                "if (typeof define === 'function' && define.amd) {" +
-                                                    "define([], factory);" +
-                                                "} else {" +
-                                                    "root.EngageSDK = factory();" +
-                                                "}" +
+                                                "root.EngageSDK = factory();" +
                                             "}(this, function() {",
-                                "end": "return EngageSDK;}));"
+                                "end": "if(typeof define === 'function' && define.amd ) {" +
+                                            "define('EngageSDK', [], function() {" +
+                                                "return EngageSDK;" +
+                                            "});" +
+                                        "}" +
+                                        "return EngageSDK;" +
+                                    "}));"
                             }
                         }));
                     }
@@ -76,14 +78,16 @@ module.exports = function(grunt) {
                             "filePath": outputFile,
                             "wrap": {
                                 "start": ";(function (root, factory) {" +
-                                                "if (typeof define === 'function' && define.amd) {" +
-                                                    "define(['jquery', 'EngageSDK'], factory);" +
-                                                "} else {" +
-                                                    "root.EngageToolbar = factory(root.jQuery, root.EngageSDK);" +
-                                                "}" +
+                                                "root.EngageToolbar = factory(root.jQuery, root.EngageSDK);" +
                                             "}(this, function(jQuery, EngageSDK) {" +
                                                 "var jquery = jQuery;",
-                                "end": "return EngageToolbar;}));"
+                                "end": "if(typeof define === 'function' && define.amd ) {" +
+                                            "define('EngageToolbar', [], function() {" +
+                                                "return EngageToolbar;" +
+                                            "});" +
+                                        "}" +
+                                        "return EngageToolbar;" +
+                                    "}));"
                             }
                         }));
                     }

@@ -1,4 +1,4 @@
-;(function (root, factory) {if (typeof define === 'function' && define.amd) {define([], factory);} else {root.EngageSDK = factory();}}(this, function() {/**
+;(function (root, factory) {root.EngageSDK = factory();}(this, function() {/**
 * @license Gibberish-AES 
 * A lightweight Javascript Libray for OpenSSL compatible AES CBC encryption.
 *
@@ -9970,4 +9970,4 @@ EngageSDK = function (require, jQuery, PresenceMonitor, UserPageTracker, BaseRES
     }
   }
   return EngageSDK;
-}({}, jquery, engage_sdk_utils_PresenceMonitor, engage_sdk_utils_UserPageTracker, engage_sdk_services_BaseRESTService, engage_sdk_services_ServiceQueue, engage_sdk_services_GetUsersService, event_dispatcher_Event);return EngageSDK;}));
+}({}, jquery, engage_sdk_utils_PresenceMonitor, engage_sdk_utils_UserPageTracker, engage_sdk_services_BaseRESTService, engage_sdk_services_ServiceQueue, engage_sdk_services_GetUsersService, event_dispatcher_Event);if(typeof define === 'function' && define.amd ) {define('EngageSDK', [], function() {return EngageSDK;});}return EngageSDK;}));

@@ -1,4 +1,4 @@
-;(function (root, factory) {if (typeof define === 'function' && define.amd) {define(['jquery', 'EngageSDK'], factory);} else {root.EngageToolbar = factory(root.jQuery, root.EngageSDK);}}(this, function(jQuery, EngageSDK) {var jquery = jQuery;/**
+;(function (root, factory) {root.EngageToolbar = factory(root.jQuery, root.EngageSDK);}(this, function(jQuery, EngageSDK) {var jquery = jQuery;/**
  *
  *
  * @author Danny Patterson
@@ -515,4 +515,4 @@ EngageToolbar = function (jQuery, ScreenController, SortOrderUtil) {
     return false;
   };
   return EngageToolbar;
-}(jquery, engage_sdk_utils_ScreenController, widgets_utils_SortOrderUtil);return EngageToolbar;}));
+}(jquery, engage_sdk_utils_ScreenController, widgets_utils_SortOrderUtil);if(typeof define === 'function' && define.amd ) {define('EngageToolbar', [], function() {return EngageToolbar;});}return EngageToolbar;}));
