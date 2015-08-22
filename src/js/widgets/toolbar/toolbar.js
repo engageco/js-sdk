@@ -129,7 +129,7 @@ define("EngageToolbar", ["jquery",
                     this.bubble.data("user", user);
                     this.bubble.find(".engage-name").text(user.firstName + " " + user.lastName);
                     this.bubble.find(".engage-title").text(user.title);
-                    var proactiveDelay = this.options.proactive.delay ? this.options.proactive.delay : 100;
+                    var proactiveDelay = this.options.proactive.delay ? this.options.proactive.delay : 1000;
                     clearTimeout(this.showProactiveBubbleTimeout);
                     this.showProactiveBubbleTimeout = setTimeout(jQuery.proxy(onOpenProactiveBubble, this), proactiveDelay);
                 }else {

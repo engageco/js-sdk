@@ -80,17 +80,18 @@ define("EngageSDK", ["require",
 
 		// find script and look for config; if found init script
 		var currentScript = document.currentScript;
-		// console.log(currentScript);
 		if(currentScript != null) {
-			currentScript = document.querySelector("script[data-customer-hash]")
+			currentScript = document.querySelector("script[data-company]")
 		}
 		if(currentScript != null) {
-			var customerHash = currentScript.getAttribute("data-customer-hash");
+			var customerHash = currentScript.getAttribute("data-company");
+            //console.log(customerHash);
 			if(customerHash != null) {
 				var engage = new EngageSDK(customerHash);
-				var widgetConfig = currentScript.getAttribute("data-widget");
+				var widgetConfig = JSON.parse(decodeURIComponent(currentScript.getAttribute("data-widget-config")));
+                //console.log(widgetConfig);
 				if(widgetConfig) {
-					engage.drawWidget(widgetConfig, currentScript.getAttribute("data-category"));
+					engage.drawWidget(widgetConfig);
 				}
 				
 			}
