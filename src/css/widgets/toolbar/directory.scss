@@ -167,7 +167,7 @@
         right: -3px;
         width: 21px;
         height: 21px;
-        background-color: #f36868;
+        background-color: #cc3117;
         border: {
             radius: 100%;
             color: #fff;
@@ -175,7 +175,7 @@
             width: 3px;
         }
         &.engage-online {
-            background-color: #62d9a4;
+            background-color: #33bb00;
         }
     }
 }
@@ -193,7 +193,7 @@
 }
 .engage-title, .engage-location {
     font-size: 11px;
-    color: #49a1d6;
+    color: #30a7e3;
     min-height: 12px;
 }
 .engage-bio {
@@ -205,7 +205,7 @@
     @include box-sizing(border-box);
     text-decoration: none;
     display: block;
-    background-color: #56b68b;
+    background-color: #33bb00;
     color: #fff;
     cursor: pointer;
     font-size: 13px;
@@ -215,17 +215,17 @@
     padding: 5px;
     border-radius: 4px;
     border: {
-        color: #56b68b;
+        color: #33bb00;
         style: solid;
         width: 1px;
     }
     &.engage-outline {
-        color: #56b68b;
+        color: #33bb00;
         background-color: #fff;
 
     }
     &.engage-button-blue {
-        background-color: #49a1d6;
-        border-color: #49a1d6;
+        background-color: #30a7e3;
+        border-color: #30a7e3;
     }
 }
