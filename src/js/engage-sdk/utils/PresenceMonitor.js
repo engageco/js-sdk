@@ -122,7 +122,7 @@ define(["jquery",
 				var jid = getBareJidFromJid(presence.attr("from"));
 				var server = getDomainFromJid(jid);
 				var user = getNodeFromJid(jid);
-				var oldStatus = self.servers[server][user].status;
+				var oldStatus = self.servers[server][user] ? self.servers[server][user].status : "offline";
 				var status = presence.find("status");
 				if(status.length > 0) {
 					if(status.text() == "online") {

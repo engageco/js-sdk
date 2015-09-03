@@ -51,7 +51,7 @@ define("EngageToolbar", ["jquery",
                     '<div class="engage-bubble-message"></div>' +
                     '<div class="engage-name"></div>' +
                     '<div class="engage-title"></div>' +
-                    '<a class="engage-button engage-chat">Chat Now</a>' +
+                    '<a class="engage-button engage-chat">Talk Now</a>' +
                 '</div>');
             this.bubble.on("click", jQuery.proxy(onTabUserClick, this));
             this.bubble.find(".engage-button").on("click", jQuery.proxy(onUserChatClick, this));
@@ -84,7 +84,7 @@ define("EngageToolbar", ["jquery",
                         '<div class="engage-bio"></div>' +
                         '<div class="engage-button-row">' +
                             '<a class="engage-button engage-button-blue">View Profile</a>' +
-                            '<a class="engage-button engage-chat">Start Chat</a>' +
+                            '<a class="engage-button engage-chat">Talk Now</a>' +
                         '</div>' +
                     '</div>' +
                 '</div>');
