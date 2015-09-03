@@ -51,7 +51,7 @@ define("EngageToolbar", ["jquery",
                     '<div class="engage-bubble-message"></div>' +
                     '<div class="engage-name"></div>' +
                     '<div class="engage-title"></div>' +
-                    '<a class="engage-button engage-chat">Talk Now</a>' +
+                    '<a class="engage-button engage-chat">Engage Live</a>' +
                 '</div>');
             this.bubble.on("click", jQuery.proxy(onTabUserClick, this));
             this.bubble.find(".engage-button").on("click", jQuery.proxy(onUserChatClick, this));
@@ -84,7 +84,7 @@ define("EngageToolbar", ["jquery",
                         '<div class="engage-bio"></div>' +
                         '<div class="engage-button-row">' +
                             '<a class="engage-button engage-button-blue">View Profile</a>' +
-                            '<a class="engage-button engage-chat">Talk Now</a>' +
+                            '<a class="engage-button engage-chat">Engage Live</a>' +
                         '</div>' +
                     '</div>' +
                 '</div>');
@@ -175,7 +175,7 @@ define("EngageToolbar", ["jquery",
                             '<div class="engage-name"></div>' +
                             '<div class="engage-title"></div>' +
                             '<div class="engage-location"></div>' +
-                            '<a class="engage-button">Chat Now</a>' +
+                            '<a class="engage-button">Engage Live</a>' +
                         '</li>');
                     if(user.profilePhoto != null && user.profilePhoto != "") {
                         item.find(".engage-photo > img").attr("src", user.profilePhoto);
@@ -204,7 +204,7 @@ define("EngageToolbar", ["jquery",
             item.toggle(online || !this.options.hideOfflineAgents)
 			var button = item.find(".engage-button");
 			button.toggleClass("engage-outline", !online);
-			var label = online ? "Chat Now" : "Send Message";
+			var label = online ? "Engage Live" : "Send Message";
 			button.text(label);
             if(this.currentUser && this.currentUser.domain == domain) {
                 this.profileScreen.find(".engage-statusIndicator").toggleClass("engage-online", online);
@@ -299,7 +299,7 @@ define("EngageToolbar", ["jquery",
 
         var onUpdateLabel = function(event) {
             var labelText = (this.isAnyoneOnline(this)) ? this.options.onlineLabel : this.options.offlineLabel;
-            labelText = (labelText) ? labelText : "Chat";
+            labelText = (labelText) ? labelText : "Engage Live";
             this.tabLabel.text(labelText);
         };
 
