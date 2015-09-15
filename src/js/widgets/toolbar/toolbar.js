@@ -242,7 +242,8 @@ define("EngageToolbar", ["jquery",
                 onShowTabUser.apply(this, [isOnline ? user : null]);
             //}
             onUpdateLabel.apply(this);
-            this.setVisibility(!(this.options.hideTabOffline && !this.isAnyoneOnline()));
+            //this.setVisibility(!(this.options.hideTabOffline && !this.isAnyoneOnline()));
+            updateVisibility.apply(this);
         };
 
 		var onUserClick = function(event) {
@@ -310,6 +311,15 @@ define("EngageToolbar", ["jquery",
                 }else {
                     this.screenController.setScreen(EngageToolbar.SCREENS.DIRECTORY);
                 }
+            }
+        };
+
+        var updateVisibility = function() {
+            var isVisible = (!this.explicitlyHide && !(this.options.hideTabOffline && !this.isAnyoneOnline()));
+            this.tab.toggleClass("engage-hide", !isVisible);
+            if(!isVisible) {
+                this.bubble.toggleClass("engage-show", false);
+                this.drawer.toggleClass("engage-hide", true);
             }
         };
 
@@ -386,7 +396,7 @@ define("EngageToolbar", ["jquery",
                     break;
                 case "directoryUrl":
                     if(this.isInitialized()) {
-                        var link = this.drawer.find(".engage-directory-link")
+                        var link = this.drawer.find(".engage-directory-link");
                         link.attr("href", value);
                         link.toggle(value != null && value != "");
                     }
@@ -419,11 +429,8 @@ define("EngageToolbar", ["jquery",
         };
 
         EngageToolbar.prototype.setVisibility = function(isVisible) {
-            this.tab.toggleClass("engage-hide", !isVisible);
-            if(!isVisible) {
-                this.bubble.toggleClass("engage-show", false);
-                this.drawer.toggleClass("engage-hide", true);
-            }
+            this.explicitlyHide = !isVisible;
+            updateVisibility.apply(this);
         };
 
         EngageToolbar.prototype.isAnyoneOnline = function() {

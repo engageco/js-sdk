@@ -6,6 +6,7 @@ $tab-width: 50px;
 $tab-height: 250px;
 $tab-bottom-offest: 40px;
 $tab-label-size: 18px;
+$tab-show-user-offest: 35px;
 
 $drawer-mobile-width: 320px;
 $drawer-width: 400px;
@@ -52,7 +53,7 @@ $red: #cc3117;
 		height: $tab-height;
 		margin-top: -$tab-height/2;
 		.engage-tab-label {
-			width: 250px;
+			width: $tab-height;
 			// bottom-up text
 			@include transform(rotate(-90deg) translateX(-100%) translateY(($tab-width - $tab-label-size) / 2));
 			@include transform-origin(top left);
@@ -65,12 +66,12 @@ $red: #cc3117;
 		}
         &.engage-show-user {
             > .engage-tab-label {
-                padding-right: 35px;
+                padding-right: $tab-show-user-offest;
                 padding-left: 0;
-                width: 215px;
+                width: $tab-height - $tab-show-user-offest;
                 &.flipped {
                     padding-right: 0;
-                    padding-left: 35px;
+                    padding-left: $tab-show-user-offest;
                 }
             }
         }
@@ -137,9 +138,9 @@ $red: #cc3117;
                 top: 0;
             }
             .engage-tab-label {
-                padding-left: 35px;
+                padding-left: $tab-show-user-offest;
                 padding-right: 0;
-                width: 215px;
+                width: $tab-height - $tab-show-user-offest;
             }
         }
 		> .engage-tab-label {
@@ -167,6 +168,7 @@ $red: #cc3117;
         left: $tab-bottom-offest/2;
         right: $tab-bottom-offest/2;
         &:hover {
+            left: $tab-bottom-offest/2;
             left: $tab-bottom-offest/2;
             right: $tab-bottom-offest/2;
             top: auto;
@@ -210,12 +212,13 @@ $red: #cc3117;
                 top: 4px;
             }
             .engage-tab-label {
-                padding-left: 35px;
+                padding-left: $tab-show-user-offest;
                 padding-right: 0;
-                width: 215px;
+                width: $tab-height - $tab-show-user-offest;
             }
         }
 		> .engage-tab-label {
+            width: $tab-height;
 			@include transform(translateY(($tab-width - $tab-label-size) / 2));
 		}
 	}
