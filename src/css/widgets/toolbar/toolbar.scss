@@ -41,14 +41,6 @@ $red: #cc3117;
             opacity: 1;
             cursor: pointer;
         }
-        > div.engage-tab-label {
-            padding-right: 35px;
-            width: 218px;
-            &.flipped {
-                padding-right: 0;
-                padding-left: 35px;
-            }
-        }
     }
 	&:active {
 		@include transform(scale(1.05));
@@ -71,6 +63,17 @@ $red: #cc3117;
 				@include transform-origin(top left);
 			}
 		}
+        &.engage-show-user {
+            > .engage-tab-label {
+                padding-right: 35px;
+                padding-left: 0;
+                width: 215px;
+                &.flipped {
+                    padding-right: 0;
+                    padding-left: 35px;
+                }
+            }
+        }
 	}
 	&.left-tab {
 		@include side-tab();
@@ -136,6 +139,7 @@ $red: #cc3117;
             .engage-tab-label {
                 padding-left: 35px;
                 padding-right: 0;
+                width: 215px;
             }
         }
 		> .engage-tab-label {
@@ -207,6 +211,8 @@ $red: #cc3117;
             }
             .engage-tab-label {
                 padding-left: 35px;
+                padding-right: 0;
+                width: 215px;
             }
         }
 		> .engage-tab-label {
