@@ -2,7 +2,8 @@
 <html>
 <html>
 <head>
-	<title>Engage SDK Example - Local Toolbar</title>
+	<title>Engage SDK Example - jquery no conflict test</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.6.1.min.js"></script>
 	<script src="../build/sdk.js"></script>
 	<script>
         // engage: cb15f03f140f28d81223f7b7c64e3a0d | customer-facing-team
@@ -40,8 +41,14 @@
             function(toolbar) {
                 toolbar.setOption("directoryTitle", "Our Support Team");
             });
-
 	</script>
+    <script>
+//        $.noConflict();
+        console.log($.fn.jquery);
+        $(function() {
+            $("body").css("margin", 50);
+        });
+    </script>
 </head>
 <body>
 

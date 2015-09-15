@@ -224,13 +224,21 @@ $red: #cc3117;
         style: solid;
         width: 1px;
     }
+    &:hover {
+        @extend .engage-button;
+    }
     &.engage-outline {
         color: $green;
         background-color: #fff;
-
+        &:hover {
+            @extend .engage-outline;
+        }
     }
     &.engage-button-blue {
         background-color: $blue;
         border-color: $blue;
+        &:hover {
+            @extend .engage-button-blue;
+        }
     }
 }
