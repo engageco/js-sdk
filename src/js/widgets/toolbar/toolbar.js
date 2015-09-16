@@ -139,19 +139,16 @@ define("EngageToolbar", ["jquery",
         };
 
         var onOpenProactiveBubble = function() {
-            var lastShown = this.sdk.getLocalProperty("proactive-last-displayed");
-            var lastShownDate = new Date(Date.parse(lastShown));
-            //console.log("lastShown", lastShown);
-            //console.log("lastShownDate", lastShownDate);
-            var frequency = (this.options.proactive && this.options.proactive.frequency) ? this.options.proactive.frequency : 1440;
-            //console.log("frequency", frequency);
-            var nextShowDate = new Date(lastShownDate.getTime() + Math.round(frequency * 60000));
-            //console.log("nextShowDate", nextShowDate);
-            //console.log("now", new Date());
-            if(lastShown == null || nextShowDate <= new Date()) {
-                this.sdk.setLocalProperty("proactive-last-displayed", new Date());
-                this.bubble.find(".engage-bubble-message").text(this.options.proactive.message);
-                this.bubble.addClass("engage-show");
+            if(!this.tab.hasClass("engage-hide")) {
+                var lastShown = this.sdk.getLocalProperty("proactive-last-displayed");
+                var lastShownDate = new Date(Date.parse(lastShown));
+                var frequency = (this.options.proactive && this.options.proactive.frequency) ? this.options.proactive.frequency : 1440;
+                var nextShowDate = new Date(lastShownDate.getTime() + Math.round(frequency * 60000));
+                if(lastShown == null || nextShowDate <= new Date()) {
+                    this.sdk.setLocalProperty("proactive-last-displayed", new Date());
+                    this.bubble.find(".engage-bubble-message").text(this.options.proactive.message);
+                    this.bubble.addClass("engage-show");
+                }
             }
         };
 
