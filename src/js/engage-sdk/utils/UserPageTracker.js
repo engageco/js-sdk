@@ -52,7 +52,7 @@ define(["jquery"],
 			// console.log("onUpdatePageFocus", document.visibilityState);
 			this.currentPageData.in_focus = document.visibilityState == "visible";
 			onPushPageActivityToIframe.apply(this);
-		}
+		};
 		var onUpdatePageViewport = function(event) {
 			// console.log("onUpdatePageViewport");
 			var body = jQuery("body");
@@ -64,7 +64,7 @@ define(["jquery"],
 			this.currentPageData.viewport.pheight = Math.max(body.get(0).scrollHeight, jQuery(window).height());
             //console.log(this.currentPageData.viewport);
 			onPushPageActivityToIframe.apply(this);
-		}
+		};
 
 		UserPageTracker.prototype.init = function() {
 			var self = this;

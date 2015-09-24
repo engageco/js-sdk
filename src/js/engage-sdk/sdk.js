@@ -1,14 +1,16 @@
 define("EngageSDK", ["require",
         "jquery",
+		"engage-sdk/managers/TrackingManager",
 		"engage-sdk/utils/PresenceMonitor",
-        "engage-sdk/utils/UserPageTracker",
+		"engage-sdk/utils/UserPageTracker",
         "engage-sdk/services/BaseRESTService",
         "engage-sdk/services/ServiceQueue",
         "engage-sdk/services/GetUsersService",
         "event-dispatcher/Event",
 		"headjs",
         "jquery.cookie"],
-	function(require, jQuery, PresenceMonitor, UserPageTracker, BaseRESTService, ServiceQueue, GetUsersService, Event) {
+	function(require, jQuery, TrackingManager, PresenceMonitor, UserPageTracker, BaseRESTService, ServiceQueue,
+			 GetUsersService, Event) {
 
 		"use strict";
 
@@ -22,7 +24,8 @@ define("EngageSDK", ["require",
             //BaseRESTService.baseUrl = "https://wapidev.engage.co";
 			this.companyHash = companyHash;
 			this.presence = PresenceMonitor.getInstance();
-			// todo: initialize browser preview and start tracking the user
+			this.tracking = TrackingManager.getInstance();
+			this.tracking.companyId = this.companyHash;
 			var userPageTracker = new UserPageTracker(companyHash);
 			userPageTracker.init();
 		};

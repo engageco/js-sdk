@@ -17,6 +17,7 @@ define("EngageToolbar", ["jquery",
             this.screenController.cssClasses.right = "engage-right";
 			jQuery(jQuery.proxy(onDOMReady, this));
             this.neverOpened = true;
+            this.sdk.tracking.companyId = this.sdk.companyHash;
 		};
 
         EngageToolbar.SCREENS = {
