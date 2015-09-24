@@ -16,7 +16,8 @@ define(["jquery"],
 			cobrowsingUpdateInteval: 500
 		};
 
-		var UserPageTracker = function(companyHash) {
+		var UserPageTracker = function(sdk, companyHash) {
+			this.sdk = sdk;
 			this.companyHash = companyHash;
 			this.currentPageData = {
 				page_url: "",
@@ -49,12 +50,10 @@ define(["jquery"],
 		};
 
 		var onUpdatePageFocus = function(event) {
-			// console.log("onUpdatePageFocus", document.visibilityState);
 			this.currentPageData.in_focus = document.visibilityState == "visible";
 			onPushPageActivityToIframe.apply(this);
 		};
 		var onUpdatePageViewport = function(event) {
-			// console.log("onUpdatePageViewport");
 			var body = jQuery("body");
 			this.currentPageData.viewport.xpos = body.scrollLeft();
 			this.currentPageData.viewport.ypos = body.scrollTop();
@@ -62,7 +61,6 @@ define(["jquery"],
 			this.currentPageData.viewport.height = jQuery(window).height(); //body.height();
 			this.currentPageData.viewport.pwidth = Math.max(body.get(0).scrollWidth, jQuery(window).width());
 			this.currentPageData.viewport.pheight = Math.max(body.get(0).scrollHeight, jQuery(window).height());
-            //console.log(this.currentPageData.viewport);
 			onPushPageActivityToIframe.apply(this);
 		};
 
@@ -103,7 +101,7 @@ define(["jquery"],
 	                });
                 self.xDomainIframe.on("load", function() {
 					self.xDomainIframeWindow = self.xDomainIframe.get(0).contentWindow || window.iframes[config.xDomainIframeID];
-                })
+                });
                 self.xDomainIframe.attr("src", config.xdomainURL + config.xdomainIframePath + "?ts=" + new Date().valueOf() + '#' + self.companyHash);
                 self.xDomainIframe.css("display", "none");
                 self.xDomainIframe.css("width", 0);
@@ -116,6 +114,9 @@ define(["jquery"],
 
                 self.cobrowsingUpdateTimeout = setInterval(jQuery.proxy(onPushPageActivityToIframe, self), config.cobrowsingUpdateInteval);
 
+				self.sdk.tracking.applicationName = "SDK";
+				self.sdk.tracking.publisherDomain = self.currentPageData.page_url;
+				self.sdk.tracking.trackEvent("load", "visitorPageLoad");
 			});
 		};
 

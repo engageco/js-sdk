@@ -33,8 +33,10 @@ define(["jquery",
 
 		var TrackingManager = function() {
 			this.applicationName = null;
+			this.publisherDomain = null;
 			this.customerDomain = null;
 			this.companyId = null;
+			this.tag = null;
 			this.userGuid = loadUserGuid();
 			this.capabilities = null;
 		};
@@ -103,8 +105,9 @@ define(["jquery",
 		};
 
 		TrackingManager.prototype.trackEvent = function(type, description) {
-			if(this.applicationName == null || this.customerDomain == null || this.companyId == null) return false;
-			var trackService = new TrackService(this.applicationName, this.customerDomain, this.companyId, type, description);
+			if(this.applicationName == null || this.companyId == null) return false;
+			var trackService = new TrackService(this.applicationName, this.customerDomain, this.publisherDomain,
+												this.companyId, this.userGuid, this.tag, type, description);
 			trackService.execute();
 		};
 

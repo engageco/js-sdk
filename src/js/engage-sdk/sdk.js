@@ -26,7 +26,7 @@ define("EngageSDK", ["require",
 			this.presence = PresenceMonitor.getInstance();
 			this.tracking = TrackingManager.getInstance();
 			this.tracking.companyId = this.companyHash;
-			var userPageTracker = new UserPageTracker(companyHash);
+			var userPageTracker = new UserPageTracker(this, companyHash);
 			userPageTracker.init();
 		};
 

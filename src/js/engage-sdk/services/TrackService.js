@@ -11,14 +11,16 @@ define(["jquery",
 
 		'use strict';
 
-		var TrackService = function(applicationName, customerDomain, companyId, type, description) {
+		var TrackService = function(applicationName, customerDomain, publisherDomain, companyId, userGuid, tag, type, description) {
 			BaseRESTService.call(this);
-			this.userGuid = null;
-			this.description = description;
-			this.customerDomain = customerDomain;
 			this.applicationName = applicationName;
-			this.type = type;
+			this.customerDomain = customerDomain;
+			this.publisherDomain = publisherDomain;
 			this.companyId = companyId;
+			this.userGuid = userGuid;
+			this.tag = tag;
+			this.type = type;
+			this.description = description;
 		};
 
 		TrackService.prototype = new BaseRESTService();
@@ -40,6 +42,9 @@ define(["jquery",
 
 		TrackService.prototype.prepareRequest = function() {
 			var params = new Array();
+			if(this.publisherDomain != null) {
+				params.push({name:"pd", value:this.publisherDomain});
+			}
 			if(this.userGuid != null) {
 				params.push({name:"uid", value:this.userGuid});
 			}
@@ -48,6 +53,9 @@ define(["jquery",
 			params.push({name:"an", value:this.applicationName});
 			params.push({name:"t", value:this.type});
 			params.push({name:"coid", value:this.companyId});
+			if(this.tag != null) {
+				params.push({name: "tag", value: this.tag});
+			}
 			return {
 				crossDomain: true,
 				data: this.packageRequestData(params),
