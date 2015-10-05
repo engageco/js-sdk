@@ -114,7 +114,6 @@ define("EngageToolbar", ["jquery",
                 onUsersLoaded.apply(this, [{users:this.users}]);
             }
 
-            // todo: track widget configuration
             this.sdk.tracking.publisherDomain = document.URL;
             this.sdk.tracking.trackEvent("load", "toolbarInit");
 		};

@@ -26,6 +26,7 @@ define("EngageSDK", ["require",
 			this.companyHash = companyHash;
 			this.presence = PresenceMonitor.getInstance();
 			this.tracking = TrackingManager.getInstance();
+			this.tracking.applicationName = "SDK";
 			this.tracking.companyId = this.companyHash;
 			var userPageTracker = new UserPageTracker(this, companyHash);
 			userPageTracker.init();
@@ -63,6 +64,7 @@ define("EngageSDK", ["require",
 		EngageSDK.prototype.loadWidget = function(slug) {
 			var getWidgetConfigService = new GetWidgetConfigService(this.companyHash, slug);
 			getWidgetConfigService.addEventListener(Event.RESULT, jQuery.proxy(function(event) {
+				this.tracking.trackEvent("loadWidget", slug);
 				this.drawWidget(event.data.config);
 			}, this));
 			ServiceQueue.getInstance().addRequest(getWidgetConfigService);
