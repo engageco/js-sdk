@@ -5,12 +5,13 @@ define("EngageSDK", ["require",
 		"engage-sdk/utils/UserPageTracker",
         "engage-sdk/services/BaseRESTService",
         "engage-sdk/services/ServiceQueue",
-        "engage-sdk/services/GetUsersService",
+		"engage-sdk/services/GetUsersService",
+		"engage-sdk/services/GetWidgetConfigService",
         "event-dispatcher/Event",
 		"headjs",
         "jquery.cookie"],
 	function(require, jQuery, TrackingManager, PresenceMonitor, UserPageTracker, BaseRESTService, ServiceQueue,
-			 GetUsersService, Event) {
+			 GetUsersService, GetWidgetConfigService, Event) {
 
 		"use strict";
 
@@ -59,6 +60,14 @@ define("EngageSDK", ["require",
 			}
 		};
 
+		EngageSDK.prototype.loadWidget = function(slug) {
+			var getWidgetConfigService = new GetWidgetConfigService(this.companyHash, slug);
+			getWidgetConfigService.addEventListener(Event.RESULT, jQuery.proxy(function(event) {
+				this.drawWidget(event.data.config);
+			}, this));
+			ServiceQueue.getInstance().addRequest(getWidgetConfigService);
+		};
+
 		EngageSDK.prototype.setWidgetVisibility = function(isVisible) {
 			if(this.widget) {
 				this.widget.setVisibility(isVisible);
@@ -81,22 +90,27 @@ define("EngageSDK", ["require",
             }
         };
 
+
+
 		// find script and look for config; if found init script
 		var currentScript = document.currentScript;
 		if(currentScript != null) {
 			currentScript = document.querySelector("script[data-company]")
 		}
 		if(currentScript != null) {
-			var customerHash = currentScript.getAttribute("data-company");
-            //console.log(customerHash);
-			if(customerHash != null) {
-				var engage = new EngageSDK(customerHash);
-				var widgetConfig = JSON.parse(decodeURIComponent(currentScript.getAttribute("data-widget-config")));
-                //console.log(widgetConfig);
-				if(widgetConfig) {
-					engage.drawWidget(widgetConfig);
+			var companyHash = currentScript.getAttribute("data-company");
+			if(companyHash != null) {
+				var engage = new EngageSDK(companyHash);
+				var widgetSlug = currentScript.getAttribute("data-widget");
+				if(widgetSlug) {
+					engage.loadWidget(widgetSlug);
+				}else {
+					var widgetConfig = JSON.parse(decodeURIComponent(currentScript.getAttribute("data-widget-config")));
+					if(widgetConfig) {
+						engage.drawWidget(widgetConfig);
+					}
 				}
-				
+
 			}
 		}
 
