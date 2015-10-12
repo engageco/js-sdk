@@ -342,10 +342,11 @@ define("EngageToolbar", ["jquery",
                     break;
                 case "tabPlacement":
                     if(this.isInitialized()) {
+                        var allTabPlacements = "top-left-tab left-tab bottom-left-tab top-right-tab right-tab bottom-right-tab";
                         var tabPlacement = (value) ? value : "right-tab";
-                        this.tab.addClass(tabPlacement);
-                        this.bubble.addClass(tabPlacement);
-                        this.drawer.addClass(tabPlacement);
+                        this.tab.removeClass(allTabPlacements).addClass(tabPlacement);
+                        this.bubble.removeClass(allTabPlacements).addClass(tabPlacement);
+                        this.drawer.removeClass(allTabPlacements).addClass(tabPlacement);
                     }
                     break;
                 case "disableMobileView":
