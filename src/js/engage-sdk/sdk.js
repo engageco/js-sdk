@@ -32,6 +32,8 @@ define("EngageSDK", ["require",
 			userPageTracker.init();
 		};
 
+		EngageSDK.version = "@@version";
+
 		EngageSDK.prototype.getUsers = function(categorySlug, callback) {
 			var getUsersService = new GetUsersService(this.companyHash, categorySlug);
             getUsersService.addEventListener(Event.RESULT, function(event) {

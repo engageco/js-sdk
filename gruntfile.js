@@ -5,6 +5,21 @@ module.exports = function(grunt) {
 
         pkg: grunt.file.readJSON("package.json"),
 
+        bump: {
+            options: {
+                files: ["package.json"],
+                updateConfigs: ["pkg"],
+                commit: true,
+                commitMessage: "Release v%VERSION%",
+                commitFiles: ["package.json"],
+                createTag: true,
+                tagName: "v%VERSION%",
+                tagMessage: "Version %VERSION%",
+                push: false,
+                gitDescribeOptions: "--tags --always --abbrev=1 --dirty=-d"
+            }
+        },
+
         requirejs: {
             sdk: {
                 options: {
@@ -149,54 +164,36 @@ module.exports = function(grunt) {
                     'build/toolbar.js': ['build/toolbar.js']
                 }
             }
-        }
+        },
 
-        // copy: {
-        //     build: {
-        //         files: [
-        //             {
-        //                 src: ["src/index.html"],
-        //                 dest: ".webBuild/index.html"
-        //             },
-        //             {
-        //                 src: ["src/APITester.html"],
-        //                 dest: ".webBuild/APITester.html"
-        //             },
-        //             {
-        //                 src: [".buildjs/RequireConfig.js"],
-        //                 dest: ".webBuild/js/RequireConfig.js"
-        //             },
-        //             {
-        //                 src: [".buildjs/Portal.js"],
-        //                 dest: ".webBuild/js/Portal.js"
-        //             },
-        //             {
-        //                 src: [".buildjs/APITester.js"],
-        //                 dest: ".webBuild/js/APITester.js"
-        //             },
-        //             {
-        //                 src: ["src/js/components/requirejs/require.js"],
-        //                 dest: ".webBuild/js/components/requirejs/require.js"
-        //             },
-        //             {
-        //                 expand: true,
-        //                 cwd: "src/",
-        //                 src: ["css/**", "fonts/**", "images/**"],
-        //                 dest: ".webBuild/"
-        //             }
-        //         ]
-        //     }
-        // }
+        replace: {
+            version: {
+                options: {
+                    patterns: [
+                        {
+                            match: "version",
+                            replacement: '<%= pkg.version %>'
+                        }
+                    ]
+                },
+                files: [
+                    {src: ["build/sdk.js"], dest: "build/sdk.js"}
+                ]
+            }
+        }
 
     });
 
+    grunt.loadNpmTasks('grunt-bump');
     grunt.loadNpmTasks("grunt-contrib-requirejs");
     grunt.loadNpmTasks("grunt-contrib-sass");
     grunt.loadNpmTasks("grunt-contrib-watch");
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks("grunt-concurrent");
+    grunt.loadNpmTasks("grunt-replace");
 
-    grunt.registerTask("build", ["sass:toolbar", "requirejs:sdk", "requirejs:toolbar", "uglify:compile"]);
+    grunt.registerTask("build", ["sass:toolbar", "requirejs:sdk", "requirejs:toolbar", "replace:version", "uglify:compile"]);
+    grunt.registerTask("deploy", ["bump", "build"]);
     grunt.registerTask("default", ["concurrent:compile"]);
 
 };

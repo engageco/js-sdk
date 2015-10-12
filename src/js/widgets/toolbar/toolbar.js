@@ -385,10 +385,13 @@ define("EngageToolbar", ["jquery",
                 case "hideTabOffline":
                     break;
                 case "hideOfflineAgents":
+                    onSortUserList.apply(this);
                     break;
                 case "showOnlineAgentsFirst":
+                    onSortUserList.apply(this);
                     break;
                 case "agentOrder":
+                    onSortUserList.apply(this);
                     break;
                 case "showAgentLocation":
                     break;
