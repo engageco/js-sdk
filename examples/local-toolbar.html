@@ -7,6 +7,7 @@
 	<script>
         // engage: cb15f03f140f28d81223f7b7c64e3a0d | customer-facing-team
         // browns: 9ff4e31e20aad41e4303f4a96ee45a47 | all-team-members
+        var toolbar = null;
 		var engage = new EngageSDK("cb15f03f140f28d81223f7b7c64e3a0d");
 		engage.drawWidget({
                 "type": "toolbar",
@@ -15,7 +16,7 @@
                 "options": {
                     "category": "customer-facing-team",
                     "directoryTitle": "Our Support Team",
-                    "tabPlacement": "bottom-right-tab",
+                    "tabPlacement": "right-tab",
 //                    "disableMobileView": true,
                     "onlineLabel": "Online! Chat Now!",
                     "offlineLabel": "Meet Our Team",
@@ -37,10 +38,41 @@
                     }
                 }
 			},
-            function(toolbar) {
-                toolbar.setOption("directoryTitle", "Our Support Team");
-            });
+            function(widget) {
+                toolbar = widget;
 
+            });
+        jQuery(document).click(function() {
+            if(Math.random() > 0.5) {
+                toolbar.setOption("tabPlacement", "top-right-tab");
+            }else {
+                toolbar.setOption("tabPlacement", "bottom-left-tab");
+            }
+        });
+
+//        var engage = new EngageSDK("cb15f03f140f28d81223f7b7c64e3a0d");
+//        engage.drawWidget({
+//                "type": "toolbar",
+////                "js": "../build/toolbar.js",
+////                "css": "../build/toolbar.css",
+//                "options": {
+//                    "directoryTitle": "Our Support Team",
+//                    "tabPlacement": "left-tab",
+//                    "onlineLabel": "test",
+//                    "offlineLabel": "test",
+//                    "labelOrientation": "flipped",
+//                    "backgroundColor": "#666",
+//                    "labelColor": "#eee",
+//                    "showOnlineAgentsFirst": true,
+//                    "agentOrder": "random",
+//                    "directoryUrl": "https://directory.engage.co/cleveland-browns-cleveland-oh",
+//                    "proactive": {
+//                        "message": "Hey there! Do you need any help?",
+//                        "delay": 1000,
+//                        "frequency": 0
+//                    }
+//                }
+//            });
 	</script>
 </head>
 <body>
