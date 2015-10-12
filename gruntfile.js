@@ -177,7 +177,8 @@ module.exports = function(grunt) {
                     ]
                 },
                 files: [
-                    {src: ["build/sdk.js"], dest: "build/sdk.js"}
+                    {src: ["build/sdk.js"], dest: "build/sdk.js"},
+                    {src: ["build/toolbar.js"], dest: "build/toolbar.js"}
                 ]
             }
         }

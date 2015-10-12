@@ -20,6 +20,8 @@ define("EngageToolbar", ["jquery",
 			jQuery(jQuery.proxy(onDOMReady, this));
 		};
 
+        EngageToolbar.version = "@@version";
+
         EngageToolbar.SCREENS = {
             SEARCH: "search",
             DIRECTORY: "directory",
