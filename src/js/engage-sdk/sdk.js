@@ -21,13 +21,15 @@ define("EngageSDK", ["require",
 		// 	SECRET: "902340ulsdknzl23ljag07234asdf03952lkds"
 		// };
 
-		var EngageSDK = function(companyHash) {
+		var EngageSDK = function(companyHash, disableTracking) {
             //BaseRESTService.baseUrl = "https://wapidev.engage.co";
 			this.companyHash = companyHash;
 			this.presence = PresenceMonitor.getInstance();
-			this.tracking = TrackingManager.getInstance();
-			this.tracking.applicationName = "SDK";
-			this.tracking.companyId = this.companyHash;
+			if(!disableTracking) {
+				this.tracking = TrackingManager.getInstance();
+				this.tracking.applicationName = "SDK";
+				this.tracking.companyId = this.companyHash;
+			}
 			var userPageTracker = new UserPageTracker(this, companyHash);
 			userPageTracker.init();
 		};
@@ -66,7 +68,9 @@ define("EngageSDK", ["require",
 		EngageSDK.prototype.loadWidget = function(slug) {
 			var getWidgetConfigService = new GetWidgetConfigService(this.companyHash, slug);
 			getWidgetConfigService.addEventListener(Event.RESULT, jQuery.proxy(function(event) {
-				this.tracking.trackEvent("loadWidget", event.data.id);
+				if(this.tracking) {
+					this.tracking.trackEvent("loadWidget", event.data.id);
+				}
 				this.drawWidget(event.data.config);
 			}, this));
 			ServiceQueue.getInstance().addRequest(getWidgetConfigService);

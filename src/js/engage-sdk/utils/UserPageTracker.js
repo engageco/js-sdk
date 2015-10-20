@@ -114,9 +114,11 @@ define(["jquery"],
 
                 self.cobrowsingUpdateTimeout = setInterval(jQuery.proxy(onPushPageActivityToIframe, self), config.cobrowsingUpdateInteval);
 
-				self.sdk.tracking.applicationName = "SDK";
-				self.sdk.tracking.publisherDomain = self.currentPageData.page_url;
-				self.sdk.tracking.trackEvent("load", "visitorPageLoad");
+				if(self.sdk.tracking) {
+					self.sdk.tracking.applicationName = "SDK";
+					self.sdk.tracking.publisherDomain = self.currentPageData.page_url;
+					self.sdk.tracking.trackEvent("load", "visitorPageLoad");
+				}
 			});
 		};
 

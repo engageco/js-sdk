@@ -15,7 +15,9 @@ define("EngageToolbar", ["jquery",
             this.screenController = new ScreenController();
             this.screenController.cssClasses.left = "engage-left";
             this.screenController.cssClasses.right = "engage-right";
-            this.sdk.tracking.applicationName = "ToolbarV2";
+            if(this.sdk.tracking) {
+                this.sdk.tracking.applicationName = "ToolbarV2";
+            }
             this.neverOpened = true;
 			jQuery(jQuery.proxy(onDOMReady, this));
 		};
@@ -116,8 +118,10 @@ define("EngageToolbar", ["jquery",
                 onUsersLoaded.apply(this, [{users:this.users}]);
             }
 
-            this.sdk.tracking.publisherDomain = document.URL;
-            this.sdk.tracking.trackEvent("load", "toolbarInit");
+            if(this.sdk.tracking) {
+                this.sdk.tracking.publisherDomain = document.URL;
+                this.sdk.tracking.trackEvent("load", "toolbarInit");
+            }
 		};
 
         var onShowTabUser = function(user) {
@@ -253,9 +257,11 @@ define("EngageToolbar", ["jquery",
 
 		var onUserClick = function(event) {
 			var user = jQuery(event.currentTarget).data("user");
-            this.sdk.tracking.customerDomain = user.domain;
-            this.sdk.tracking.trackEvent("click", "toolbarViewProfile");
-            this.sdk.tracking.customerDomain = null;
+            if(this.sdk.tracking) {
+                this.sdk.tracking.customerDomain = user.domain;
+                this.sdk.tracking.trackEvent("click", "toolbarViewProfile");
+                this.sdk.tracking.customerDomain = null;
+            }
             this.screenController.setScreen(EngageToolbar.SCREENS.PROFILE);
             this.drawer.find(".engage-back").removeClass("engage-hide");
             this.currentUser = user;
@@ -335,7 +341,9 @@ define("EngageToolbar", ["jquery",
             this.options[name] = value;
             switch(name) {
                 case "category":
-                    this.sdk.tracking.tag = value;
+                    if(this.sdk.tracking) {
+                        this.sdk.tracking.tag = value;
+                    }
                     this.sdk.getUsers(value, jQuery.proxy(onUsersLoaded, this));
                     break;
                 case "directoryTitle":
@@ -432,7 +440,9 @@ define("EngageToolbar", ["jquery",
             this.tab.addClass("engage-hide");
             this.bubble.removeClass("engage-show");
             this.neverOpened = false;
-            this.sdk.tracking.trackEvent("click", "toolbarOpen");
+            if(this.sdk.tracking) {
+                this.sdk.tracking.trackEvent("click", "toolbarOpen");
+            }
             var self = this;
             setTimeout(function() {
                 self.drawer.removeClass("engage-hide");
