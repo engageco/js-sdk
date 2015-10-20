@@ -341,9 +341,9 @@ define("EngageToolbar", ["jquery",
             this.options[name] = value;
             switch(name) {
                 case "category":
-                    if(this.sdk.tracking) {
-                        this.sdk.tracking.tag = value;
-                    }
+                    //if(this.sdk.tracking) {
+                    //    this.sdk.tracking.tag = value;
+                    //}
                     this.sdk.getUsers(value, jQuery.proxy(onUsersLoaded, this));
                     break;
                 case "directoryTitle":

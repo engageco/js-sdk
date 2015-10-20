@@ -69,6 +69,7 @@ define("EngageSDK", ["require",
 			var getWidgetConfigService = new GetWidgetConfigService(this.companyHash, slug);
 			getWidgetConfigService.addEventListener(Event.RESULT, jQuery.proxy(function(event) {
 				if(this.tracking) {
+					this.tracking.tag = slug;
 					this.tracking.trackEvent("loadWidget", event.data.id);
 				}
 				this.drawWidget(event.data.config);
