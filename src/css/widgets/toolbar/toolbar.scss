@@ -231,6 +231,7 @@ $red: #cc3117;
 		right: $tab-bottom-offest;
 	}
 	> .engage-tab-label {
+        @include box-sizing(border-box);
 		@include user-select(none);
 		text-align: center;
 		font-size: $tab-label-size;
