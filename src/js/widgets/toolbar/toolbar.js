@@ -371,7 +371,11 @@ define("EngageToolbar", ["jquery",
                     break;
                 case "labelOrientation":
                     if(this.isInitialized()) {
-                        this.tabLabel.addClass(value);
+                        if(value == "flipped") {
+                            this.tabLabel.addClass("flipped");
+                        }else {
+                            this.tabLabel.removeClass("flipped");
+                        }
                     }
                     break;
                 case "backgroundColor":
