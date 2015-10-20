@@ -164,9 +164,10 @@ define("EngageToolbar", ["jquery",
         };
 
 		var onUsersLoaded = function(data) {
+            this.directoryScreen.find("ul li").remove();
+            // todo: unwatch all old users
 			this.users = data.users;
             // todo: look for agents this visitor has chatted with before and highlight them in a featured agents area
-            //       in the drawer and put them in the
             if(this.users && this.directoryScreen) {
                 var list = this.directoryScreen.find("ul");
                 for(var i = 0; i < this.users.length; i++) {
@@ -385,6 +386,7 @@ define("EngageToolbar", ["jquery",
                     }
                     break;
                 case "hideTabOffline":
+                    updateVisibility.apply(this);
                     break;
                 case "hideOfflineAgents":
                     onSortUserList.apply(this);
@@ -396,6 +398,7 @@ define("EngageToolbar", ["jquery",
                     onSortUserList.apply(this);
                     break;
                 case "showAgentLocation":
+                    this.this.find(".engage-location").toggle(value == true);
                     break;
                 case "showListOnly":
                     if(this.isInitialized()) {
