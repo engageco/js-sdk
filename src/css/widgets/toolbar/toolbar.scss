@@ -68,7 +68,7 @@ $red: #cc3117;
             > .engage-tab-label {
                 padding-right: $tab-show-user-offest;
                 padding-left: 0;
-                width: $tab-height - $tab-show-user-offest;
+                width: $tab-height;
                 &.flipped {
                     padding-right: 0;
                     padding-left: $tab-show-user-offest;
@@ -140,7 +140,7 @@ $red: #cc3117;
             .engage-tab-label {
                 padding-left: $tab-show-user-offest;
                 padding-right: 0;
-                width: $tab-height - $tab-show-user-offest;
+                width: $tab-height;
             }
         }
 		> .engage-tab-label {
@@ -214,7 +214,7 @@ $red: #cc3117;
             .engage-tab-label {
                 padding-left: $tab-show-user-offest;
                 padding-right: 0;
-                width: $tab-height - $tab-show-user-offest;
+                width: $tab-height;
             }
         }
 		> .engage-tab-label {
