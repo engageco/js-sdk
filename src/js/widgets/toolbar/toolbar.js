@@ -398,7 +398,7 @@ define("EngageToolbar", ["jquery",
                     onSortUserList.apply(this);
                     break;
                 case "showAgentLocation":
-                    this.this.find(".engage-location").toggle(value == true);
+                    this.find(".engage-location").toggle(value == true);
                     break;
                 case "showListOnly":
                     if(this.isInitialized()) {
