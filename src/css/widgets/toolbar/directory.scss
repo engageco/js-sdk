@@ -124,10 +124,12 @@ $red: #cc3117;
 .engage-profilePhoto {
     @include box-sizing(border-box);
     position: relative;
+    display: block;
     width: 75px;
     height: 75px;
     margin: 6px;
     .engage-photo {
+        display: block;
         width: 100%;
         height: 100%;
         border-radius: 30%;
@@ -168,6 +170,7 @@ $red: #cc3117;
     >.engage-statusIndicator {
         @include box-sizing(border-box);
         position: absolute;
+        display: block;
         top: -3px;
         right: -3px;
         width: 21px;
