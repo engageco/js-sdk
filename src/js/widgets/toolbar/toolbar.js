@@ -19,6 +19,7 @@ define("EngageToolbar", ["jquery",
                 this.sdk.tracking.applicationName = "ToolbarV2";
             }
             this.neverOpened = true;
+            this.callback = null;
 			jQuery(jQuery.proxy(onDOMReady, this));
 		};
 
@@ -38,6 +39,7 @@ define("EngageToolbar", ["jquery",
         };
 
 		var onDOMReady = function() {
+            console.log("onDOMReady");
 			this.tab = jQuery('<div class="engage-tab mobile-enabled engage-hide">' +
                     '<div class="engage-tab-label"></div>' +
                     '<div class="engage-profilePhoto engage-tiny">' +
@@ -121,6 +123,10 @@ define("EngageToolbar", ["jquery",
             if(this.sdk.tracking) {
                 this.sdk.tracking.publisherDomain = document.URL;
                 this.sdk.tracking.trackEvent("load", "toolbarInit");
+            }
+
+            if(this.callback) {
+                this.callback(this);
             }
 		};
 

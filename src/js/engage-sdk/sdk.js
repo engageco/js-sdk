@@ -53,7 +53,8 @@ define("EngageSDK", ["require",
 					var cssSrc = (config.css) ? config.css : "https://sdk.engage.co/toolbar.css";
 					head.load([jsSrc, cssSrc], function() {
 						sdk.widget = new EngageToolbar(sdk, config.options);
-                        if(callback) callback(sdk.widget);
+                        if(callback) sdk.widget.callback = callback;
+						//callback(sdk.widget);
 					});
 					break;
 				case "custom":
