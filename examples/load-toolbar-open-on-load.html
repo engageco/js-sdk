@@ -8,6 +8,7 @@
 	<script>
 		var engage = new EngageSDK("9ff4e31e20aad41e4303f4a96ee45a47");
 		engage.loadWidget("new-browns-widget", function(widget) {
+			console.log(widget);
                 widget.openDrawer();
             });
 	</script>

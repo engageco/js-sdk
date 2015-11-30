@@ -5,7 +5,7 @@ define("EngageToolbar", ["jquery",
 
 		'use strict';
 
-		var EngageToolbar = function(sdk, options) {
+		var EngageToolbar = function(sdk, options, callback) {
 			this.sdk = sdk;
 			this.options = options;
 			this.users = null;
@@ -19,7 +19,7 @@ define("EngageToolbar", ["jquery",
                 this.sdk.tracking.applicationName = "ToolbarV2";
             }
             this.neverOpened = true;
-            this.callback = null;
+            this.callback = callback;
 			jQuery(jQuery.proxy(onDOMReady, this));
 		};
 
