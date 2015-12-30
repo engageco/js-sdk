@@ -125,6 +125,7 @@ define("EngageToolbar", ["jquery",
                 this.sdk.tracking.trackEvent("load", "toolbarInit");
             }
 
+                console.log("callback");
             if(this.callback) {
                 this.callback(this);
             }

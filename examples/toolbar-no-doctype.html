@@ -2,46 +2,44 @@
 <head></head>
 
 <body>
-<script src="../build/sdk.js"
-        data-company="9ff4e31e20aad41e4303f4a96ee45a47"
-        data-widget="new-browns-widget"></script>
-
-<!--<script>-->
-    <!--var engage = new EngageSDK("9ff4e31e20aad41e4303f4a96ee45a47");-->
-    <!--engage.loadWidget("new-browns-widget", function(widget) {-->
-        <!--widget.openDrawer();-->
-    <!--});-->
-<!--</script>-->
+<script src="../build/sdk.js"></script>
 
 <script>
     var engage = new EngageSDK("9ff4e31e20aad41e4303f4a96ee45a47");
-    engage.drawWidget({
-            "type": "toolbar",
-            "js": "../build/toolbar.js",
-            "css": "../build/toolbar.css",
-            "options": {
-                "category": "all-team-members",
-                "directoryTitle": "Our Support Team",
-                "tabPlacement": "right-tab",
-                "onlineLabel": "Online! Chat Now!",
-                "offlineLabel": "Meet Our Team",
-                "labelOrientation": "flipped",
-                "backgroundColor": "#666",
-                "labelColor": "#eee",
-                "showOnlineAgentsFirst": true,
-                "agentOrder": "random",
-                "directoryUrl": "https://directory.engage.co/cleveland-browns-cleveland-oh",
-                "proactive": {
-                    "message": "Hey there! Do you need any help?",
-                    "delay": 1000,
-                    "frequency": 0
-                }
-            }
-        }, function(toolbar) {
-            toolbar.openDrawer();
-        });
-
+    engage.loadWidget("new-browns-widget", function(widget) {
+        widget.openDrawer();
+    });
 </script>
+
+<!--<script>-->
+    <!--var engage = new EngageSDK("9ff4e31e20aad41e4303f4a96ee45a47");-->
+    <!--engage.drawWidget({-->
+            <!--"type": "toolbar",-->
+<!--//            "js": "../build/toolbar.js",-->
+<!--//            "css": "../build/toolbar.css",-->
+            <!--"options": {-->
+                <!--"category": "all-team-members",-->
+                <!--"directoryTitle": "Our Support Team",-->
+                <!--"tabPlacement": "right-tab",-->
+                <!--"onlineLabel": "Online! Chat Now!",-->
+                <!--"offlineLabel": "Meet Our Team",-->
+                <!--"labelOrientation": "flipped",-->
+                <!--"backgroundColor": "#666",-->
+                <!--"labelColor": "#eee",-->
+                <!--"showOnlineAgentsFirst": true,-->
+                <!--"agentOrder": "random",-->
+                <!--"directoryUrl": "https://directory.engage.co/cleveland-browns-cleveland-oh",-->
+                <!--"proactive": {-->
+                    <!--"message": "Hey there! Do you need any help?",-->
+                    <!--"delay": 1000,-->
+                    <!--"frequency": 0-->
+                <!--}-->
+            <!--}-->
+        <!--}, function(toolbar) {-->
+            <!--toolbar.openDrawer();-->
+        <!--});-->
+
+<!--</script>-->
 
 
 </body>
