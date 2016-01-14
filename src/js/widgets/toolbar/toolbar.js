@@ -125,7 +125,6 @@ define("EngageToolbar", ["jquery",
                 this.sdk.tracking.trackEvent("load", "toolbarInit");
             }
 
-                console.log("callback");
             if(this.callback) {
                 this.callback(this);
             }
@@ -175,9 +174,12 @@ define("EngageToolbar", ["jquery",
         };
 
 		var onUsersLoaded = function(data) {
+            if(!this.directoryScreen) {
+                onDOMReady.apply(this);
+            }
             this.directoryScreen.find("ul li").remove();
             // todo: unwatch all old users
-			this.users = data.users;
+            this.users = data.users;
             // todo: look for agents this visitor has chatted with before and highlight them in a featured agents area
             if(this.users && this.directoryScreen) {
                 var list = this.directoryScreen.find("ul");
