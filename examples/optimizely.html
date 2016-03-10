@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<html>
+<head>
+    <title>Engage SDK Example - Load Toolbar (open on load)</title>
+    <!--<script src="../build/sdk.js"></script>-->
+    <!--<script src="https://sdk.engage.co/sdk.js"></script>-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.6.1.min.js"></script>
+    <script>
+
+//        $(function(){
+//            var fileRef = document.createElement('script');
+//            fileRef.setAttribute("type","text/javascript");
+//            fileRef.setAttribute("src", "//sdk.engage.co/sdk.js");
+////            fileRef.setAttribute("data-company", "265BE076-CE79-770B-7FAE-7A794DF6DC6B");
+////            fileRef.setAttribute("data-widget", "test-3");
+//            document.body.appendChild(fileRef);
+//        });
+
+
+        $.getScript("https://sdk.engage.co/sdk.js", function() {
+            var engage = new EngageSDK("265BE076-CE79-770B-7FAE-7A794DF6DC6B");
+            engage.loadWidget("test-3");
+        });
+
+//        var engage = new EngageSDK("9ff4e31e20aad41e4303f4a96ee45a47");
+//        engage.loadWidget("new-browns-widget", function(widget) {
+//            console.log(widget);
+//            widget.openDrawer();
+//        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>

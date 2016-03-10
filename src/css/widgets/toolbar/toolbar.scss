@@ -47,6 +47,10 @@ $red: #cc3117;
 		@include transform(scale(1.05));
 	}
 
+    @media only screen and (max-device-height: 350px), only screen and (max-height: 350px) {
+        display: none;
+    }
+
 	@mixin side-tab() {
 		top: 50%;
 		width: $tab-width;
@@ -290,6 +294,11 @@ $red: #cc3117;
     @include transition-duration(0.3s);
     @include transition-timing-function(ease-out);
     @include transition-delay(0.10s);
+
+    @media only screen and (max-device-height: 350px), only screen and (max-height: 350px) {
+        display: none;
+    }
+
     &:after {
         display: block;
         content: "";
