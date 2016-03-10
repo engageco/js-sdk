@@ -39,7 +39,7 @@ define("EngageToolbar", ["jquery",
         };
 
 		var onDOMReady = function() {
-            console.log("onDOMReady");
+            //console.log("onDOMReady");
 			this.tab = jQuery('<div class="engage-tab mobile-enabled engage-hide">' +
                     '<div class="engage-tab-label"></div>' +
                     '<div class="engage-profilePhoto engage-tiny">' +
@@ -183,7 +183,7 @@ define("EngageToolbar", ["jquery",
             // todo: look for agents this visitor has chatted with before and highlight them in a featured agents area
             if(this.users && this.directoryScreen) {
                 var list = this.directoryScreen.find("ul");
-                console.log(list);
+                //console.log(list);
                 for(var i = 0; i < this.users.length; i++) {
                     var user = this.users[i];
                     var item = jQuery('<li>' +

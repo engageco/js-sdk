@@ -295,7 +295,7 @@ $red: #cc3117;
     @include transition-timing-function(ease-out);
     @include transition-delay(0.10s);
 
-    @media only screen and (max-device-height: 350px), only screen and (max-height: 350px) {
+    @media only screen and (max-device-height: 400px), only screen and (max-height: 400px) {
         display: none;
     }
 
