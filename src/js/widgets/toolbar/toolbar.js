@@ -39,7 +39,7 @@ define("EngageToolbar", ["jquery",
         };
 
 		var onDOMReady = function() {
-            //console.log("onDOMReady");
+            console.log("onDOMReady");
 			this.tab = jQuery('<div class="engage-tab mobile-enabled engage-hide">' +
                     '<div class="engage-tab-label"></div>' +
                     '<div class="engage-profilePhoto engage-tiny">' +
@@ -72,8 +72,8 @@ define("EngageToolbar", ["jquery",
                         '<a class="engage-close"></a>' +
                     '</div>' +
                     '<div class="engage-footer">' +
-                        '<span class="engage-powered-by">&copy; ' + new Date().getFullYear() + ' <a href="http://engage.co" target="tab">Powered By Engage</a></span>' +
-                        '<a class="engage-directory-link" target="tab">Full Company Directory</a>' +
+                        '<span class="engage-powered-by">&copy; ' + new Date().getFullYear() + ' <a href="http://engage.co" target="_tab">Powered By Engage</a></span>' +
+                        '<a class="engage-directory-link" target="_tab">Full Company Directory</a>' +
                     '</div>' +
                     '<div class="engage-screen engage-search engage-right"></div>' +
                     '<div class="engage-screen engage-directory engage-right">' +
@@ -174,12 +174,14 @@ define("EngageToolbar", ["jquery",
         };
 
 		var onUsersLoaded = function(data) {
-            if(!this.directoryScreen) {
-                onDOMReady.apply(this);
-            }
-            this.directoryScreen.find("ul li").remove();
+            console.log("onUsersLoaded", this.directoryScreen);
             // todo: unwatch all old users
             this.users = data.users;
+            if(!this.directoryScreen) {
+                //onDOMReady.apply(this);
+                return false;
+            }
+            this.directoryScreen.find("ul li").remove();
             // todo: look for agents this visitor has chatted with before and highlight them in a featured agents area
             if(this.users && this.directoryScreen) {
                 var list = this.directoryScreen.find("ul");
@@ -299,7 +301,7 @@ define("EngageToolbar", ["jquery",
 		var onUserChatClick = function(event) {
 			event.stopImmediatePropagation();
 			var user = jQuery(event.currentTarget).parent().data("user") || this.currentUser;
-			window.open(user.profileUrl);
+			window.open(user.profileUrl, "_tab");
 		};
 
 		var onTabClick = function(event) {
@@ -329,6 +331,8 @@ define("EngageToolbar", ["jquery",
         };
 
         var onShowFirstScreen = function() {
+            console.log("onShowFirstScreen");
+            console.log(this.screenController.currentScreen);
             if(this.screenController.currentScreen == null) {
                 if(this.options.showSearch) {
                     this.screenController.setScreen(EngageToolbar.SCREENS.SEARCH);
