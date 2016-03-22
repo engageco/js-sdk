@@ -49,8 +49,8 @@ define("EngageSDK", ["require",
 			// note: load widget configuration for the customer if 'config' is a string
 			switch(config.type) {
 				case "toolbar":
-					var jsSrc = (config.js) ? config.js : "../build/toolbar.js";
-					var cssSrc = (config.css) ? config.css : "../build/toolbar.css";
+					var jsSrc = (config.js) ? config.js : "https://sdk.engage.co/toolbar.js";
+					var cssSrc = (config.css) ? config.css : "https://sdk.engage.co/toolbar.css";
 					head.load([jsSrc, cssSrc], function() {
 						sdk.widget = new EngageToolbar(sdk, config.options, callback);
 						//callback(sdk.widget);
