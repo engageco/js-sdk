@@ -136,6 +136,7 @@ $red: #cc3117;
         overflow: hidden;
 //        background-color: #fff;
         > img {
+            opacity: 1 !important;
             width: 100%;
         }
         &.no-photo {

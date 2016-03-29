@@ -17,9 +17,11 @@
 <body>
 
 <a href="https://profile.engage.co/norablum" class="engage-chat-button" style="display:none;">Chat Now!</a>
+<script src="https://sdk.engage.co/sdk.js"></script>
 <script type="text/javascript">
     var engage = new EngageSDK();
     engage.presence.watchUser("patterson", function(status) {
+		// Place code to show/hide button here; something like the following line
         jQuery(".engage-chat-button").toggle(status == "online");
     });
     engage.presence.start();
