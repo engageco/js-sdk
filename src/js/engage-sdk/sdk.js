@@ -68,11 +68,13 @@ define("EngageSDK", ["require",
 		EngageSDK.prototype.loadWidget = function(slug, callback) {
 			var getWidgetConfigService = new GetWidgetConfigService(this.companyHash, slug);
 			getWidgetConfigService.addEventListener(Event.RESULT, jQuery.proxy(function(event) {
-				if(this.tracking) {
-					this.tracking.tag = slug;
-					this.tracking.trackEvent("loadWidget", event.data.id);
-				}
-				this.drawWidget(event.data.config, callback);
+                if(!event.data.config.disabled) {
+                    if(this.tracking) {
+                        this.tracking.tag = slug;
+                        this.tracking.trackEvent("loadWidget", event.data.id);
+                    }
+                    this.drawWidget(event.data.config, callback);
+                }
 			}, this));
 			ServiceQueue.getInstance().addRequest(getWidgetConfigService);
 		};

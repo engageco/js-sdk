@@ -36,7 +36,7 @@ define(["jquery",
 			if(data.hasOwnProperty("requestId")) {
 				BaseRESTService.requestId = data.requestId;
 			}
-			BaseRESTService.requestId++;
+            if(this.useToken) BaseRESTService.requestId++;
 			this.handleResponse(data);
 		};
 

@@ -39,7 +39,7 @@ define("EngageToolbar", ["jquery",
         };
 
 		var onDOMReady = function() {
-            console.log("onDOMReady");
+            //console.log("onDOMReady");
 			this.tab = jQuery('<div class="engage-tab mobile-enabled engage-hide">' +
                     '<div class="engage-tab-label"></div>' +
                     '<div class="engage-profilePhoto engage-tiny">' +
@@ -174,7 +174,7 @@ define("EngageToolbar", ["jquery",
         };
 
 		var onUsersLoaded = function(data) {
-            console.log("onUsersLoaded", this.directoryScreen);
+            //console.log("onUsersLoaded", this.directoryScreen);
             // todo: unwatch all old users
             this.users = data.users;
             if(!this.directoryScreen) {
@@ -331,8 +331,8 @@ define("EngageToolbar", ["jquery",
         };
 
         var onShowFirstScreen = function() {
-            console.log("onShowFirstScreen");
-            console.log(this.screenController.currentScreen);
+            //console.log("onShowFirstScreen");
+            //console.log(this.screenController.currentScreen);
             if(this.screenController.currentScreen == null) {
                 if(this.options.showSearch) {
                     this.screenController.setScreen(EngageToolbar.SCREENS.SEARCH);
