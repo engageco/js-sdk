@@ -16,7 +16,7 @@
                 "options": {
                     "category": "customer-facing-team",
                     "directoryTitle": "Our Support Team",
-                    "tabPlacement": "right-tab",
+                    "tabPlacement": "top-right-tab",
 //                    "disableMobileView": true,
                     "onlineLabel": "Online! Chat Now!",
                     "offlineLabel": "Meet Our Team",
@@ -45,8 +45,10 @@
         jQuery(document).click(function() {
             if(Math.random() > 0.5) {
                 toolbar.setOption("tabPlacement", "top-right-tab");
+                toolbar.setOption('category', 'customer-facing-team');
             }else {
                 toolbar.setOption("tabPlacement", "bottom-left-tab");
+                toolbar.setOption('category', 'customer-service-team');
             }
         });
 
