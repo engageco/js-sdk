@@ -174,7 +174,7 @@ define("EngageToolbar", ["jquery",
         };
 
 		var onUsersLoaded = function(data) {
-            console.log("onUsersLoaded", this.directoryScreen);
+            //console.log("onUsersLoaded", this.directoryScreen);
             // todo: unwatch all old users
             this.users = data.users;
             if(!this.directoryScreen) {
@@ -220,7 +220,7 @@ define("EngageToolbar", ["jquery",
 		};
 
 		var onUserPresenceChange = function(status, domain) {
-            console.log("onUserPresenceChange", status, domain);
+            //console.log("onUserPresenceChange", status, domain);
 			var online = status == "online";
 			var item = this.directoryScreen.find("li[data-domain='" + domain + "']");
 			item.find(".engage-statusIndicator").toggleClass("engage-online", online);
