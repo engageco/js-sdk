@@ -16,7 +16,7 @@
                 "options": {
                     "category": "customer-facing-team",
                     "directoryTitle": "Our Support Team",
-                    "tabPlacement": "top-right-tab",
+                    "tabPlacement": "right-tab",
 //                    "disableMobileView": true,
                     "onlineLabel": "Online! Chat Now!",
                     "offlineLabel": "Meet Our Team",
@@ -31,6 +31,7 @@
 //                    "showListOnly": true,
 //                    "showSearch": true
                     "directoryUrl": "https://directory.engage.co/cleveland-browns-cleveland-oh",
+                    "agentLimit": "",
                     "proactive": {
                         "message": "Hey there! Do you need any help?",
                         "delay": 1000,
@@ -42,15 +43,15 @@
                 toolbar = widget;
 
             });
-        jQuery(document).click(function() {
-            if(Math.random() > 0.5) {
-                toolbar.setOption("tabPlacement", "top-right-tab");
-                toolbar.setOption('category', 'customer-facing-team');
-            }else {
-                toolbar.setOption("tabPlacement", "bottom-left-tab");
-                toolbar.setOption('category', 'customer-service-team');
-            }
-        });
+//        jQuery(document).click(function() {
+//            if(Math.random() > 0.5) {
+//                toolbar.setOption("tabPlacement", "top-right-tab");
+//                toolbar.setOption('category', 'customer-facing-team');
+//            }else {
+//                toolbar.setOption("tabPlacement", "bottom-left-tab");
+//                toolbar.setOption('category', 'customer-service-team');
+//            }
+//        });
 
 //        var engage = new EngageSDK("cb15f03f140f28d81223f7b7c64e3a0d");
 //        engage.drawWidget({

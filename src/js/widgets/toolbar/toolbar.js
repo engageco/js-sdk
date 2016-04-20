@@ -258,6 +258,14 @@ define("EngageToolbar", ["jquery",
             if(this.options.showOnlineAgentsFirst != false) {
                 sortedList = SortOrderUtil.orderByOnline(sortedList, this.sdk.presence);
             }
+            sortedList.show();
+            if(this.options.agentLimit != null && this.options.agentLimit != "") {
+                //sortedList = sortedList.slice(0, this.options.agentLimit);
+                var agentLimit = this.options.agentLimit;
+                sortedList.each(function(index, item) {
+                    if(index >= agentLimit) jQuery(item).hide();
+                });
+            }
             this.directoryScreen.find("ul").append(sortedList);
             //if(this.currentUser == null || this.sdk.presence.getUserStatus(this.currentUser.domain) != "online") {
                 var user = sortedList.first().data("user");
@@ -443,6 +451,9 @@ define("EngageToolbar", ["jquery",
                         link.attr("href", value);
                         link.toggle(value != null && value != "");
                     }
+                    break;
+                case "agentLimit":
+                    onSortUserList.apply(this);
                     break;
             }
         };

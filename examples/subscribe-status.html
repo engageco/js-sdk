@@ -1,18 +1,8 @@
 <!doctype html>
 <html>
 <head>
-	<title>Engage SDK Example - Local Toolbar</title>
+	<title>Engage SDK Example - Status Button</title>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-	<script src="../build/sdk.js"></script>
-	<script>
-		var engage = new EngageSDK("cb15f03f140f28d81223f7b7c64e3a0d");
-		engage.presence.watchUser("patterson@chat-prod1.engage.co", function(status) {
-			console.log("patterson status changed to " + status);
-		});
-		engage.presence.watchUser("lieflarson", function(status) {
-			console.log("lieflarson status changed to " + status);
-		});
-	</script>
 </head>
 <body>
 
