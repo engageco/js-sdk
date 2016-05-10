@@ -11,11 +11,12 @@ define(["jquery",
 
 		'use strict';
 
-		var GetUsersService = function(companyHash, categorySlug, searchKey) {
+		var GetUsersService = function(companyHash, categorySlug, searchKey, syndicationCode) {
 			BaseRESTService.call(this);
 			this.companyHash = companyHash;
 			this.categorySlug = categorySlug;
 			this.searchKey = searchKey;
+			this.syndicationCode = syndicationCode;
 		};
 
 		GetUsersService.prototype = new BaseRESTService();
@@ -36,14 +37,20 @@ define(["jquery",
 		};
 
 		GetUsersService.prototype.prepareRequest = function() {
-			var data = [
-				{name:"companyHash", value:this.companyHash}
-			];
+			var data = [];
+			
+			if(this.companyHash) {
+				data.push({name:"companyHash", value:this.companyHash});
+			}
 			if(this.categorySlug) {
 				data.push({name:"categorySlug", value:this.categorySlug});
 			}
 			if(this.searchKey) {
 				data.push({name:"searchKey", value:this.searchKey});
+			}
+			
+			if(this.syndicationCode) {
+				data.push({name:"syndicationCode", value:this.syndicationCode});
 			}
 			return {
 				crossDomain: true,
