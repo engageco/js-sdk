@@ -264,7 +264,6 @@ define("EngageToolbar", ["jquery",
             }
             sortedList.each(jQuery.proxy(function(index, item) {
                 var $item = jQuery(item);
-                console.log(index, agentLimit);
                 if(index >= agentLimit) {
                     $item.addClass("hide");
                 }else {
