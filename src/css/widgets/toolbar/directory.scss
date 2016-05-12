@@ -53,6 +53,9 @@ $red: #cc3117;
             right: 0;
             text-align: left;
             margin: 5px;
+            &.hide {
+                display: none;
+            }
             .engage-profilePhoto {
                 margin: 5px;
             }
