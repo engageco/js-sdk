@@ -224,7 +224,7 @@ define("EngageToolbar", ["jquery",
 			var online = status == "online";
 			var item = this.directoryScreen.find("li[data-domain='" + domain + "']");
 			item.find(".engage-statusIndicator").toggleClass("engage-online", online);
-            item.toggle(online || !this.options.hideOfflineAgents)
+            item.toggleClass("hide", !online && this.options.hideOfflineAgents === true);
 			var button = item.find(".engage-button");
 			button.toggleClass("engage-outline", !online);
 			var label = online ? "Engage Live" : "Send Message";
@@ -258,14 +258,20 @@ define("EngageToolbar", ["jquery",
             if(this.options.showOnlineAgentsFirst != false) {
                 sortedList = SortOrderUtil.orderByOnline(sortedList, this.sdk.presence);
             }
-            sortedList.show();
+            var agentLimit = 1000000;
             if(this.options.agentLimit != null && this.options.agentLimit != "") {
-                //sortedList = sortedList.slice(0, this.options.agentLimit);
-                var agentLimit = this.options.agentLimit;
-                sortedList.each(function(index, item) {
-                    if(index >= agentLimit) jQuery(item).hide();
-                });
+                agentLimit = this.options.agentLimit;
             }
+            sortedList.each(jQuery.proxy(function(index, item) {
+                var $item = jQuery(item);
+                console.log(index, agentLimit);
+                if(index >= agentLimit) {
+                    $item.addClass("hide");
+                }else {
+                    var online = $item.find(".engage-statusIndicator").hasClass("engage-online");
+                    $item.toggleClass("hide", !online && this.options.hideOfflineAgents === true);
+                }
+            }, this));
             this.directoryScreen.find("ul").append(sortedList);
             //if(this.currentUser == null || this.sdk.presence.getUserStatus(this.currentUser.domain) != "online") {
                 var user = sortedList.first().data("user");
@@ -273,7 +279,6 @@ define("EngageToolbar", ["jquery",
                 onShowTabUser.apply(this, [isOnline ? user : null]);
             //}
             onUpdateLabel.apply(this);
-            //this.setVisibility(!(this.options.hideTabOffline && !this.isAnyoneOnline()));
             updateVisibility.apply(this);
         };
 
@@ -361,14 +366,24 @@ define("EngageToolbar", ["jquery",
             }
         };
 
+        var updateUsers = function() {
+            clearTimeout(this.getUserDelay);
+            this.getUserDelay = setTimeout(jQuery.proxy(function() {
+                this.sdk.getUsers(this.options.category, jQuery.proxy(onUsersLoaded, this), this.options.syndicationCode);
+            }, this), 250);
+        };
+
         EngageToolbar.prototype.setOption = function(name, value) {
             this.options[name] = value;
             switch(name) {
+                case "syndicationCode":
+                    updateUsers.apply(this);
+                    break;
                 case "category":
                     //if(this.sdk.tracking) {
                     //    this.sdk.tracking.tag = value;
                     //}
-                    this.sdk.getUsers(value, jQuery.proxy(onUsersLoaded, this));
+                    updateUsers.apply(this);
                     break;
                 case "directoryTitle":
                     if(this.isInitialized()) {

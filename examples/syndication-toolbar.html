@@ -7,100 +7,39 @@
 	<script>
         // engage: cb15f03f140f28d81223f7b7c64e3a0d | customer-facing-team
         // browns: 9ff4e31e20aad41e4303f4a96ee45a47 | all-team-members
-        // ppr: 43AB2762-5BDA-14D0-2C6B-843E3F4E5B44 | travel-nursing-widget
-
-        var toolbar = null;
-		var engage = new EngageSDK("43AB2762-5BDA-14D0-2C6B-843E3F4E5B44");
+        // syndication code: abcdefghijklmnop
+		var engage = new EngageSDK();
 		engage.drawWidget({
                 "type": "toolbar",
                 "js": "../build/toolbar.js",
                 "css": "../build/toolbar.css",
                 "options": {
-////                    "category": "all-agents",
-//                    "directoryTitle": "Our Support Team",
-//                    "tabPlacement": "right-tab",
-////                    "disableMobileView": true,
-//                    "onlineLabel": "Online! Chat Now!",
-//                    "offlineLabel": "Meet Our Team",
-//                    "labelOrientation": "flipped",
-//                    "backgroundColor": "#666",
-//                    "labelColor": "#eee",
-////                    "hideTabOffline": true,
-////                    "hideOfflineAgents": true,
-//                    "showOnlineAgentsFirst": true,
-//                    "agentOrder": "alpha", // "random" (default) || "last-chat" || "alpha" || "distance"
-////                    "showAgentLocation": true,
-////                    "showListOnly": true,
-////                    "showSearch": true
-//                    "directoryUrl": "https://directory.engage.co/cleveland-browns-cleveland-oh",
-//                    "agentLimit": 3,
-//                    "proactive": {
-//                        "message": "Hey there! Do you need any help?",
-//                        "delay": 1000,
-//                        "frequency": 0
-//                    }
-
-                    "agentLimit": "",
-                    "agentOrder": "last-chat",
-                    "backgroundColor": "#66CD00",
-                    "category": "travel-nursing",
-                    "directoryTitle": "The Travel Nursing Team:",
-                    "directoryUrl": "https://directory.engage.co/ppr",
-                    "disableMobileView": false,
-                    "hideOfflineAgents": true,
-                    "hideTabOffline": true,
-                    "labelColor": "#fff",
-                    "labelOrientation": "flipped",
+                    "syndicationCode": "abcdefghijklmnop",
+//                    "category": "all-agents",
+                    "directoryTitle": "Our Support Team",
+                    "tabPlacement": "right-tab",
+//                    "disableMobileView": true,
+                    "onlineLabel": "Online! Chat Now!",
                     "offlineLabel": "Meet Our Team",
-                    "onlineLabel": "Let's Talk Live!",
-                    "proactive": {
-                        "delay": 15000,
-                        "frequency": 30,
-                        "message": "Hey There! Do you have any questions we can help answer?"
-                    },
-                    "showAgentLocation": false,
-                    "showListOnly": false,
+                    "labelOrientation": "flipped",
+                    "backgroundColor": "#666",
+                    "labelColor": "#eee",
+//                    "hideTabOffline": true,
+//                    "hideOfflineAgents": true,
                     "showOnlineAgentsFirst": true,
-                    "tabPlacement": "right-tab"
-                }
-			},
-            function(widget) {
-                toolbar = widget;
-
-            });
-//        jQuery(document).click(function() {
-//            if(Math.random() > 0.5) {
-//                toolbar.setOption("tabPlacement", "top-right-tab");
-//                toolbar.setOption('category', 'customer-facing-team');
-//            }else {
-//                toolbar.setOption("tabPlacement", "bottom-left-tab");
-//                toolbar.setOption('category', 'customer-service-team');
-//            }
-//        });
-
-//        var engage = new EngageSDK("cb15f03f140f28d81223f7b7c64e3a0d");
-//        engage.drawWidget({
-//                "type": "toolbar",
-////                "js": "../build/toolbar.js",
-////                "css": "../build/toolbar.css",
-//                "options": {
-//                    "directoryTitle": "Our Support Team",
-//                    "tabPlacement": "left-tab",
-//                    "onlineLabel": "test",
-//                    "offlineLabel": "test",
-//                    "labelOrientation": "flipped",
-//                    "backgroundColor": "#666",
-//                    "labelColor": "#eee",
-//                    "showOnlineAgentsFirst": true,
-//                    "agentOrder": "random",
+                    "agentOrder": "last-chat", // "random" (default) || "last-chat" || "alpha" || "distance"
+                    "showAgentLocation": true,
+//                    "showListOnly": true,
+//                    "showSearch": true
 //                    "directoryUrl": "https://directory.engage.co/cleveland-browns-cleveland-oh",
-//                    "proactive": {
-//                        "message": "Hey there! Do you need any help?",
-//                        "delay": 1000,
-//                        "frequency": 0
-//                    }
-//                }
-//            });
+                    "agentLimit": 30,
+                    "proactive": {
+                        "message": "Hey there! Do you need any help?",
+                        "delay": 1000,
+                        "frequency": 0
+                    }
+                }
+			});
 	</script>
 </head>
 <body>

@@ -36,8 +36,14 @@ define("EngageSDK", ["require",
 
 		EngageSDK.version = "@@version";
 
-		EngageSDK.prototype.getUsers = function(categorySlug, callback) {
-			var getUsersService = new GetUsersService(this.companyHash, categorySlug);
+		EngageSDK.prototype.getUsers = function(categorySlug, callback, syndicationCode) {
+			var getUsersService = new GetUsersService();
+            if(syndicationCode) {
+                getUsersService.syndicationCode = syndicationCode;
+            }else {
+                getUsersService.companyHash = this.companyHash;
+            }
+            getUsersService.categorySlug = categorySlug;
             getUsersService.addEventListener(Event.RESULT, function(event) {
                 if(callback) callback(event.data);
             });

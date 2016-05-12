@@ -30,6 +30,9 @@ $red: #cc3117;
             &:hover {
                 background-color: #eee;
             }
+            &.hide {
+                display: none;
+            }
             .engage-profilePhoto {
                 margin: 0 auto;
                 margin-bottom: 10px;
