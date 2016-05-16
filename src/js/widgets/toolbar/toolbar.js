@@ -315,7 +315,11 @@ define("EngageToolbar", ["jquery",
 		var onUserChatClick = function(event) {
 			event.stopImmediatePropagation();
 			var user = jQuery(event.currentTarget).parent().data("user") || this.currentUser;
-			window.open(user.profileUrl, "_tab");
+            var url = user.profileUrl;
+            if(this.options.syndicationCode != null && this.options.syndicationCode != "") {
+                url += "?sc=" + this.options.syndicationCode;
+            }
+			window.open(url, "_tab");
 		};
 
 		var onTabClick = function(event) {
