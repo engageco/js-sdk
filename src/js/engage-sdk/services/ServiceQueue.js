@@ -13,7 +13,7 @@ define(["jquery",
 		'use strict';
 
 		var TOKEN_WINDOW = 5;
-		var KEEP_ALIVE_TIMEOUT = 600000;
+		var KEEP_ALIVE_TIMEOUT = 60000;
 
 		var ServiceQueue = function() {
 			EventDispatcher.call(this);
