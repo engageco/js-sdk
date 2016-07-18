@@ -3,9 +3,10 @@
 <html>
 <head>
 	<title>Engage SDK Example - jquery no conflict test</title>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-1.6.1.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
 	<script src="../build/sdk.js"></script>
 	<script>
+        console.log(jQuery.fn.jquery);
         // engage: cb15f03f140f28d81223f7b7c64e3a0d | customer-facing-team
         // browns: 9ff4e31e20aad41e4303f4a96ee45a47 | all-team-members
 		var engage = new EngageSDK("cb15f03f140f28d81223f7b7c64e3a0d");
@@ -43,8 +44,9 @@
             });
 	</script>
     <script>
-//        $.noConflict();
+//        jQuery.noConflict();
         console.log($.fn.jquery);
+        console.log(jQuery.fn.jquery);
         $(function() {
             $("body").css("margin", 50);
         });

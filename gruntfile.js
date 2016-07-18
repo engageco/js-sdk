@@ -60,7 +60,7 @@ module.exports = function(grunt) {
                                                 "return EngageSDK;" +
                                             "});" +
                                         "}" +
-                                        "jQuery.noConflict();" +
+                                        "jQuery.noConflict(true);" +
                                         "return EngageSDK;" +
                                     "}));"
                             }
