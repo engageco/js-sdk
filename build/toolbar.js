@@ -1,1 +1,598 @@
-!function(a,b){a.EngageToolbar=b(a.jQuery,a.EngageSDK)}(this,function(a,b){var c,d,e,f=a;return c=function(a){var b=function(){this.screens=new Array,this.currentScreen=null,this.cssClasses={left:"left",right:"right",overlay:"overlay",hide:"hide",background:"background"},this.clearHistory()};return b.DIRECTION_BACK="back",b.DIRECTION_FORWARD="forward",b.prototype.addScreen=function(a,b){null==this.screens[a]&&(this.screens[a]=b,b.css("visibility","hidden"))},b.prototype.clearHistory=function(){this.history=new Array,this.currentIndex=-1},b.prototype.getScreen=function(a){return this.screens[a]},b.prototype.setScreen=function(a,c,d){var e,f=this.screens[a];if(this.currentScreen==f)return null;if(f.hasClass(this.cssClasses.overlay))null!=this.currentScreen&&this.currentScreen.addClass(b.BACKGROUND);else if(e=c==b.DIRECTION_BACK?this.cssClasses.right:this.cssClasses.left,null!=this.currentScreen){var g=this.currentScreen;setTimeout(function(){g.css("visibility","hidden")},700),this.currentScreen.hasClass(b.OVERLAY)&&(e=this.cssClasses.hide),this.currentScreen.addClass(e)}return f.css("visibility","visible"),f.removeClass(this.cssClasses.left+" "+this.cssClasses.right+" "+this.cssClasses.overlay+" "+this.cssClasses.hide+" "+this.cssClasses.background),d||(this.history=this.history.slice(0,this.currentIndex+1),this.history.push(a),this.currentIndex=this.history.length-1),this.currentScreen=f,f},b.prototype.back=function(a){this.currentIndex>0?(this.currentIndex--,this.setScreen(this.history[this.currentIndex],b.DIRECTION_BACK,!0)):null!=a&&this.setScreen(a,b.DIRECTION_BACK,!0)},b.prototype.forward=function(){this.currentIndex<this.history.length-1&&this.setScreen(this.history[++this.currentIndex],b.DIRECTION_FORWARD,!0)},b.prototype.resetAllScreens=function(){for(var a in this.screens){var b=this.screens[a];b.hasClass(this.cssClasses.overlay)?b.addClass(this.cssClasses.hide):b.addClass(this.cssClasses.right)}},b.prototype.isOverlayOpen=function(){return this.currentScreen.hasClass(b.OVERLAY)},b}(f),d=function(a){var b={};return b.orderByOnline=function(b,c){return b.sort(function(b,d){var e=c.getUserStatus(a(b).data("user").domain),f=c.getUserStatus(a(d).data("user").domain);return"online"==e&&"online"!=f?-1:"online"!=e&&"online"==f?1:0})},b.orderByRandom=function(a){return a.sort(function(a,b){return Math.round(Math.random())-.5})},b.orderByAlpha=function(b){return b.sort(function(b,c){var d=a(b).data("user").lastName,e=a(c).data("user").lastName;return e>d?-1:d>e?1:0})},b.orderByLastChat=function(b){return b.sort(function(b,c){var d=Date.parse(a(b).data("user").lastChat),e=Date.parse(a(c).data("user").lastChat);return e>d?-1:d>e?1:0})},b}(f),e=function(a,b,c){var d=function(c,d,e){this.sdk=c,this.options=d,this.users=null,this.tab=null,this.drawer=null,this.setOption("category",this.options.category),this.screenController=new b,this.screenController.cssClasses.left="engage-left",this.screenController.cssClasses.right="engage-right",this.sdk.tracking&&(this.sdk.tracking.applicationName="ToolbarV2"),this.neverOpened=!0,this.callback=e,a(a.proxy(f,this))};d.version="1.0.95",d.SCREENS={SEARCH:"search",DIRECTORY:"directory",PROFILE:"profile"};var e=function(a){var b=[];return a.city&&b.push(a.city),a.state&&b.push(a.state),b.join(", ")},f=function(){this.tab=a('<div class="engage-tab mobile-enabled engage-hide"><div class="engage-tab-label"></div><div class="engage-profilePhoto engage-tiny"><div class="engage-photo no-photo"><img></div><div class="engage-statusIndicator engage-online"></div></div></div>'),this.tabLabel=this.tab.find(".engage-tab-label"),this.tabLabel.appendTo(this.tab),this.tab.appendTo(a("body")),this.tab.on("click",a.proxy(o,this)),this.tab.find(".engage-profilePhoto").on("click",a.proxy(p,this)),this.bubble=a('<div class="engage-bubble mobile-enabled"><div class="engage-bubble-close"></div><div class="engage-bubble-message"></div><div class="engage-name"></div><div class="engage-title"></div><a class="engage-button engage-chat">Engage Live</a></div>'),this.bubble.on("click",a.proxy(p,this)),this.bubble.find(".engage-button").on("click",a.proxy(n,this)),this.bubble.find(".engage-bubble-close").on("click",a.proxy(i,this)),this.bubble.appendTo(a("body")),this.drawer=a('<div class="engage-drawer mobile-enabled engage-hide"><div class="engage-header"><div class="engage-directory-title"></div><a class="engage-back engage-hide"></a><a class="engage-close"></a></div><div class="engage-footer"><span class="engage-powered-by">&copy; '+(new Date).getFullYear()+' <a href="http://engage.co" target="_tab">Powered By Engage</a></span><a class="engage-directory-link" target="_tab">Full Company Directory</a></div><div class="engage-screen engage-search engage-right"></div><div class="engage-screen engage-directory engage-right"><ul></ul></div><div class="engage-screen engage-profile engage-right"><div class="engage-profilePhoto"><div class="engage-photo"><img></div><div class="engage-statusIndicator engage-online"></div></div><div class="engage-name"></div><div class="engage-title"></div><div class="engage-location"></div><hr><div class="engage-bio"></div><div class="engage-button-row"><a class="engage-button engage-button-blue">View Profile</a><a class="engage-button engage-chat">Engage Live</a></div></div></div>'),this.drawer.find(".engage-close").on("click",a.proxy(q,this)),this.drawer.find(".engage-back").on("click",a.proxy(r,this)),this.drawer.find(".engage-button").on("click",a.proxy(n,this)),this.drawer.appendTo(a("body")),this.searchScreen=this.drawer.find(".engage-screen.engage-search"),this.screenController.addScreen(d.SCREENS.SEARCH,this.searchScreen),this.directoryScreen=this.drawer.find(".engage-screen.engage-directory"),this.screenController.addScreen(d.SCREENS.DIRECTORY,this.directoryScreen),this.profileScreen=this.drawer.find(".engage-screen.engage-profile"),this.screenController.addScreen("profile",this.profileScreen),this.setOption("tabPlacement",this.options.tabPlacement),this.setOption("showListOnly",this.options.showListOnly),this.setOption("offlineLabel",this.options.offlineLabel),this.setOption("labelOrientation",this.options.labelOrientation),this.setOption("disableMobileView",this.options.disableMobileView),this.setOption("labelColor",this.options.labelColor),this.setOption("directoryTitle",this.options.directoryTitle),this.setOption("backgroundColor",this.options.backgroundColor),this.setOption("directoryUrl",this.options.directoryUrl),this.users&&j.apply(this,[{users:this.users}]),this.sdk.tracking&&(this.sdk.tracking.publisherDomain=document.URL,this.sdk.tracking.trackEvent("load","toolbarInit")),this.callback&&this.callback(this)},g=function(b){if(b&&null!=b.profilePhoto&&""!=b.profilePhoto?(this.tab.find(".engage-profilePhoto").data("user",b),this.tab.find(".engage-photo > img").attr("src",b.profilePhoto),this.tab.find(".engage-photo").removeClass("no-photo")):(this.tab.find(".engage-photo > img").attr("src",""),this.tab.find(".engage-photo").addClass("no-photo")),this.tab.toggleClass("engage-show-user",null!=b),this.neverOpened&&b&&this.options.proactive){this.bubble.data("user",b),this.bubble.find(".engage-name").text(b.firstName+" "+b.lastName),this.bubble.find(".engage-title").text(b.title);var c=this.options.proactive.delay?this.options.proactive.delay:1e3;clearTimeout(this.showProactiveBubbleTimeout),this.showProactiveBubbleTimeout=setTimeout(a.proxy(h,this),c)}else this.bubble.removeClass("engage-show")},h=function(){if(!this.tab.hasClass("engage-hide")){var a=this.sdk.getLocalProperty("proactive-last-displayed"),b=new Date(Date.parse(a)),c=this.options.proactive&&this.options.proactive.frequency?this.options.proactive.frequency:1440,d=new Date(b.getTime()+Math.round(6e4*c));(null==a||d<=new Date)&&(this.sdk.setLocalProperty("proactive-last-displayed",new Date),this.bubble.find(".engage-bubble-message").text(this.options.proactive.message),this.bubble.addClass("engage-show"))}},i=function(a){a.stopImmediatePropagation(),this.bubble.removeClass("engage-show")},j=function(b){if(this.users=b.users,!this.directoryScreen)return!1;if(this.directoryScreen.find("ul li").remove(),this.users&&this.directoryScreen){for(var c=this.directoryScreen.find("ul"),d=0;d<this.users.length;d++){var f=this.users[d],g=a('<li><div class="engage-profilePhoto engage-small"><div class="engage-photo"><img></div><div class="engage-statusIndicator"></div></div><div class="engage-name"></div><div class="engage-title"></div><div class="engage-location"></div><a class="engage-button">Engage Live</a></li>');null!=f.profilePhoto&&""!=f.profilePhoto?g.find(".engage-photo > img").attr("src",f.profilePhoto):g.find(".engage-photo").addClass("no-photo"),g.find(".engage-name").text(f.firstName+" "+f.lastName),g.find(".engage-title").text(f.title),g.find(".engage-location").text(e(f)),g.find(".engage-location").toggle(1==this.options.showAgentLocation),g.attr("data-domain",f.domain),g.data("user",f),g.on("click",a.proxy(m,this)),g.find(".engage-button").on("click",a.proxy(n,this)),c.append(g),k.apply(this,[this.sdk.presence.getUserStatus(f.domain),f.domain]),this.sdk.presence.watchUser(f.domain,a.proxy(k,this))}this.sdk.presence.start()}},k=function(b,c){var d="online"==b,e=this.directoryScreen.find("li[data-domain='"+c+"']");e.find(".engage-statusIndicator").toggleClass("engage-online",d),e.toggleClass("hide",!d&&this.options.hideOfflineAgents===!0);var f=e.find(".engage-button");f.toggleClass("engage-outline",!d);var g=d?"Engage Live":"Send Message";if(f.text(g),this.currentUser&&this.currentUser.domain==c){this.profileScreen.find(".engage-statusIndicator").toggleClass("engage-online",d);var f=this.profileScreen.find(".engage-button.engage-chat");f.toggleClass("engage-outline",!d),f.text(g)}clearTimeout(this.sortTimeout),this.sortTimeout=setTimeout(a.proxy(l,this),200)},l=function(b){var d=this.directoryScreen.find("li");switch(this.options.agentOrder){case"random":d=c.orderByRandom(d);break;case"alpha":d=c.orderByAlpha(d);break;case"last-chat":default:d=c.orderByLastChat(d)}0!=this.options.showOnlineAgentsFirst&&(d=c.orderByOnline(d,this.sdk.presence));var e=1e6;null!=this.options.agentLimit&&""!=this.options.agentLimit&&(e=this.options.agentLimit),d.each(a.proxy(function(b,c){var d=a(c);if(b>=e)d.addClass("hide");else{var f=d.find(".engage-statusIndicator").hasClass("engage-online");d.toggleClass("hide",!f&&this.options.hideOfflineAgents===!0)}},this)),this.directoryScreen.find("ul").append(d);var f=d.first().data("user"),h="online"==this.sdk.presence.getUserStatus(f.domain);g.apply(this,[h?f:null]),s.apply(this),u.apply(this)},m=function(b){var c=a(b.currentTarget).data("user");this.sdk.tracking&&(this.sdk.tracking.customerDomain=c.domain,this.sdk.tracking.trackEvent("click","toolbarViewProfile"),this.sdk.tracking.customerDomain=null),this.screenController.setScreen(d.SCREENS.PROFILE),this.drawer.find(".engage-back").removeClass("engage-hide"),this.currentUser=c;var f=this.sdk.presence.getUserStatus(c.domain);"online"==f&&g.apply(this,[this.currentUser]),null!=c.profilePhoto&&""!=c.profilePhoto?(this.profileScreen.find(".engage-photo > img").attr("src",c.profilePhoto),this.tab.find(".engage-photo").removeClass("no-photo")):(this.profileScreen.find(".engage-photo > img").attr("src",""),this.profileScreen.find(".engage-photo").addClass("no-photo")),this.profileScreen.find(".engage-name").text(c.firstName+" "+c.lastName),this.profileScreen.find(".engage-title").text(c.title),this.profileScreen.find(".engage-location").text(e(c)),this.profileScreen.find(".engage-location").toggle(1==this.options.showAgentLocation);var h=a.trim(c.bio).substring(0,140).split(" ").slice(0,-1).join(" ");""!=h&&(h+="..."),this.profileScreen.find(".engage-bio").text(h),k.apply(this,[f,c.domain])},n=function(b){b.stopImmediatePropagation();var c=a(b.currentTarget).parent().data("user")||this.currentUser,d=c.profileUrl;null!=this.options.syndicationCode&&""!=this.options.syndicationCode&&(d+="?sc="+this.options.syndicationCode),window.open(d,"_tab")},o=function(a){this.openDrawer()},p=function(a){a.stopImmediatePropagation(),t.apply(this),o.apply(this,[a]),m.apply(this,[a])},q=function(a){this.closeDrawer()},r=function(a){this.screenController.back(),this.drawer.find(".engage-back").toggleClass("engage-hide",0==this.screenController.currentIndex)},s=function(a){var b=this.isAnyoneOnline(this)?this.options.onlineLabel:this.options.offlineLabel;b=b?b:"Engage Live",this.tabLabel.text(b)},t=function(){null==this.screenController.currentScreen&&(this.options.showSearch?this.screenController.setScreen(d.SCREENS.SEARCH):this.screenController.setScreen(d.SCREENS.DIRECTORY))},u=function(){var a=!(this.explicitlyHide||this.options.hideTabOffline&&!this.isAnyoneOnline());this.tab.toggleClass("engage-hide",!a),a||(this.bubble.toggleClass("engage-show",!1),this.drawer.toggleClass("engage-hide",!0))},v=function(){clearTimeout(this.getUserDelay),this.getUserDelay=setTimeout(a.proxy(function(){this.sdk.getUsers(this.options.category,a.proxy(j,this),this.options.syndicationCode)},this),250)};return d.prototype.setOption=function(a,b){switch(this.options[a]=b,a){case"syndicationCode":v.apply(this);break;case"category":v.apply(this);break;case"directoryTitle":this.isInitialized()&&this.drawer.find(".engage-directory-title").text(this.options.directoryTitle);break;case"tabPlacement":if(this.isInitialized()){var c="top-left-tab left-tab bottom-left-tab top-right-tab right-tab bottom-right-tab",d=b?b:"right-tab";this.tab.removeClass(c).addClass(d),this.bubble.removeClass(c).addClass(d),this.drawer.removeClass(c).addClass(d)}break;case"disableMobileView":this.isInitialized()&&(this.tab.toggleClass("mobile-enabled",!b),this.bubble.toggleClass("mobile-enabled",!b),this.drawer.toggleClass("mobile-enabled",!b));break;case"onlineLabel":this.isInitialized()&&s.apply(this);break;case"offlineLabel":this.isInitialized()&&s.apply(this);break;case"labelOrientation":this.isInitialized()&&("flipped"==b?this.tabLabel.addClass("flipped"):this.tabLabel.removeClass("flipped"));break;case"backgroundColor":this.isInitialized()&&b&&(this.tab.css("background-color",b),this.tab.find(".engage-statusIndicator").css("border-color",b));break;case"labelColor":this.isInitialized()&&b&&this.tab.css("color",b);break;case"hideTabOffline":u.apply(this);break;case"hideOfflineAgents":l.apply(this);break;case"showOnlineAgentsFirst":l.apply(this);break;case"agentOrder":l.apply(this);break;case"showAgentLocation":this.drawer.find(".engage-location").toggle(1==b);break;case"showListOnly":this.isInitialized()&&this.directoryScreen.toggleClass("engage-list",1==b);break;case"showSearch":break;case"proactive":break;case"directoryUrl":if(this.isInitialized()){var e=this.drawer.find(".engage-directory-link");e.attr("href",b),e.toggle(null!=b&&""!=b)}break;case"agentLimit":l.apply(this)}},d.prototype.isInitialized=function(){return null!=this.tab},d.prototype.openDrawer=function(){clearTimeout(this.showProactiveBubbleTimeout),this.tab.addClass("engage-hide"),this.bubble.removeClass("engage-show"),this.neverOpened=!1,this.sdk.tracking&&this.sdk.tracking.trackEvent("click","toolbarOpen");var b=this;setTimeout(function(){b.drawer.removeClass("engage-hide"),setTimeout(a.proxy(t,b),300)},300)},d.prototype.closeDrawer=function(){this.drawer.addClass("engage-hide");var a=this;setTimeout(function(){a.tab.removeClass("engage-hide")},500)},d.prototype.setVisibility=function(a){this.explicitlyHide=!a,u.apply(this)},d.prototype.isAnyoneOnline=function(){if(this.users)for(var a=0;a<this.users.length;a++)if("online"==this.sdk.presence.getUserStatus(this.users[a].domain))return!0;return!1},d}(f,c,d),"function"==typeof define&&define.amd&&define("EngageToolbar",[],function(){return e}),e});
+;(function (root, factory) {root.EngageToolbar = factory(root.EngageSDK);}(this, function(EngageSDK) {var jquery = EngageSDK.jQuery;/**
+ *
+ *
+ * @author Danny Patterson
+ */
+var engage_sdk_utils_ScreenController, widgets_utils_SortOrderUtil, EngageToolbar;
+engage_sdk_utils_ScreenController = function (jQuery) {
+  var ScreenController = function () {
+    this.screens = new Array();
+    this.currentScreen = null;
+    this.cssClasses = {
+      left: 'left',
+      right: 'right',
+      overlay: 'overlay',
+      hide: 'hide',
+      background: 'background'
+    };
+    this.clearHistory();
+  };
+  ScreenController.DIRECTION_BACK = 'back';
+  ScreenController.DIRECTION_FORWARD = 'forward';
+  ScreenController.prototype.addScreen = function (screenId, screen) {
+    if (this.screens[screenId] == null) {
+      this.screens[screenId] = screen;
+      screen.css('visibility', 'hidden');
+    }
+  };
+  ScreenController.prototype.clearHistory = function () {
+    this.history = new Array();
+    this.currentIndex = -1;
+  };
+  ScreenController.prototype.getScreen = function (screenId) {
+    return this.screens[screenId];
+  };
+  ScreenController.prototype.setScreen = function (screenId, direction, hideFromHistory) {
+    var inTransition, outTransition;
+    var screen = this.screens[screenId];
+    if (this.currentScreen == screen)
+      return null;
+    if (!screen.hasClass(this.cssClasses.overlay)) {
+      if (direction == ScreenController.DIRECTION_BACK) {
+        outTransition = this.cssClasses.right;
+      } else {
+        outTransition = this.cssClasses.left;
+      }
+      if (this.currentScreen != null) {
+        var oldScreen = this.currentScreen;
+        setTimeout(function () {
+          oldScreen.css('visibility', 'hidden');
+        }, 700);
+        if (this.currentScreen.hasClass(ScreenController.OVERLAY)) {
+          outTransition = this.cssClasses.hide;
+        }
+        this.currentScreen.addClass(outTransition);
+      }
+    } else {
+      if (this.currentScreen != null) {
+        this.currentScreen.addClass(ScreenController.BACKGROUND);
+      }
+    }
+    screen.css('visibility', 'visible');
+    //			setTimeout(function(){
+    screen.removeClass(this.cssClasses.left + ' ' + this.cssClasses.right + ' ' + this.cssClasses.overlay + ' ' + this.cssClasses.hide + ' ' + this.cssClasses.background);
+    //			}, 100);
+    if (!hideFromHistory) {
+      this.history = this.history.slice(0, this.currentIndex + 1);
+      this.history.push(screenId);
+      this.currentIndex = this.history.length - 1;
+    }
+    this.currentScreen = screen;
+    return screen;
+  };
+  ScreenController.prototype.back = function (defaultScreen) {
+    if (this.currentIndex > 0) {
+      this.currentIndex--;
+      this.setScreen(this.history[this.currentIndex], ScreenController.DIRECTION_BACK, true);
+    } else {
+      if (defaultScreen != null) {
+        this.setScreen(defaultScreen, ScreenController.DIRECTION_BACK, true);
+      } else {
+      }
+    }
+  };
+  ScreenController.prototype.forward = function () {
+    if (this.currentIndex < this.history.length - 1) {
+      this.setScreen(this.history[++this.currentIndex], ScreenController.DIRECTION_FORWARD, true);
+    }
+  };
+  ScreenController.prototype.resetAllScreens = function () {
+    for (var screenId in this.screens) {
+      var screen = this.screens[screenId];
+      if (!screen.hasClass(this.cssClasses.overlay)) {
+        screen.addClass(this.cssClasses.right);
+      } else {
+        screen.addClass(this.cssClasses.hide);
+      }
+    }
+  };
+  ScreenController.prototype.isOverlayOpen = function () {
+    return this.currentScreen.hasClass(ScreenController.OVERLAY);
+  };
+  return ScreenController;
+}(jquery);
+widgets_utils_SortOrderUtil = function (jQuery) {
+  var SortOrderUtil = {};
+  SortOrderUtil.orderByOnline = function (list, presence) {
+    return list.sort(function (a, b) {
+      var userAStatus = presence.getUserStatus(jQuery(a).data('user').domain);
+      var userBStatus = presence.getUserStatus(jQuery(b).data('user').domain);
+      if (userAStatus == 'online' && userBStatus != 'online') {
+        return -1;
+      } else if (userAStatus != 'online' && userBStatus == 'online') {
+        return 1;
+      }
+      return 0;
+    });
+  };
+  SortOrderUtil.orderByRandom = function (list) {
+    return list.sort(function (a, b) {
+      return Math.round(Math.random()) - 0.5;
+    });
+  };
+  SortOrderUtil.orderByAlpha = function (list) {
+    return list.sort(function (a, b) {
+      var userALastName = jQuery(a).data('user').lastName;
+      var userBLastName = jQuery(b).data('user').lastName;
+      if (userALastName < userBLastName) {
+        return -1;
+      } else if (userALastName > userBLastName) {
+        return 1;
+      }
+      return 0;
+    });
+  };
+  SortOrderUtil.orderByLastChat = function (list) {
+    return list.sort(function (a, b) {
+      var userALastChat = Date.parse(jQuery(a).data('user').lastChat);
+      var userBLastChat = Date.parse(jQuery(b).data('user').lastChat);
+      if (userALastChat < userBLastChat) {
+        return -1;
+      } else if (userALastChat > userBLastChat) {
+        return 1;
+      }
+      return 0;
+    });
+  };
+  //SortOrderUtil.orderByDistance = function(list, lat, long) {
+  //    // todo
+  //    return list;
+  //};
+  //SortOrderUtil.orderByCategory = function(list, categoryOrder) {
+  //    // todo
+  //    return list;
+  //};
+  return SortOrderUtil;
+}(jquery);
+EngageToolbar = function (jQuery, ScreenController, SortOrderUtil) {
+  var EngageToolbar = function (sdk, options, callback) {
+    this.sdk = sdk;
+    this.options = options;
+    this.users = null;
+    this.tab = null;
+    this.drawer = null;
+    this.setOption('category', this.options.category);
+    this.screenController = new ScreenController();
+    this.screenController.cssClasses.left = 'engage-left';
+    this.screenController.cssClasses.right = 'engage-right';
+    if (this.sdk.tracking) {
+      this.sdk.tracking.applicationName = 'ToolbarV2';
+    }
+    this.neverOpened = true;
+    this.callback = callback;
+    jQuery(jQuery.proxy(onDOMReady, this));
+  };
+  EngageToolbar.version = '1.0.97';
+  EngageToolbar.SCREENS = {
+    SEARCH: 'search',
+    DIRECTORY: 'directory',
+    PROFILE: 'profile'
+  };
+  var getCityStateFormatted = function (user) {
+    var cityState = [];
+    if (user.city)
+      cityState.push(user.city);
+    if (user.state)
+      cityState.push(user.state);
+    return cityState.join(', ');
+  };
+  var onDOMReady = function () {
+    //console.log("onDOMReady");
+    this.tab = jQuery('<div class="engage-tab mobile-enabled engage-hide">' + '<div class="engage-tab-label"></div>' + '<div class="engage-profilePhoto engage-tiny">' + '<div class="engage-photo no-photo"><img></div>' + '<div class="engage-statusIndicator engage-online"></div>' + '</div>' + '</div>');
+    this.tabLabel = this.tab.find('.engage-tab-label');
+    this.tabLabel.appendTo(this.tab);
+    this.tab.appendTo(jQuery('body'));
+    this.tab.on('click', jQuery.proxy(onTabClick, this));
+    this.tab.find('.engage-profilePhoto').on('click', jQuery.proxy(onTabUserClick, this));
+    this.bubble = jQuery('<div class="engage-bubble mobile-enabled">' + '<div class="engage-bubble-close"></div>' + '<div class="engage-bubble-message"></div>' + '<div class="engage-name"></div>' + '<div class="engage-title"></div>' + '<a class="engage-button engage-chat">Engage Live</a>' + '</div>');
+    this.bubble.on('click', jQuery.proxy(onTabUserClick, this));
+    this.bubble.find('.engage-button').on('click', jQuery.proxy(onUserChatClick, this));
+    this.bubble.find('.engage-bubble-close').on('click', jQuery.proxy(onCloseProactiveBubble, this));
+    this.bubble.appendTo(jQuery('body'));
+    this.drawer = jQuery('<div class="engage-drawer mobile-enabled engage-hide">' + '<div class="engage-header">' + '<div class="engage-directory-title"></div>' + '<a class="engage-back engage-hide"></a>' + '<a class="engage-close"></a>' + '</div>' + '<div class="engage-footer">' + '<span class="engage-powered-by">&copy; ' + new Date().getFullYear() + ' <a href="http://engage.co" target="_tab">Powered By Engage</a></span>' + '<a class="engage-directory-link" target="_tab">Full Company Directory</a>' + '</div>' + '<div class="engage-screen engage-search engage-right"></div>' + '<div class="engage-screen engage-directory engage-right">' + '<ul></ul>' + '</div>' + '<div class="engage-screen engage-profile engage-right">' + '<div class="engage-profilePhoto">' + '<div class="engage-photo"><img></div>' + '<div class="engage-statusIndicator engage-online"></div>' + '</div>' + '<div class="engage-name"></div>' + '<div class="engage-title"></div>' + '<div class="engage-location"></div>' + '<hr>' + '<div class="engage-bio"></div>' + '<div class="engage-button-row">' + '<a class="engage-button engage-button-blue">View Profile</a>' + '<a class="engage-button engage-chat">Engage Live</a>' + '</div>' + '</div>' + '</div>');
+    this.drawer.find('.engage-close').on('click', jQuery.proxy(onDrawerCloseClick, this));
+    this.drawer.find('.engage-back').on('click', jQuery.proxy(onScreenBackClick, this));
+    this.drawer.find('.engage-button').on('click', jQuery.proxy(onUserChatClick, this));
+    this.drawer.appendTo(jQuery('body'));
+    this.searchScreen = this.drawer.find('.engage-screen.engage-search');
+    this.screenController.addScreen(EngageToolbar.SCREENS.SEARCH, this.searchScreen);
+    this.directoryScreen = this.drawer.find('.engage-screen.engage-directory');
+    this.screenController.addScreen(EngageToolbar.SCREENS.DIRECTORY, this.directoryScreen);
+    this.profileScreen = this.drawer.find('.engage-screen.engage-profile');
+    this.screenController.addScreen('profile', this.profileScreen);
+    this.setOption('tabPlacement', this.options.tabPlacement);
+    this.setOption('showListOnly', this.options.showListOnly);
+    this.setOption('offlineLabel', this.options.offlineLabel);
+    this.setOption('labelOrientation', this.options.labelOrientation);
+    this.setOption('disableMobileView', this.options.disableMobileView);
+    this.setOption('labelColor', this.options.labelColor);
+    this.setOption('directoryTitle', this.options.directoryTitle);
+    this.setOption('backgroundColor', this.options.backgroundColor);
+    this.setOption('directoryUrl', this.options.directoryUrl);
+    if (this.users) {
+      onUsersLoaded.apply(this, [{ users: this.users }]);
+    }
+    if (this.sdk.tracking) {
+      this.sdk.tracking.publisherDomain = document.URL;
+      this.sdk.tracking.trackEvent('load', 'toolbarInit');
+    }
+    if (this.callback) {
+      this.callback(this);
+    }
+  };
+  var onShowTabUser = function (user) {
+    //if(!this.bubble.hasClass("engage-show")) { // don't switch users if the proactive bubble is open
+    if (user && user.profilePhoto != null && user.profilePhoto != '') {
+      this.tab.find('.engage-profilePhoto').data('user', user);
+      this.tab.find('.engage-photo > img').attr('src', user.profilePhoto);
+      this.tab.find('.engage-photo').removeClass('no-photo');
+    } else {
+      this.tab.find('.engage-photo > img').attr('src', '');
+      this.tab.find('.engage-photo').addClass('no-photo');
+    }
+    this.tab.toggleClass('engage-show-user', user != null);
+    if (this.neverOpened && user && this.options.proactive) {
+      this.bubble.data('user', user);
+      this.bubble.find('.engage-name').text(user.firstName + ' ' + user.lastName);
+      this.bubble.find('.engage-title').text(user.title);
+      var proactiveDelay = this.options.proactive.delay ? this.options.proactive.delay : 1000;
+      clearTimeout(this.showProactiveBubbleTimeout);
+      this.showProactiveBubbleTimeout = setTimeout(jQuery.proxy(onOpenProactiveBubble, this), proactiveDelay);
+    } else {
+      this.bubble.removeClass('engage-show');
+    }  //}
+  };
+  var onOpenProactiveBubble = function () {
+    if (!this.tab.hasClass('engage-hide')) {
+      var lastShown = this.sdk.getLocalProperty('proactive-last-displayed');
+      var lastShownDate = new Date(Date.parse(lastShown));
+      var frequency = this.options.proactive && this.options.proactive.frequency ? this.options.proactive.frequency : 1440;
+      var nextShowDate = new Date(lastShownDate.getTime() + Math.round(frequency * 60000));
+      if (lastShown == null || nextShowDate <= new Date()) {
+        this.sdk.setLocalProperty('proactive-last-displayed', new Date());
+        this.bubble.find('.engage-bubble-message').text(this.options.proactive.message);
+        this.bubble.addClass('engage-show');
+      }
+    }
+  };
+  var onCloseProactiveBubble = function (event) {
+    event.stopImmediatePropagation();
+    this.bubble.removeClass('engage-show');
+  };
+  var onUsersLoaded = function (data) {
+    //console.log("onUsersLoaded", this.directoryScreen);
+    // todo: unwatch all old users
+    this.users = data.users;
+    if (!this.directoryScreen) {
+      //onDOMReady.apply(this);
+      return false;
+    }
+    this.directoryScreen.find('ul li').remove();
+    // todo: look for agents this visitor has chatted with before and highlight them in a featured agents area
+    if (this.users && this.directoryScreen) {
+      var list = this.directoryScreen.find('ul');
+      //console.log(list);
+      for (var i = 0; i < this.users.length; i++) {
+        var user = this.users[i];
+        var item = jQuery('<li>' + '<div class="engage-profilePhoto engage-small">' + '<div class="engage-photo"><img></div>' + '<div class="engage-statusIndicator"></div>' + '</div>' + '<div class="engage-name"></div>' + '<div class="engage-title"></div>' + '<div class="engage-location"></div>' + '<a class="engage-button">Engage Live</a>' + '</li>');
+        if (user.profilePhoto != null && user.profilePhoto != '') {
+          item.find('.engage-photo > img').attr('src', user.profilePhoto);
+        } else {
+          item.find('.engage-photo').addClass('no-photo');
+        }
+        item.find('.engage-name').text(user.firstName + ' ' + user.lastName);
+        item.find('.engage-title').text(user.title);
+        item.find('.engage-location').text(getCityStateFormatted(user));
+        item.find('.engage-location').toggle(this.options.showAgentLocation == true);
+        item.attr('data-domain', user.domain);
+        item.data('user', user);
+        item.on('click', jQuery.proxy(onUserClick, this));
+        item.find('.engage-button').on('click', jQuery.proxy(onUserChatClick, this));
+        list.append(item);
+        onUserPresenceChange.apply(this, [
+          this.sdk.presence.getUserStatus(user.domain),
+          user.domain
+        ]);
+        this.sdk.presence.watchUser(user.domain, jQuery.proxy(onUserPresenceChange, this));
+      }
+      this.sdk.presence.start();
+    }
+  };
+  var onUserPresenceChange = function (status, domain) {
+    //console.log("onUserPresenceChange", status, domain);
+    var online = status == 'online';
+    var item = this.directoryScreen.find('li[data-domain=\'' + domain + '\']');
+    item.find('.engage-statusIndicator').toggleClass('engage-online', online);
+    item.toggleClass('hide', !online && this.options.hideOfflineAgents === true);
+    var button = item.find('.engage-button');
+    button.toggleClass('engage-outline', !online);
+    var label = online ? 'Engage Live' : 'Send Message';
+    button.text(label);
+    if (this.currentUser && this.currentUser.domain == domain) {
+      this.profileScreen.find('.engage-statusIndicator').toggleClass('engage-online', online);
+      var button = this.profileScreen.find('.engage-button.engage-chat');
+      button.toggleClass('engage-outline', !online);
+      button.text(label);
+    }
+    // NOTE: Since this is called each time a user's presence changes, we want to add a delay
+    //       in case multiple users change at once.
+    clearTimeout(this.sortTimeout);
+    this.sortTimeout = setTimeout(jQuery.proxy(onSortUserList, this), 200);
+  };
+  var onSortUserList = function (event) {
+    var sortedList = this.directoryScreen.find('li');
+    switch (this.options.agentOrder) {
+    case 'random':
+      sortedList = SortOrderUtil.orderByRandom(sortedList);
+      break;
+    case 'alpha':
+      sortedList = SortOrderUtil.orderByAlpha(sortedList);
+      break;
+    case 'last-chat':
+    default:
+      sortedList = SortOrderUtil.orderByLastChat(sortedList);
+      break;
+    }
+    if (this.options.showOnlineAgentsFirst != false) {
+      sortedList = SortOrderUtil.orderByOnline(sortedList, this.sdk.presence);
+    }
+    var agentLimit = 1000000;
+    if (this.options.agentLimit != null && this.options.agentLimit != '') {
+      agentLimit = this.options.agentLimit;
+    }
+    sortedList.each(jQuery.proxy(function (index, item) {
+      var $item = jQuery(item);
+      if (index >= agentLimit) {
+        $item.addClass('hide');
+      } else {
+        var online = $item.find('.engage-statusIndicator').hasClass('engage-online');
+        $item.toggleClass('hide', !online && this.options.hideOfflineAgents === true);
+      }
+    }, this));
+    this.directoryScreen.find('ul').append(sortedList);
+    //if(this.currentUser == null || this.sdk.presence.getUserStatus(this.currentUser.domain) != "online") {
+    var user = sortedList.first().data('user');
+    var isOnline = this.sdk.presence.getUserStatus(user.domain) == 'online';
+    onShowTabUser.apply(this, [isOnline ? user : null]);
+    //}
+    onUpdateLabel.apply(this);
+    updateVisibility.apply(this);
+  };
+  var onUserClick = function (event) {
+    var user = jQuery(event.currentTarget).data('user');
+    if (this.sdk.tracking) {
+      this.sdk.tracking.customerDomain = user.domain;
+      this.sdk.tracking.trackEvent('click', 'toolbarViewProfile');
+      this.sdk.tracking.customerDomain = null;
+    }
+    this.screenController.setScreen(EngageToolbar.SCREENS.PROFILE);
+    this.drawer.find('.engage-back').removeClass('engage-hide');
+    this.currentUser = user;
+    var status = this.sdk.presence.getUserStatus(user.domain);
+    if (status == 'online') {
+      onShowTabUser.apply(this, [this.currentUser]);
+    }
+    if (user.profilePhoto != null && user.profilePhoto != '') {
+      this.profileScreen.find('.engage-photo > img').attr('src', user.profilePhoto);
+      this.tab.find('.engage-photo').removeClass('no-photo');
+    } else {
+      this.profileScreen.find('.engage-photo > img').attr('src', '');
+      this.profileScreen.find('.engage-photo').addClass('no-photo');
+    }
+    this.profileScreen.find('.engage-name').text(user.firstName + ' ' + user.lastName);
+    this.profileScreen.find('.engage-title').text(user.title);
+    this.profileScreen.find('.engage-location').text(getCityStateFormatted(user));
+    this.profileScreen.find('.engage-location').toggle(this.options.showAgentLocation == true);
+    var bio = jQuery.trim(user.bio).substring(0, 140).split(' ').slice(0, -1).join(' ');
+    if (bio != '')
+      bio += '...';
+    this.profileScreen.find('.engage-bio').text(bio);
+    onUserPresenceChange.apply(this, [
+      status,
+      user.domain
+    ]);
+  };
+  var onUserChatClick = function (event) {
+    event.stopImmediatePropagation();
+    var user = jQuery(event.currentTarget).parent().data('user') || this.currentUser;
+    var url = user.profileUrl;
+    if (this.options.syndicationCode != null && this.options.syndicationCode != '') {
+      url += '?sc=' + this.options.syndicationCode;
+    }
+    window.open(url, '_tab');
+  };
+  var onTabClick = function (event) {
+    this.openDrawer();
+  };
+  var onTabUserClick = function (event) {
+    event.stopImmediatePropagation();
+    onShowFirstScreen.apply(this);
+    onTabClick.apply(this, [event]);
+    onUserClick.apply(this, [event]);
+  };
+  var onDrawerCloseClick = function (event) {
+    this.closeDrawer();
+  };
+  var onScreenBackClick = function (event) {
+    this.screenController.back();
+    this.drawer.find('.engage-back').toggleClass('engage-hide', this.screenController.currentIndex == 0);
+  };
+  var onUpdateLabel = function (event) {
+    var labelText = this.isAnyoneOnline(this) ? this.options.onlineLabel : this.options.offlineLabel;
+    labelText = labelText ? labelText : 'Engage Live';
+    this.tabLabel.text(labelText);
+  };
+  var onShowFirstScreen = function () {
+    //console.log("onShowFirstScreen");
+    //console.log(this.screenController.currentScreen);
+    if (this.screenController.currentScreen == null) {
+      if (this.options.showSearch) {
+        this.screenController.setScreen(EngageToolbar.SCREENS.SEARCH);
+      } else {
+        this.screenController.setScreen(EngageToolbar.SCREENS.DIRECTORY);
+      }
+    }
+  };
+  var updateVisibility = function () {
+    var isVisible = !this.explicitlyHide && !(this.options.hideTabOffline && !this.isAnyoneOnline());
+    this.tab.toggleClass('engage-hide', !isVisible);
+    if (!isVisible) {
+      this.bubble.toggleClass('engage-show', false);
+      this.drawer.toggleClass('engage-hide', true);
+    }
+  };
+  var updateUsers = function () {
+    clearTimeout(this.getUserDelay);
+    this.getUserDelay = setTimeout(jQuery.proxy(function () {
+      this.sdk.getUsers(this.options.category, jQuery.proxy(onUsersLoaded, this), this.options.syndicationCode);
+    }, this), 250);
+  };
+  EngageToolbar.prototype.setOption = function (name, value) {
+    this.options[name] = value;
+    switch (name) {
+    case 'syndicationCode':
+      updateUsers.apply(this);
+      break;
+    case 'category':
+      //if(this.sdk.tracking) {
+      //    this.sdk.tracking.tag = value;
+      //}
+      updateUsers.apply(this);
+      break;
+    case 'directoryTitle':
+      if (this.isInitialized()) {
+        this.drawer.find('.engage-directory-title').text(this.options.directoryTitle);
+      }
+      break;
+    case 'tabPlacement':
+      if (this.isInitialized()) {
+        var allTabPlacements = 'top-left-tab left-tab bottom-left-tab top-right-tab right-tab bottom-right-tab';
+        var tabPlacement = value ? value : 'right-tab';
+        this.tab.removeClass(allTabPlacements).addClass(tabPlacement);
+        this.bubble.removeClass(allTabPlacements).addClass(tabPlacement);
+        this.drawer.removeClass(allTabPlacements).addClass(tabPlacement);
+      }
+      break;
+    case 'disableMobileView':
+      if (this.isInitialized()) {
+        this.tab.toggleClass('mobile-enabled', !value);
+        this.bubble.toggleClass('mobile-enabled', !value);
+        this.drawer.toggleClass('mobile-enabled', !value);
+      }
+      break;
+    case 'onlineLabel':
+      if (this.isInitialized()) {
+        onUpdateLabel.apply(this);
+      }
+      break;
+    case 'offlineLabel':
+      if (this.isInitialized()) {
+        onUpdateLabel.apply(this);
+      }
+      break;
+    case 'labelOrientation':
+      if (this.isInitialized()) {
+        if (value == 'flipped') {
+          this.tabLabel.addClass('flipped');
+        } else {
+          this.tabLabel.removeClass('flipped');
+        }
+      }
+      break;
+    case 'backgroundColor':
+      if (this.isInitialized() && value) {
+        this.tab.css('background-color', value);
+        this.tab.find('.engage-statusIndicator').css('border-color', value);
+      }
+      break;
+    case 'labelColor':
+      if (this.isInitialized() && value) {
+        this.tab.css('color', value);
+      }
+      break;
+    case 'hideTabOffline':
+      updateVisibility.apply(this);
+      break;
+    case 'hideOfflineAgents':
+      onSortUserList.apply(this);
+      break;
+    case 'showOnlineAgentsFirst':
+      onSortUserList.apply(this);
+      break;
+    case 'agentOrder':
+      onSortUserList.apply(this);
+      break;
+    case 'showAgentLocation':
+      this.drawer.find('.engage-location').toggle(value == true);
+      break;
+    case 'showListOnly':
+      if (this.isInitialized()) {
+        this.directoryScreen.toggleClass('engage-list', value == true);
+      }
+      break;
+    case 'showSearch':
+      break;
+    case 'proactive':
+      break;
+    case 'directoryUrl':
+      if (this.isInitialized()) {
+        var link = this.drawer.find('.engage-directory-link');
+        link.attr('href', value);
+        link.toggle(value != null && value != '');
+      }
+      break;
+    case 'agentLimit':
+      onSortUserList.apply(this);
+      break;
+    }
+  };
+  EngageToolbar.prototype.isInitialized = function () {
+    return this.tab != null;
+  };
+  EngageToolbar.prototype.openDrawer = function () {
+    clearTimeout(this.showProactiveBubbleTimeout);
+    this.tab.addClass('engage-hide');
+    this.bubble.removeClass('engage-show');
+    this.neverOpened = false;
+    if (this.sdk.tracking) {
+      this.sdk.tracking.trackEvent('click', 'toolbarOpen');
+    }
+    var self = this;
+    setTimeout(function () {
+      self.drawer.removeClass('engage-hide');
+      setTimeout(jQuery.proxy(onShowFirstScreen, self), 300);
+    }, 300);
+  };
+  EngageToolbar.prototype.closeDrawer = function () {
+    this.drawer.addClass('engage-hide');
+    var self = this;
+    setTimeout(function () {
+      self.tab.removeClass('engage-hide');
+    }, 500);
+  };
+  EngageToolbar.prototype.setVisibility = function (isVisible) {
+    this.explicitlyHide = !isVisible;
+    updateVisibility.apply(this);
+  };
+  EngageToolbar.prototype.isAnyoneOnline = function () {
+    if (this.users) {
+      for (var i = 0; i < this.users.length; i++) {
+        if (this.sdk.presence.getUserStatus(this.users[i].domain) == 'online') {
+          return true;
+        }
+      }
+    }
+    return false;
+  };
+  return EngageToolbar;
+}(jquery, engage_sdk_utils_ScreenController, widgets_utils_SortOrderUtil);if(typeof define === 'function' && define.amd ) {define('EngageToolbar', [], function() {return EngageToolbar;});}return EngageToolbar;}));

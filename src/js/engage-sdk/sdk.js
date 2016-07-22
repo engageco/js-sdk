@@ -34,6 +34,8 @@ define("EngageSDK", ["require",
 			userPageTracker.init();
 		};
 
+        EngageSDK.jQuery = jQuery;
+
 		EngageSDK.version = "@@version";
 
 		EngageSDK.prototype.getUsers = function(categorySlug, callback, syndicationCode) {

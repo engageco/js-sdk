@@ -94,9 +94,9 @@ module.exports = function(grunt) {
                             "filePath": outputFile,
                             "wrap": {
                                 "start": ";(function (root, factory) {" +
-                                                "root.EngageToolbar = factory(root.jQuery, root.EngageSDK);" +
-                                            "}(this, function(jQuery, EngageSDK) {" +
-                                                "var jquery = jQuery;",
+                                                "root.EngageToolbar = factory(root.EngageSDK);" +
+                                            "}(this, function(EngageSDK) {" +
+                                                "var jquery = EngageSDK.jQuery;",
                                 "end": "if(typeof define === 'function' && define.amd ) {" +
                                             "define('EngageToolbar', [], function() {" +
                                                 "return EngageToolbar;" +
@@ -193,7 +193,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks("grunt-concurrent");
     grunt.loadNpmTasks("grunt-replace");
 
-    grunt.registerTask("build", ["sass:toolbar", "requirejs:sdk", "requirejs:toolbar", "replace:version", "uglify:compile"]);
+    grunt.registerTask("build", ["sass:toolbar", "requirejs:sdk", "requirejs:toolbar", "replace:version"]); //, "uglify:compile"
     grunt.registerTask("deploy", ["bump", "build"]);
     grunt.registerTask("default", ["concurrent:compile"]);
 

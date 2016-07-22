@@ -3,6 +3,7 @@ define("EngageToolbar", ["jquery",
         "widgets/utils/SortOrderUtil"],
 	function(jQuery, ScreenController, SortOrderUtil) {
 
+
 		'use strict';
 
 		var EngageToolbar = function(sdk, options, callback) {
