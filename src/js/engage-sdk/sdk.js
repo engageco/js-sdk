@@ -110,10 +110,9 @@ define("EngageSDK", ["require",
         };
 
 
-
 		// find script and look for config; if found init script
 		var currentScript = document.currentScript;
-		if(currentScript != null) {
+		if(!currentScript) {
 			currentScript = document.querySelector("script[data-company]")
 		}
 		if(currentScript != null) {

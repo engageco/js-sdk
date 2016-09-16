@@ -10152,7 +10152,7 @@ EngageSDK = function (require, jQuery, TrackingManager, PresenceMonitor, UserPag
     userPageTracker.init();
   };
   EngageSDK.jQuery = jQuery;
-  EngageSDK.version = '1.0.97';
+  EngageSDK.version = '1.0.98';
   EngageSDK.prototype.getUsers = function (categorySlug, callback, syndicationCode) {
     var getUsersService = new GetUsersService();
     if (syndicationCode) {
@@ -10227,7 +10227,7 @@ EngageSDK = function (require, jQuery, TrackingManager, PresenceMonitor, UserPag
   };
   // find script and look for config; if found init script
   var currentScript = document.currentScript;
-  if (currentScript != null) {
+  if (!currentScript) {
     currentScript = document.querySelector('script[data-company]');
   }
   if (currentScript != null) {
