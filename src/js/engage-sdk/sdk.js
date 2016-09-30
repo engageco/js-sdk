@@ -111,7 +111,9 @@ define("EngageSDK", ["require",
 
 
         var getAttribute = function(element, attributeName) {
+            console.log(element.attributes);
             for(var i = 0; i <= element.attributes.length; i++) {
+                console.log(element.attributes[i]);
                 if(element.attributes[i].name.trim() == attributeName) {
                     return element.attributes[attributeName].value;
                 }
