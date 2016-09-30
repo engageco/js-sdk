@@ -10152,7 +10152,7 @@ EngageSDK = function (require, jQuery, TrackingManager, PresenceMonitor, UserPag
     userPageTracker.init();
   };
   EngageSDK.jQuery = jQuery;
-  EngageSDK.version = '1.0.104';
+  EngageSDK.version = '1.0.105';
   EngageSDK.prototype.getUsers = function (categorySlug, callback, syndicationCode) {
     var getUsersService = new GetUsersService();
     if (syndicationCode) {
@@ -10226,11 +10226,9 @@ EngageSDK = function (require, jQuery, TrackingManager, PresenceMonitor, UserPag
     }
   };
   var getAttribute = function (element, attributeName) {
-    console.log(element.attributes);
     for (var i = 0; i <= element.attributes.length; i++) {
-      console.log(element.attributes[i]);
       if (element.attributes[i].name.trim() == attributeName) {
-        return element.attributes[attributeName].value;
+        return element.attributes[i].value;
       }
     }
     return null;
