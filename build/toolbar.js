@@ -172,7 +172,7 @@ EngageToolbar = function (jQuery, ScreenController, SortOrderUtil) {
     this.callback = callback;
     jQuery(jQuery.proxy(onDOMReady, this));
   };
-  EngageToolbar.version = '1.0.99';
+  EngageToolbar.version = '1.0.100';
   EngageToolbar.SCREENS = {
     SEARCH: 'search',
     DIRECTORY: 'directory',
