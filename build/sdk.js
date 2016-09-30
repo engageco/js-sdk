@@ -10152,7 +10152,7 @@ EngageSDK = function (require, jQuery, TrackingManager, PresenceMonitor, UserPag
     userPageTracker.init();
   };
   EngageSDK.jQuery = jQuery;
-  EngageSDK.version = '1.0.98';
+  EngageSDK.version = '1.0.99';
   EngageSDK.prototype.getUsers = function (categorySlug, callback, syndicationCode) {
     var getUsersService = new GetUsersService();
     if (syndicationCode) {
@@ -10230,11 +10230,14 @@ EngageSDK = function (require, jQuery, TrackingManager, PresenceMonitor, UserPag
   if (!currentScript) {
     currentScript = document.querySelector('script[data-company]');
   }
+  console.log('currentScript', currentScript);
   if (currentScript != null) {
     var companyHash = currentScript.getAttribute('data-company');
+    console.log('companyHash', companyHash);
     if (companyHash != null) {
       var engage = new EngageSDK(companyHash);
       var widgetSlug = currentScript.getAttribute('data-widget');
+      console.log('widgetSlug', widgetSlug);
       if (widgetSlug) {
         engage.loadWidget(widgetSlug);
       } else {
