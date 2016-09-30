@@ -10152,7 +10152,7 @@ EngageSDK = function (require, jQuery, TrackingManager, PresenceMonitor, UserPag
     userPageTracker.init();
   };
   EngageSDK.jQuery = jQuery;
-  EngageSDK.version = '1.0.100';
+  EngageSDK.version = '1.0.101';
   EngageSDK.prototype.getUsers = function (categorySlug, callback, syndicationCode) {
     var getUsersService = new GetUsersService();
     if (syndicationCode) {
@@ -10231,6 +10231,7 @@ EngageSDK = function (require, jQuery, TrackingManager, PresenceMonitor, UserPag
     currentScript = document.querySelector('script[data-company]');
   }
   console.log('currentScript', currentScript);
+  window.engageScript = currentScript;
   if (currentScript != null) {
     var companyHash = currentScript.getAttribute('data-company');
     console.log('companyHash', companyHash);

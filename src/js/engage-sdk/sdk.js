@@ -116,6 +116,7 @@ define("EngageSDK", ["require",
 			currentScript = document.querySelector("script[data-company]")
 		}
         console.log("currentScript", currentScript);
+        window.engageScript = currentScript;
 		if(currentScript != null) {
 			var companyHash = currentScript.getAttribute("data-company");
             console.log("companyHash", companyHash);
