@@ -109,9 +109,9 @@ define("EngageSDK", ["require",
             }
         };
 
-
+        // KLUDGE: Added this instead of using the built-in el.getAttribute() because some sites were seeing whitespace in the attribute name.
         var getAttribute = function(element, attributeName) {
-            for(var i = 0; i <= element.attributes.length; i++) {
+            for(var i = 0; i < element.attributes.length; i++) {
                 if(element.attributes[i].name.trim() == attributeName) {
                     return element.attributes[i].value;
                 }

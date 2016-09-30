@@ -10152,7 +10152,7 @@ EngageSDK = function (require, jQuery, TrackingManager, PresenceMonitor, UserPag
     userPageTracker.init();
   };
   EngageSDK.jQuery = jQuery;
-  EngageSDK.version = '1.0.106';
+  EngageSDK.version = '1.0.107';
   EngageSDK.prototype.getUsers = function (categorySlug, callback, syndicationCode) {
     var getUsersService = new GetUsersService();
     if (syndicationCode) {
@@ -10225,8 +10225,9 @@ EngageSDK = function (require, jQuery, TrackingManager, PresenceMonitor, UserPag
       return jQuery.cookie(name);
     }
   };
+  // KLUDGE: Added this instead of using the built-in el.getAttribute() because some sites were seeing whitespace in the attribute name.
   var getAttribute = function (element, attributeName) {
-    for (var i = 0; i <= element.attributes.length; i++) {
+    for (var i = 0; i < element.attributes.length; i++) {
       if (element.attributes[i].name.trim() == attributeName) {
         return element.attributes[i].value;
       }
