@@ -110,6 +110,15 @@ define("EngageSDK", ["require",
         };
 
 
+        var getAttribute = function(element, attributeName) {
+            for(var i = 0; i <= element.attributes.length; i++) {
+                if(element.attributes[i].name.trim() == attributeName) {
+                    return element.attributes[attributeName].value;
+                }
+            }
+            return null;
+        };
+
 		// find script and look for config; if found init script
 		var currentScript = document.currentScript;
 		if(!currentScript) {
@@ -118,16 +127,16 @@ define("EngageSDK", ["require",
         console.log("currentScript", currentScript);
         window.engageScript = currentScript;
 		if(currentScript != null) {
-			var companyHash = currentScript.getAttribute("data-company");
+			var companyHash = getAttribute(currentScript, "data-company");
             console.log("companyHash", companyHash);
 			if(companyHash != null) {
 				var engage = new EngageSDK(companyHash);
-				var widgetSlug = currentScript.getAttribute("data-widget");
+				var widgetSlug = getAttribute(currentScript, "data-widget");
                 console.log("widgetSlug", widgetSlug);
 				if(widgetSlug) {
 					engage.loadWidget(widgetSlug);
 				}else {
-					var widgetConfig = JSON.parse(decodeURIComponent(currentScript.getAttribute("data-widget-config")));
+					var widgetConfig = JSON.parse(decodeURIComponent(getAttribute(currentScript, "data-widget-config")));
 					if(widgetConfig) {
 						engage.drawWidget(widgetConfig);
 					}
@@ -135,6 +144,8 @@ define("EngageSDK", ["require",
 
 			}
 		}
+
+
 
 		return EngageSDK;
 

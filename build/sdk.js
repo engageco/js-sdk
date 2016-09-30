@@ -10152,7 +10152,7 @@ EngageSDK = function (require, jQuery, TrackingManager, PresenceMonitor, UserPag
     userPageTracker.init();
   };
   EngageSDK.jQuery = jQuery;
-  EngageSDK.version = '1.0.101';
+  EngageSDK.version = '1.0.103';
   EngageSDK.prototype.getUsers = function (categorySlug, callback, syndicationCode) {
     var getUsersService = new GetUsersService();
     if (syndicationCode) {
@@ -10225,6 +10225,14 @@ EngageSDK = function (require, jQuery, TrackingManager, PresenceMonitor, UserPag
       return jQuery.cookie(name);
     }
   };
+  var getAttribute = function (element, attributeName) {
+    for (var i = 0; i <= element.attributes.length; i++) {
+      if (element.attributes[i].name.trim() == attributeName) {
+        return element.attributes[attributeName].value;
+      }
+    }
+    return null;
+  };
   // find script and look for config; if found init script
   var currentScript = document.currentScript;
   if (!currentScript) {
@@ -10233,16 +10241,16 @@ EngageSDK = function (require, jQuery, TrackingManager, PresenceMonitor, UserPag
   console.log('currentScript', currentScript);
   window.engageScript = currentScript;
   if (currentScript != null) {
-    var companyHash = currentScript.getAttribute('data-company');
+    var companyHash = getAttribute(currentScript, 'data-company');
     console.log('companyHash', companyHash);
     if (companyHash != null) {
       var engage = new EngageSDK(companyHash);
-      var widgetSlug = currentScript.getAttribute('data-widget');
+      var widgetSlug = getAttribute(currentScript, 'data-widget');
       console.log('widgetSlug', widgetSlug);
       if (widgetSlug) {
         engage.loadWidget(widgetSlug);
       } else {
-        var widgetConfig = JSON.parse(decodeURIComponent(currentScript.getAttribute('data-widget-config')));
+        var widgetConfig = JSON.parse(decodeURIComponent(getAttribute(currentScript, 'data-widget-config')));
         if (widgetConfig) {
           engage.drawWidget(widgetConfig);
         }
