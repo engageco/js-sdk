@@ -124,15 +124,11 @@ define("EngageSDK", ["require",
 		if(!currentScript) {
 			currentScript = document.querySelector("script[data-company]")
 		}
-        console.log("currentScript", currentScript);
-        window.engageScript = currentScript;
 		if(currentScript != null) {
 			var companyHash = getAttribute(currentScript, "data-company");
-            console.log("companyHash", companyHash);
 			if(companyHash != null) {
 				var engage = new EngageSDK(companyHash);
 				var widgetSlug = getAttribute(currentScript, "data-widget");
-                console.log("widgetSlug", widgetSlug);
 				if(widgetSlug) {
 					engage.loadWidget(widgetSlug);
 				}else {
