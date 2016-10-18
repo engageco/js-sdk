@@ -172,7 +172,7 @@ EngageToolbar = function (jQuery, ScreenController, SortOrderUtil) {
     this.callback = callback;
     jQuery(jQuery.proxy(onDOMReady, this));
   };
-  EngageToolbar.version = '1.0.108';
+  EngageToolbar.version = '@@version';
   EngageToolbar.SCREENS = {
     SEARCH: 'search',
     DIRECTORY: 'directory',
@@ -258,7 +258,7 @@ EngageToolbar = function (jQuery, ScreenController, SortOrderUtil) {
       var lastShownDate = new Date(Date.parse(lastShown));
       var frequency = this.options.proactive && this.options.proactive.frequency ? this.options.proactive.frequency : 1440;
       var nextShowDate = new Date(lastShownDate.getTime() + Math.round(frequency * 60000));
-      console.log(lastShownDate, nextShowDate, new Date());
+      console.log(lastShown, lastShownDate, nextShowDate, new Date());
       if (lastShown == null || nextShowDate <= new Date()) {
         this.sdk.setLocalProperty('proactive-last-displayed', new Date());
         this.bubble.find('.engage-bubble-message').text(this.options.proactive.message);
