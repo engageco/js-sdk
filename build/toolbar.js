@@ -255,12 +255,14 @@ EngageToolbar = function (jQuery, ScreenController, SortOrderUtil) {
   var onOpenProactiveBubble = function () {
     if (!this.tab.hasClass('engage-hide')) {
       var lastShown = this.sdk.getLocalProperty('proactive-last-displayed');
-      var lastShownDate = new Date(Date.parse(lastShown));
+      var lastShownDate = parseInt(lastShown);
+      //new Date(Date.parse(lastShown));
       var frequency = this.options.proactive && this.options.proactive.frequency ? this.options.proactive.frequency : 1440;
-      var nextShowDate = new Date(lastShownDate.getTime() + Math.round(frequency * 60000));
-      console.log(lastShown, lastShownDate, nextShowDate, new Date());
-      if (lastShown == null || nextShowDate <= new Date()) {
-        this.sdk.setLocalProperty('proactive-last-displayed', new Date());
+      var nextShowDate = lastShownDate + frequency * 60000;
+      var now = new Date().getTime();
+      console.log(lastShown, lastShownDate, nextShowDate, now);
+      if (lastShown == null || nextShowDate <= now) {
+        this.sdk.setLocalProperty('proactive-last-displayed', now);
         this.bubble.find('.engage-bubble-message').text(this.options.proactive.message);
         this.bubble.addClass('engage-show');
       }
