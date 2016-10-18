@@ -257,6 +257,8 @@ EngageToolbar = function (jQuery, ScreenController, SortOrderUtil) {
       var lastShown = this.sdk.getLocalProperty('proactive-last-displayed');
       var lastShownDate = parseInt(lastShown);
       //new Date(Date.parse(lastShown));
+      if (isNaN(lastShownDate))
+        lastShown = null;
       var frequency = this.options.proactive && this.options.proactive.frequency ? this.options.proactive.frequency : 1440;
       var nextShowDate = lastShownDate + frequency * 60000;
       var now = new Date().getTime();
