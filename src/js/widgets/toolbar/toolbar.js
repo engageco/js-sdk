@@ -163,7 +163,7 @@ define("EngageToolbar", ["jquery",
                 var frequency = (this.options.proactive && this.options.proactive.frequency) ? this.options.proactive.frequency : 1440;
                 var nextShowDate = lastShownDate + (frequency * 60000);
                 var now = new Date().getTime();
-                console.log(lastShown, lastShownDate, nextShowDate, now);
+                //console.log(lastShown, lastShownDate, nextShowDate, now);
                 if(lastShown == null || nextShowDate <= now) {
                     this.sdk.setLocalProperty("proactive-last-displayed", now);
                     this.bubble.find(".engage-bubble-message").text(this.options.proactive.message);
