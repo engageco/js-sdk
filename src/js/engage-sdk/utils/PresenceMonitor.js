@@ -106,7 +106,7 @@ define(["jquery",
                             var request = jQuery.ajax({
                                 crossDomain: true,
                                 type: "GET",
-                                url: "https://wapi.engage.co/api/v2/userStatus?userId=" + users[0].userId + "&userDomain=" + users[0].user
+                                url: "https://wapi.engage.co/api/v2/userStatus?userId=" + users[0].userId + "&userDomain=" + users[0].userDomain
                             });
                             request.success(jQuery.proxy(onCombinedStatusSuccess, this, users[0]));
                             request.fail(jQuery.proxy(onFail, this));
